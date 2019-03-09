@@ -24,6 +24,7 @@
             console.log("Loading all houses from the wiki. This might take a while");
 
             var apiCallback = function (err, info, next, data) {
+
                 if (data) {
                     for (let j = 0; j < data.query.search.length; j++) {
                         //console.log(info);
@@ -36,13 +37,16 @@
 
                         houses.push(title);
                     }
+
+                    console.log(houses.length);
+                    console.log(data.query.searchinfo.totalhits);
                     if (houses.length == data.query.searchinfo.totalhits) {
                         callback(houses);
                     }
                 }
             };
 
-            for (let i = 0; i < 540; i = i + 10) {
+            for (let i = 0; i < 587; i = i + 10) {
                 //Setup up the api parameters
                 var params = {
                     action: "query",
@@ -96,10 +100,12 @@
             var house = {};
 
             client.api.call(params, function (err, info, next, data) {
+
                 if (data) {
 
                     var $ = HtmlParser.load(data.parse.text["*"]);
                     var arr = data.parse.text["*"].match(/<th\sscope(.*?)>(.*?)<\/td><\/tr>/g);
+                    console.log(arr);
                     if (arr !== null) {
                         house.name = houseName;
 

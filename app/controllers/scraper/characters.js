@@ -32,43 +32,12 @@
             var character = {};
             client.api.call(params, function (err, info, next, data) {
                 if (data) {
-                    var arr = data.parse.text["*"].match(/<th\sscope(.*?)>(.*?)<\/td><\/tr>/g);
-                    if (arr !== null) {
-                        character.name = characterName;
-                        character.slug = pageName.replace(/'/g,'_');
+                    character.name = characterName;
+                    character.slug = pageName.replace(/'/g,'_');
 
-                        for (let i = 0; i < arr.length; i++) {
-                            var tempName = arr[i].match(/<th\sscope(.*?)>(.*?)<\/th>/g)[0].match(/>(.*?)</g);
-                            var name = tempName[0].substring(1, tempName[0].length - 1);
-                            var tempValue = arr[i].match(/<td\sclass=\"\"\sstyle=\"\">(.*?)<\/td>/g)[0].match(/\">(.*?)<\/td>/g);
-                            var value = tempValue[0].substring(1, tempValue[0].length - 1);
-                            if (value.indexOf("href") != -1) {
-                                value = value.match(/\">(.*?)<\/a>/)[0];
-                                value = value.substring(2, value.length - 4);
-                            }
-                            else {
-                                value = value.substring(1, value.length - 4);
-                            }
-                            /*
-                             * Get the other information
-                             */
 
-                            if (value !== null) {
-                                name = name.toLowerCase();
-                                if (name == "played by") {
-                                    name = "actor";
-                                }
-                                else if (name == "allegiance" || name.toLowerCase() == "royal house") {
-                                    name = "house";
-                                }
-                                character[name] = value;
-                            }
 
-                            /*
-                             *
-                             */
-                        }
-                    }
+                    // Fetch Gender
                     if (data.parse.properties.length !== 0) {
                         var firstAttempt = data.parse.properties[0]["*"];
                         var gender = null;
@@ -117,7 +86,10 @@
                         character.imageLink = imgLink;
                     }
 
+
+
                     var infobox = $('.infobox th');
+
                     //fetch titles
                     character.titles = [];
 
@@ -136,6 +108,9 @@
 
                             // remove references like [1]
                             title = title.replace(/\[\d+\]+/g, '');
+
+                            title = title.replace(/&apos;/g,"'");
+                            title = title.replace(/&amp;/g,"&");
 
                             character.titles.push(title);
                         });
@@ -160,11 +135,202 @@
                             // remove references like [1]
                             book = book.replace(/\(\w+\)+/g, '').trim();
 
+                            book = book.replace(/&apos;/g,"'");
+                            book = book.replace(/&amp;/g,"&");
+
                             character.books.push(book);
                         });
                     }
 
-                    // Catch birthdate
+                    // fetch actor
+                    var actorTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Played by' || $(this).html() == '<span style="white-space:nowrap">Played by</span>';}).
+                        parent().find('td');
+
+                    if(actorTd.html() != null) {
+
+                        var actor = actorTd.html();
+                        actor = actor.replace(/<a\s(.*?)>/g, '').trim();
+                        actor = actor.replace(/<\/a>/g, '').trim();
+
+                        actor = actor.replace(/\(\w+\)+/g, '').trim();
+                        actor = actor.replace(/&apos;/g,"'");
+                        actor = actor.replace(/&amp;/g,"&");
+
+                        character.actor = actor;
+                    }
+
+                    // fetch culture
+                    var cultureTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Culture' || $(this).html() == '<span style="white-space:nowrap">Culture</span>';}).
+                        parent().find('td');
+
+                    if(cultureTd.html() != null) {
+
+                        var culture = cultureTd.html();
+                        culture = culture.replace(/<a\s(.*?)>/g, '').trim();
+                        culture = culture.replace(/<\/a>/g, '').trim();
+
+                        culture = culture.replace(/\(\w+\)+/g, '').trim();
+                        culture = culture.replace(/&apos;/g,"'");
+                        culture = culture.replace(/&amp;/g,"&");
+
+                        character.culture = culture;
+                    }
+
+                    //fetch father
+                    var fatherTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Father' || $(this).html() == '<span style="white-space:nowrap">Father</span>';}).
+                        parent().find('td');
+
+                    if(fatherTd.html() != null) {
+
+                        var father = fatherTd.html().split('<br>');
+                        father[0] = father[0].replace(/<a\s(.*?)>/g, '').trim();
+                        father[0] = father[0].replace(/<\/a>/g, '').trim();
+
+                        father[0] = father[0].replace(/\(\w+\)+/g, '').trim();
+                        father[0] = father[0].replace(/&apos;/g,"'");
+                        father[0] = father[0].replace(/&amp;/g,"&");
+
+                        character.father = father[0];
+                    }
+
+
+                    //fetch mother
+                    var motherTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Mother' || $(this).html() == '<span style="white-space:nowrap">Mother</span>';}).
+                        parent().find('td');
+
+                    if(motherTd.html() != null) {
+
+                        var mother = motherTd.html().split('<br>');
+                        mother[0] = mother[0].replace(/<a\s(.*?)>/g, '').trim();
+                        mother[0] = mother[0].replace(/<\/a>/g, '').trim();
+
+                        mother[0] = mother[0].replace(/\(\w+\)+/g, '').trim();
+                        mother[0] = mother[0].replace(/&apos;/g,"'");
+                        mother[0] = mother[0].replace(/&amp;/g,"&");
+
+                        character.mother = mother[0];
+                    }
+
+                    // fetch heir
+                    var heirTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Heir' || $(this).html() == '<span style="white-space:nowrap">Heir</span>';}).
+                        parent().find('td');
+
+                    if(heirTd.html() != null) {
+
+                        var heir = heirTd.html();
+                        heir = heir.replace(/<a\s(.*?)>/g, '').trim();
+                        heir = heir.replace(/<\/a>/g, '').trim();
+
+                        heir = heir.replace(/\(\w+\)+/g, '').trim();
+                        heir = heir.replace(/&apos;/g,"'");
+                        heir = heir.replace(/&amp;/g,"&");
+
+                        character.heir = heir;
+                    }
+
+                    // fetch spouse
+                    character.spouse = [];
+                    var spouseTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Spouse' || $(this).html() == 'Queen' || $(this).html() == 'Wife' || $(this).html() == 'Husband' || $(this).html() == 'King';}).
+                        parent().find('td');
+
+                    if(spouseTd.html() != null) {
+
+                        var spouses = spouseTd.html().split('<br>');
+
+                        spouses.forEach(function(spouse) {
+                            // remove html tags and unnecessary spaces
+                            spouse = spouse.replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+
+                            // remove references like [1]
+                            spouse = spouse.replace(/\(\w+\)+/g, '').trim();
+
+                            spouse = spouse.replace(/&apos;/g,"'");
+                            spouse = spouse.replace(/&amp;/g,"&");
+
+                            character.spouse.push(spouse);
+                        });
+                    }
+
+                    //fetch children
+                    character.children = [];
+
+                    var childTd = infobox.
+                        filter(function(i, el) {return $(this).html() === 'Issue';}).
+                        parent().find('td')
+                    ;
+
+                    if(childTd.html() !== null)
+                    {
+                        // get multiple titles
+                        var children = childTd.html().split('<br>');
+                        children.forEach(function(child) {
+                            // remove html tags and unnecessary spaces
+                            child = child.replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+
+                            // remove references like [1]
+                            child = child.replace(/\[\d+\]+/g, '');
+
+                            child = child.replace(/&apos;/g,"'");
+                            child = child.replace(/&amp;/g,"&");
+
+                            character.children.push(child);
+                        });
+                    }
+
+                    //fetch allegiance
+                    character.allegiance = [];
+                    var allegianceTd = infobox.
+                        filter(function(i, el) {return $(this).html() === 'Allegiance';}).
+                        parent().find('td')
+                    ;
+
+                    if(allegianceTd.html() !== null)
+                    {
+                        var allegiances = allegianceTd.html().split('<br>');
+
+                        var house = allegiances[0].replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+                        house = house.replace(/\(\w+\)+/g, '').trim();
+                        character.house = house
+
+                        allegiances.forEach(function(allegiance) {
+                            allegiance = allegiance.replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+
+                            allegiance = allegiance.replace(/\(\w+\)+/g, '').trim();
+
+                            allegiance = allegiance.replace(/&apos;/g,"'");
+                            allegiance = allegiance.replace(/&amp;/g,"&");
+
+                            character.allegiance.push(allegiance);
+                        });
+                    }
+
+                    //fetch house
+                    var houseTd = infobox.
+                        filter(function(i,el) {return $(this).html() == 'Royal House' || $(this).html() == '<span style="white-space:nowrap">Royal House</span>';}).
+                        parent().find('td');
+
+                    if(houseTd.html() != null) {
+
+                        var house = houseTd.html();
+                        house = house.replace(/<a\s(.*?)>/g, '').trim();
+                        house = house.replace(/<\/a>/g, '').trim();
+
+                        house = house.replace(/\(\w+\)+/g, '').trim();
+
+                        house = house.replace(/&apos;/g,"'");
+                        house = house.replace(/&amp;/g,"&");
+
+                        character.house = house;
+                    }
+
+
+                    // fetch birthdate
                     var bornTd = infobox.
                         filter(function(i, el) {return $(this).html() === 'Born' || $(this).html() === 'Born in';}).
                         parent().find('td')
@@ -172,6 +338,24 @@
 
                     if(bornTd.html() !== null) {
                         var born = bornTd.html();
+
+                        var bornPlace = born.replace(/<[^>]*>/g, '');
+                        var checkBornAt = bornPlace.match(/at/g);
+
+                        if(checkBornAt != null) {
+                            bornPlace = bornPlace.replace(/.*(?=at)/g,'');
+                            bornPlace = bornPlace.replace(/\[.*?\]/g,'');
+                            bornPlace = bornPlace.replace(/at&#xA0;/g,'');
+                            bornPlace = bornPlace.replace(/at /g,'');
+                            bornPlace = bornPlace.replace(/\n/g,'');
+                            bornPlace = bornPlace.replace(/\(\w+\)+/g, '').trim();
+
+                            bornPlace = bornPlace.replace(/&apos;/g,"'");
+                            bornPlace = bornPlace.replace(/&amp;/g,"&");
+                            character.placeOfBirth = bornPlace;
+                        }
+                        
+                        
 
                         var isBirthDate = false;
                         if(born.indexOf('AC') > -1) {
@@ -193,7 +377,7 @@
                         }
                     }
 
-                    // Catch dateOfDeath
+                    // fetch dateOfDeath
                     var diedTd = infobox.
                         filter(function(i, el) {return $(this).html() === 'Died' || $(this).html() === 'Died in';}).
                         parent().find('td')
@@ -202,6 +386,22 @@
                     if(diedTd.html() !== null) {
                         var died = diedTd.html();
                         var isDead = false;
+
+                        var deathPlace = died.replace(/<[^>]*>/g, '');
+                        var checkDeathAt = deathPlace.match(/at/g);
+
+                        if(checkDeathAt != null) {
+                            deathPlace = deathPlace.replace(/.*(?=at)/g,'');
+                            deathPlace = deathPlace.replace(/\[.*?\]/g,'');
+                            deathPlace = deathPlace.replace(/at&#xA0;/g,'');
+                            deathPlace = deathPlace.replace(/at /g,'');
+                            deathPlace = deathPlace.replace(/\n/g,'');
+                            deathPlace = deathPlace.replace(/\(\w+\)+/g, '').trim();
+
+                            deathPlace = deathPlace.replace(/&apos;/g,"'");
+                            deathPlace = deathPlace.replace(/&amp;/g,"&");
+                            character.placeOfDeath = deathPlace;
+                        }
 
                         if(died.indexOf('AC') > -1) {
                             var diedAC = died.match(/\d+ AC/);
@@ -235,7 +435,9 @@
             var scraper = require("./characters");
             scraper.getAllNames(function (characters) {
                 var charactersCollection = [];
+                //var testCharacter = ['Bran Stark','Petyr Baelish','Joffrey Baratheon','Tyrion Lannister','Arya Stark','Jaime Lannister','Tommen Baratheon','Stannis Baratheon','Theon Greyjoy','Eddard Stark','Jon Snow','Daenerys Targaryen','Cersei Lannister']
 
+                console.log(characters.length);
                 async.each(characters, function(character, cb){
                     scraper.get(character, function(char) {
                         console.log('Fetched ' + char.name);
@@ -281,9 +483,11 @@
                 allLis.each(function() {
                     name = $(this).find('a').first().attr("title").replace(/_/g,' ');
                     if(name.indexOf('House ') < 0) {
+                        console.log(name);
                         characters.push(name);
                     }
                 });
+
                 console.log("All character names loaded");
                 callback(characters);
             });

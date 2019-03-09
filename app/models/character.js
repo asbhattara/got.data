@@ -18,8 +18,9 @@ var CharacterSchema = new Schema({
     house       : {type: String, ref: "House"},                   // House Targaryen
     createdAt   : {type: Date, default: Date.now},
     updatedAt   : {type: Date, default: Date.now},
-    spouse             : {type: String, ref: 'Character'},
-    allegiance         : {type: String, ref: 'Character'},
+    spouse             : [{type: String, ref: 'Character'}],
+    children             : [{type: String, ref: 'Character'}],
+    allegiance         : [{type: String, ref: 'Character'}],
     pageRank: Number,
     books              : [String],
     placeOfLastVisit   : {type: String, ref: "Region"}, 
