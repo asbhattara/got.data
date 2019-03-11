@@ -18,8 +18,9 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "mwbot": "1.0.10",
     "body-parser": "~1.15.0",
-    "cheerio": "^0.20.0",
     "console-stamp": "^0.2.0",
     "cors": "^2.7.1",
     "express": "latest",
