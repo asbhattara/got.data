@@ -1,5 +1,6 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
+const Character = require('../../../models/fandom/characters');
 
 class CharacterScraper {
     constructor() {
@@ -64,7 +65,7 @@ class CharacterScraper {
 
             data.push(await this.scrape(character["name"], character["slug"]));
         }
-
+        console.log(data);
         return data;
     }
 
@@ -78,6 +79,10 @@ class CharacterScraper {
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
         // character object
+        // let result = new Character({
+        //     name: name,
+        //     slug: page
+        // });
         let result = {
             "name": name,
             "slug": page,
@@ -110,6 +115,7 @@ class CharacterScraper {
 
         // scrape character image
         result["image"] = $(".pi-image-thumbnail").attr("src");
+
 
         // scrape personal description (right info box)
         $(".portable-infobox").find(".pi-item").each(function() {
@@ -283,4 +289,3 @@ class CharacterScraper {
 // sample characters output: https://pastebin.com/AByMyz0W
 
 module.exports = CharacterScraper;
-
