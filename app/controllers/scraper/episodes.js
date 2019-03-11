@@ -15,6 +15,7 @@
     var jsonfile = require('jsonfile');
     var request = require('request');
     var HtmlParser = require('cheerio');
+    var imdb = require('imdb-api');
 
     module.exports = {
         getAllNames: function (callback) {
@@ -28,7 +29,9 @@
                 for (let i = 0; i < arr.length; i++) {
                     let subArr = arr[i].match(/\stitle=\"(.*?)\"/g);
                     episodes.push(subArr[0].substring(8, subArr[0].length - 1));
+                    episodes[i] = episodes[i].replace(/\(.*?\)/g, '');
                 }
+
                 callback(episodes);
             });
         },
@@ -41,7 +44,8 @@
                 var saveEpisode = function (episode) {
                     if (episode.name !== null) {
                         episodesCollection.push(episode);
-                        console.log("Fetched " + episode.name);
+                        console.log(episode);
+                        console.log("Fetched " + episode);
                     }
                     else {
                         nr--;
@@ -63,11 +67,13 @@
             // get episode cast from imbd
             console.log("Get the cast from imdb..");
             var episodesCasts = [];
+            
             request('http://www.imdb.com/title/tt0944947/epcast', function (error, response, body) {
                 if (!error && response.statusCode == 200) {
 
                     var $ = HtmlParser.load(body);
                     var casts = $('.cast');
+
 
                     // for each episode cast
                     casts.each(function(episodeNr) {
@@ -106,13 +112,17 @@
                         }
 
                     });
+
+                    console.log(episodesCasts);
                     callback(false, {"data" : episodesCasts, "createdAt" : new Date()});
                 }
                 else {
                     callback(error,episodesCasts);
                 }
             });
+
         },
+        
 
         get: function (episodeName, callback) {
             //console.log("start get epsiode: " + episodeName);
@@ -136,6 +146,7 @@
 
             var episode = {};
             client.api.call(params, function (err, info, next, data) {
+
                 if (data) {
                     var arr = data.parse.text["*"].match(/<th\sscope(.*?)>(.*?)<\/td><\/tr>/g);
                     if (arr) {

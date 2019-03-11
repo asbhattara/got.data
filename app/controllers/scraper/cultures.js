@@ -18,56 +18,45 @@
                 format: "json"
             };
 
+            
+
             client.api.call(params, function (err, info, next, data) {
+
+                var cultures = [];
 
                 var allData = data.parse.text["*"];
                 var result = allData.match(/<tr>(.|\n)*?<\/tr>/g);
-                var listForSevenKingdoms, listForBeyondTheWall, listForEssos, listForAncientTimes;
-                var cultures = [];
 
-                for (let i = 0; i < result.length; i++) {
-                    if (result[i].match(/(Seven Kingdoms)/)) {
-                        listForSevenKingdoms = result[i].match(/title="([^"]*)"/g);
-                        listForSevenKingdoms.shift();
-                        for (let j = 0; j < listForSevenKingdoms.length; j++) {
-                            let culture = {};
-                            culture.name = listForSevenKingdoms[j].substring(7, listForSevenKingdoms[j].length - 1);
-                            cultures.push(culture);
-                        }
-                    }
-                    /*
-                     if(result[i].match(/(Beyond the Wall)/)){
-                     listForBeyondTheWall = result[i].match(/title="([^"]*)"/g);
-                     for(j=0; j<listForBeyondTheWall.length; j++){
-                     var culture = {};
-                     culture.name = listForBeyondTheWall[j].substring(7, listForBeyondTheWall[j].length-1);
-                     cultures.push(culture);
-                     }
-                     }
-                     */
-                    if (result[i].match(/Essos/)) {
-                        listForEssos = result[i].match(/title="([^"]*)"/g);
-                        listForEssos.shift();
-                        for (let j = 0; j < listForEssos.length; j++) {
-                            let culture = {};
-                            culture.name = listForEssos[j].substring(7, listForEssos[j].length - 1);
-                            cultures.push(culture);
-                        }
-                    }
-                    /*
-                     if(result[i].match(/(From ancient times)/)){
-                     listForAncientTimes = result[i].match(/title="([^"]*)"/g);
-                     for(j=0; j<listForAncientTimes.length; j++){
-                     var culture = {};
-                     culture.name = listForAncientTimes[j].substring(7, listForAncientTimes[j].length-1);
-                     cultures.push(culture);
-                     }
-                     }
-                     */
+                var listForSevenKingdomsAndAncientTimes, listForBeyondTheWallAndEssos;
+
+                listForSevenKingdomsAndAncientTimes = result[3].match(/title="([^"]*)"/g);
+                listForBeyondTheWallAndEssos = result[5].match(/title="([^"]*)"/g);
+
+                for (var i = 0; i < listForSevenKingdomsAndAncientTimes.length; i++) {
+                    let culture = {};
+                    listForSevenKingdomsAndAncientTimes[i] = listForSevenKingdomsAndAncientTimes[i].replace(/title=/g, '');
+                    listForSevenKingdomsAndAncientTimes[i] = listForSevenKingdomsAndAncientTimes[i].replace(/"/g, '');
+                    culture.name = listForSevenKingdomsAndAncientTimes[i];
+                    cultures.push(culture);
                 }
+
+                for (var i = 0; i < listForBeyondTheWallAndEssos.length; i++) {
+                    let culture = {};
+                    listForBeyondTheWallAndEssos[i] = listForBeyondTheWallAndEssos[i].replace(/title=/g, '');
+                    listForBeyondTheWallAndEssos[i] = listForBeyondTheWallAndEssos[i].replace(/"/g, '');
+                    culture.name = listForBeyondTheWallAndEssos[i];
+                    cultures.push(culture);
+                }
+
+
                 callback(cultures);
+
+                
             });
+
         },
+
+
 
         scrapToFile: function (cacheFile, scraperFunction, callback) {
             console.log('Scrapping from wiki. May take a while..');

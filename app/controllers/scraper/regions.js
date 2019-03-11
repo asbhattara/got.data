@@ -8,6 +8,9 @@
     });
     var jsonfile = require('jsonfile');
 
+    var HtmlParser = require('cheerio');
+    var async = require('async');
+
     module.exports = {
         get: function (regionName, callback) {
 			
@@ -50,36 +53,141 @@
 
             var params = {
                 action: "parse",
-                page: "Portal:Geography",
+                page: "Westeros",
                 format: "json",
 				redirects: ""
             };
 
             var regions = [];
 
-            //Iterate through all Regions
+
+            this.getWesteros(function(region) {
+                console.log(region);
+                regions.push(region);
+            });
+
+             this.getEssos(function(region) {
+                console.log(region);
+                regions.push(region);
+            });
+
+             this.getSothoryos(function(region) {
+                console.log(region);
+                regions.push(region);
+            });
+
+            setTimeout(function() {
+                callback(regions);
+            }, 9000);
+
+            
+
+        },
+
+        getWesteros: function (callback) {
+
+            console.log("start getRegions");
+            //Setup the mediawiki bot
+
+            var params = {
+                action: "parse",
+                page: "Westeros",
+                format: "json",
+                redirects: ""
+            };
+
+            var regions = [];
+
+            //Iterate through all Regions    toctitle
 
             //console.log("Loading all regions from the wiki. This might take a while");
             client.api.call(params, function (err, info, next, data) {
-			
-                var section = data.parse.text["*"].split("Regions");
-                for (let i = 1; i < 4; i++) {
-                    var continents = section[i].split("<\/li><\/ul>");
 
-                    var str = continents[0].match(/\">(.*?)<\/a>/g);
-                    for (let j = 0; j < str.length; j++) {
-                        str[j] = str[j].substring(2, str[j].length - 4);
-                        //var region = {};
-                        //region.name = str[j];
-                        regions.push(str[j]);
-                    }
-                }
-                callback(regions);
+                var $ = HtmlParser.load(data.parse.text["*"]);
+                
+                var contents = $('.toc li');
+
+                var check = contents.html();
+
+                check = check.split('<ul>');
+                
+                check = check[1].replace('/<(.|\n)*?>/g','');
+                
+                check = check.replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+
+                check = check.replace(/\d+/g, '');
+                check = check.replace(/\./g, '');
+
+                check = check.split('\n');
+
+                check.forEach(function(element) {
+                    callback(element);
+                });
+
+                
+                
 
             });
+
         },
+
+        getEssos: function (callback) {
+
+            console.log("start getRegions");
+            //Setup the mediawiki bot
+
+            var params = {
+                action: "parse",
+                page: "Essos",
+                format: "json",
+                redirects: ""
+            };
+
+            var regions = [];
+
+            //Iterate through all Regions    toctitle
+
+            //console.log("Loading all regions from the wiki. This might take a while");
+            client.api.call(params, function (err, info, next, data) {
+
+                var $ = HtmlParser.load(data.parse.text["*"]);
+                
+                var contents = $('ul ul');
+
+                var check = contents.html();
+
+                
+                check = check.replace(/\*?<(?:.|\n)*?>/gm, '').trim();
+
+                check = check.replace(/\d+/g, '');
+                check = check.replace(/\./g, '');
+
+                check = check.split('\n');
+
+
+                check.forEach(function(element) {
+                    callback(element);
+                });
+
+            });
+
+        },
+
+        getSothoryos: function (callback) {
+
+            console.log("start getRegions");
+            //Setup the mediawiki bot
+
+            var check = ['Naath','Isle of Tears','Basilisk Point'];
+
+            check.forEach(function(element) {
+                    callback(element);
+                });
+
+        },
+
 		
-		getAll: function (callback) {
+		getAll: async function (callback) {
             var scraper = require("./regions");
             scraper.getAllNames(function (regions) {
 
