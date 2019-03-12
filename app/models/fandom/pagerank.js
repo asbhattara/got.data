@@ -6,4 +6,4 @@ const PageRankSchema = new Schema({
     ranks       : Number
 });
 
-module.exports = mongoose.model('PageRank', PageRankSchema);
+module.exports = mongoose.model('PageRanks', PageRankSchema);

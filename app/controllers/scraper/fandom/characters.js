@@ -1,6 +1,6 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Character = require('../../../models/fandom/characters');
+
 
 class CharacterScraper {
     constructor() {
@@ -65,7 +65,6 @@ class CharacterScraper {
 
             data.push(await this.scrape(character["name"], character["slug"]));
         }
-        console.log(data);
         return data;
     }
 
@@ -78,11 +77,7 @@ class CharacterScraper {
 
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
-        // character object
-        // let result = new Character({
-        //     name: name,
-        //     slug: page
-        // });
+
         let result = {
             "name": name,
             "slug": page,

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var CharacterSchema = new Schema({
+const CharacterSchema = new Schema({
     name            : {type: String, required: true, unique: true},
     slug            : {type: String, required: true},
     nicknames       : [String],                               
@@ -30,5 +30,6 @@ var CharacterSchema = new Schema({
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now},
 });
+
 
 module.exports = mongoose.model('Character', CharacterSchema);
