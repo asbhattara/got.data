@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'),
-      Characters = require('../../../models/fandom/characters'),
-      CharacterScraper = require('../../../controllers/scraper/fandom/characters');
+      Characters = require('../../models/fandom/characters'),
+      CharacterScraper = require('../scraper/fandom/characters');
 
 
-class CharacterFiller {
+class CharacterFandomFiller {
     constructor() {
         this.scraper = new CharacterScraper();
     }
@@ -64,4 +64,4 @@ class CharacterFiller {
         return;
     }
 }
-module.exports = CharacterFiller;
+module.exports = CharacterFandomFiller;

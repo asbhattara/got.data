@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Religions = require('../../../models/fandom/religions'),
-      ReligionScraper = require('../../../controllers/scraper/fandom/religions');
+      Episodes = require('../../models/fandom/episodes'),
+      EpisodeScraper = require('../scraper/fandom/episodes');
 
 
-class ReligionFiller {
+class EpisodeFandomFiller {
     constructor() {
-        this.scraper = new ReligionScraper();
+        this.scraper = new EpisodeScraper();
     }
 
     async fill() {
@@ -26,7 +26,7 @@ class ReligionFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Religions.deleteMany({}, (err, data) => {
+        Episodes.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -36,31 +36,32 @@ class ReligionFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(religions) {
+    async matchToModel(episodes) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        religions.map(religion => {
-            let newRel = new Religions();
-            for(let attr in religion) {
+        episodes.map(episode => {
+            let newEp = new Episodes();
+            for(let attr in episode) {
                 // numbers sometimes return NaN which throws error in DB
-                // if((attr == '') && isNaN(religion[attr])) {
-                //     delete religion[attr];
-                // } 
-                newRel[attr] = religion[attr];
+                if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
+                    delete episode[attr];
+                    continue;
+                } 
+                newEp[attr] = episode[attr];
             }
-            return newRel;
+            return newEp;
         });
-        return religions.filter(religion => religion['name']);
+        return episodes.filter(episode => episode['title']);
     }
 
     async insertToDb(data) {
-        Religions.insertMany(data, (err, docs) => {
+        Episodes.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' religions successfully saved to MongoDB!');
+            console.log(docs.length + ' episodes successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = ReligionFiller;
+module.exports = EpisodeFandomFiller;
