@@ -3,7 +3,7 @@ const Schema   = mongoose.Schema;
 
 const PageRankSchema = new Schema({
     title       : {type: String, required: true, unique: true},
-    ranks       : Number
+    rank        : Number
 });
 
-module.exports = mongoose.model('PageRanks', PageRankSchema);
+module.exports = mongoose.model('PageRank', PageRankSchema);

@@ -112,7 +112,7 @@ class PageRankScraper {
 
             self.pending.push(nextPage);
         });
-
+        // console.log('page: ' + page + ' rank: ' + this.ranks[page]);
         return true;
     }
 }

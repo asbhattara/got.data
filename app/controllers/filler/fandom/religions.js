@@ -12,8 +12,7 @@ class ReligionFiller {
         try {
             // start scraping
             let data = await this.scraper.scrapeAll();
-            // clear collection
-            await this.clearAll();
+
             // match scraped data to model
             data = await this.matchToModel(data);
             // add to DB
@@ -35,6 +34,8 @@ class ReligionFiller {
         });
         return;
     }
+
+    
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(religions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
@@ -52,15 +53,21 @@ class ReligionFiller {
         return religions.filter(religion => religion['name']);
     }
 
-    async insertToDb(data) {
-        Religions.insertMany(data, (err, docs) => {
-            if (err) {
-                console.warn('error in saving to db: ' + err);
-                return;
-            } 
-            console.log(docs.length + ' religions successfully saved to MongoDB!');
-        });
-        return;
+    async insertAll(data) {
+        // clear collection
+        await this.clearAll();
+        try {
+            Religions.insertMany(data, (err, docs) => {
+                if (err) {
+                    console.warn('error in saving to db: ' + err);
+                    return;
+                } 
+                console.log(docs.length + ' religions successfully saved to MongoDB!');
+            });
+            return;
+        } catch(e) {
+            throw new Error(e);
+        }
     }
 }
 module.exports = ReligionFiller;

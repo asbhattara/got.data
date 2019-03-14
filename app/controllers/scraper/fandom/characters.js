@@ -58,7 +58,7 @@ class CharacterScraper {
         let data = [];
 
         for(let i = 0; i < names.length; i++)
-        // for(let i = 0; i < 2; i++)
+        // for(let i = 0; i < 4; i++)
         {
             let character = names[i]["character"];
 

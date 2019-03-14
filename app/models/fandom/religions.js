@@ -20,5 +20,5 @@ const ReligionSchema = new Schema({
     // highlights  : [String]										
 });
 
-module.exports = mongoose.model('Religions', ReligionSchema);
+module.exports = mongoose.model('Religion', ReligionSchema);
 

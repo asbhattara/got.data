@@ -44,7 +44,6 @@ class EpisodeFiller {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
                     delete episode[attr];
-                    continue;
                 } 
                 newEp[attr] = episode[attr];
             }

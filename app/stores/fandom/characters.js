@@ -6,9 +6,9 @@ class CharacterStore {
     constructor() {}
 
     async add(character) {
-        for (let attr in character) {
-            if (!Characters.schema.path.hasOwnProperty(attr)) {
-                return { message: 'Character attribute ' + attr + ' doesn\'t match MongoDB schema!' }
+        for (let key in character) {
+            if (!Characters.schema.path.hasOwnProperty(key)) {
+                return { message: 'Character attribute ' + key + ' doesn\'t match MongoDB schema!' }
             }
         }
         return await Characters.find({name: character.name}, (err, char) => {
@@ -31,7 +31,7 @@ class CharacterStore {
     async getAll() {
         return await Characters.find({}, (err, chars) => {
             if (err) return new Error(err);
-            if (!char) return { message: 'Character database empty. Scraping should be started...' };
+            if (!chars) return { message: 'Character database empty. Scraping should be started...' };
             return chars;
         })
     }

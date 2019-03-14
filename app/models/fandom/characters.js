@@ -26,9 +26,17 @@ const CharacterSchema = new Schema({
     first_seen      : {type: String, ref: 'Episode'},
     seasons         : [Number],
     appearances     : [{type: String, ref: 'Episode'}],
+
     actor           : String,
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now},
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
+
+CharacterSchema.virtual('pagerank', {
+    ref: 'PageRank',
+    localField: 'slug',
+    foreignField: 'title'
+    // justOne: true
 });
 
 
