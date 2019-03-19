@@ -31,6 +31,7 @@
     "mwbot": "1.0.10",
     "node-uuid": "latest",
     "nodemw": "0.8.1",
+    "request-promise": "^4.2.4",
     "swig": "^1.4.2",
     "twitter": "latest"
   },
