@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var CharacterSentimentSchema = new Schema({
+const CharacterSentimentSchema = new Schema({
     character: {type: String, ref: "Character"},
     date     : {type: Date, default: Date.now},		// Similar to a "created at" field
     posSum   : {type: Number},

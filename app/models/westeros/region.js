@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var RegionSchema = new Schema({
+const RegionSchema = new Schema({
     name      : {type: String, required: true, unique: true},
     continent : {type: Schema.Types.ObjectId, ref: "Continent"},
     neighbors : [{type: Schema.Types.ObjectId, ref: "Region"}],

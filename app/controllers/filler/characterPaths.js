@@ -1,26 +1,28 @@
-var CharacterPath = require(__appbase + 'models/characterPath');
-var Character = require(__appbase + 'models/character');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
 
-var file = __base + 'data/characterPaths.json';
+let CharacterPath = require(__appbase + 'models/characterPath');
+let Character = require(__appbase + 'models/character');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
+
+let file = __base + 'data/characterPaths.json';
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var pathsToCharacters = [];
+        let pathsToCharacters = [];
 
-        var addPathToDb = function(data, cback) {
+        let addPathToDb = function(data, cback) {
             pathsToCharacters.push(data.name);
             if(!data.hasOwnProperty('name')) {
                 cback(true);
                 return;
             }
 
-            var newPath = new CharacterPath();
+            let newPath = new CharacterPath();
             newPath.name = data.name;
 
             if(data.hasOwnProperty('path')) {
@@ -99,8 +101,8 @@ module.exports = {
                                 });
                             }
                             else if (module.exports.policy == 3 && oldPath !== null) {
-                                var isChange = false;
-                                for (var prop in path) {
+                                let isChange = false;
+                                for (let prop in path) {
                                     if (!oldPath.hasOwnProperty(prop) && oldPath[prop].length < 1) {
                                         oldPath[prop] = path[prop];
                                         isChange = true;
@@ -137,7 +139,7 @@ module.exports = {
             },
 
             function(charsHavePaths, cb) {
-                var notFoundChars = [];
+                let notFoundChars = [];
                 async.each(charsHavePaths,function(char, _callback) {
                     Character.findOne({'name':char}, function(err, oldChar) {
                         if(err || oldChar === null) {

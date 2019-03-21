@@ -52,4 +52,4 @@ class CultureScraper extends Scraper {
     }
 }
 
-module.exports = new CultureScraper();
+module.exports = CultureScraper;

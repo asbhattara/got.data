@@ -18,7 +18,7 @@ module.exports = {
      * @apiDescription Add new character PLOD values. Take a look at https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/characterPlod.js to understand how the JSON-body should look like.
      */
     add: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
         charactersPlodStore.add(req.body,function(success, message) {
             if(success == 1)
                 res.status(201).json({ message: 'Success', data: message });
@@ -47,7 +47,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/characterPlod.js" target="_blank">characterPlod model</a>.
      */
     get: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
         charactersPlodStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -73,7 +73,7 @@ module.exports = {
      * @apiDescription Get all character PLOD values.
      */
     getAll: function (req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getAll(function(success,characters) {
             if(success)
@@ -99,7 +99,7 @@ module.exports = {
      * @apiDescription Get character PLOD values, limited by :count parameter. PLOD values are sorted in descending order.
      */
     getByPLOD: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getByPLOD(req.params.count, function(success, message) {
             if(success)
@@ -122,7 +122,7 @@ module.exports = {
      * @apiDescription Get character PLOD values by the slug of the character like Jon_Snow.
      */
     getBySlug: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getBySlug(req.params.slug, function(success, message) {
             if(success)
@@ -145,7 +145,7 @@ module.exports = {
      * @apiDescription Get character PLOD values by the name of the character like Jon Snow.
      */
     getByName: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getByName(req.params.name, function(success, message) {
             if(success)
@@ -170,7 +170,7 @@ module.exports = {
      * @apiDescription Get character PLOD values by :id
      */
     getById: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getById(req.params.id, function(success, message) {
             if(success == 1)
@@ -197,7 +197,7 @@ module.exports = {
      * @apiDescription Get character PLOD values by :algorithm. Algorithm is of type String and serves as a distinction between Project B, Group 6, Group 7 etc. as well as other PLOD methods. As of April 4th, there is "gotplod" and "gotarffplod" in the DB.
      */
     getByAlgorithm: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.getByAlgorithm(req.params.algorithm, function(success, message) {
             if(success == 1)
@@ -228,7 +228,7 @@ module.exports = {
      * @apiDescription Edit character PLOD values by :id
      */
     edit: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.edit(req.params.id, function(success, message) {
             if(success == 1)
@@ -261,7 +261,7 @@ module.exports = {
      * @apiDescription Delete character PLOD values by :id
      */
     remove: function(req, res) {
-        var charactersPlodStore = require('../stores/charactersPlod');
+        var charactersPlodStore = require('../stores/westeros/charactersPlod');
 
         charactersPlodStore.remove(req.params.id, function(success, message) {
             if(success == 1)

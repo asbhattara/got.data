@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var CharacterSchema = new Schema({
+const CharacterSchema = new Schema({
     name       : {type: String, required: true, unique: true},                                // Rhaegar
     titles      : [String],                                                        // Prince of Dragonstone Ser
     male       : Boolean,                                                       // Male

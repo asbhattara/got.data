@@ -1,23 +1,25 @@
-var Scraper = require(__appbase + 'controllers/scraper/regions');
-var Region = require(__appbase + 'models/region');
-var Regions = require(__appbase + 'stores/regions');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/regions');
+let Region = require(__appbase + 'models/region');
+let Regions = require(__appbase + 'stores/regions');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var afterInsertion = function()
+        let afterInsertion = function()
         {
-            var endInsertion = function() {
+            let endInsertion = function() {
                 console.log('Filling done =).');
                 callback(false);
             };
 
-            var file = __base + 'data/regions.json';
+            let file = __base + 'data/regions.json';
             console.log('Add additional data from file '+ file);
             jsonfile.readFile(file, function(err, obj) {
                 if(!err && obj.length > 0) {
@@ -32,8 +34,8 @@ module.exports = {
             });
         };
 
-        var file = __tmpbase + 'regions.json';
-        var scrape = function(){
+        let file = __tmpbase + 'regions.json';
+        let scrape = function(){
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -45,7 +47,7 @@ module.exports = {
 
         jsonfile.readFile(file, function(err, obj) {
             if(obj !== undefined) {
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -66,7 +68,7 @@ module.exports = {
     },
     matchToModel: function(region) {
         // go through the properties of the house
-        for(var z in region) {
+        for(let z in region) {
             // ignore references for now, later gather the ids and edit the entries
             if (z == 'continent' || z == 'neighbours' || z == 'events' || z == 'cultures' || !Region.schema.paths.hasOwnProperty(z)) {
                 delete region[z];
@@ -83,7 +85,7 @@ module.exports = {
     insertToDb: function(regions, callback) {
         console.log('Inserting into db..');
 
-        var addRegion = function(region, callb) {
+        let addRegion = function(region, callb) {
             Regions.add(region, function (success, data) {
 
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
@@ -91,7 +93,7 @@ module.exports = {
             });
         };
 
-        var insert = function (regions) {
+        let insert = function (regions) {
             // iterate through regions
             async.each(regions, function (region, _callback) {
                     // name is required
@@ -109,9 +111,9 @@ module.exports = {
                         // see if there is such an entry already in the db
                         Regions.getByName(region.name,function(success,oldRegion){
                             if(success == 1) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in region) {
+                                for(let z in region) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldRegion[z] === undefined)) {
                                         if(oldRegion[z] === undefined) {
@@ -155,8 +157,8 @@ module.exports = {
     },
     addDataToDb: function(data,callback) {
 
-        var createNewRegion = function(data,callb) {
-            var newRegion = new Region();
+        let createNewRegion = function(data,callb) {
+            let newRegion = new Region();
             newRegion.name = data.name;
             if (data.hasOwnProperty('color')) {
                 newRegion.color = data.color;
@@ -175,7 +177,7 @@ module.exports = {
             });
         };
 
-        var notFoundRegions = [];
+        let notFoundRegions = [];
 
        async.each(data, function (region, _callb) {
             async.waterfall([

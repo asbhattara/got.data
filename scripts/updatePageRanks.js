@@ -1,7 +1,9 @@
+// TODO
+
 require(__dirname + '/../' + 'constants');
-var fs = require('fs');
-var jsonfile = require('jsonfile');
-var async = require('async');
+let fs = require('fs');
+let jsonfile = require('jsonfile');
+let async = require('async');
 
 global.__base = __dirname + '/../';
 global.__appbase = __dirname + '/../app/';
@@ -12,15 +14,15 @@ global.__appbase = __dirname + '/../app/';
 
 // npm run updatePageRanks --dir=tmp/pageRanks --to=data/pageRanks.json
 // npm run updatePageRanks --update=characters --file=data/pageRanks.json
-var dir = process.env.npm_config_dir || false;
-var to = process.env.npm_config_to || 'data/pageRanks.json';
-var charsToUpdate = process.env.npm_config_update === 'characters';
-var file = process.env.npm_config_file || 'data/pageRanks.json';
+let dir = process.env.npm_config_dir || false;
+let to = process.env.npm_config_to || 'data/pageRanks.json';
+let charsToUpdate = process.env.npm_config_update === 'characters';
+let file = process.env.npm_config_file || 'data/pageRanks.json';
 
-var transformDirToJson = function(dir,to,callback) {
+let transformDirToJson = function(dir,to,callback) {
     dir = __base + dir;
     to = __base + to;
-    var pageRanks = [];
+    let pageRanks = [];
 
     console.log('Direction ' + dir +' is to be transforemed to json file '+ to);
 
@@ -30,7 +32,7 @@ var transformDirToJson = function(dir,to,callback) {
             process.exit();
         }
 
-        var processFileData = function(data,cback) {
+        let processFileData = function(data,cback) {
             // syntax errors in these files =/
 
             // just handle the first element, which has the score
@@ -92,7 +94,7 @@ if(!dir && !charsToUpdate) {
     process.exit();
 }
 
-var updateCharacters = function(file,callback) {
+let updateCharacters = function(file,callback) {
     jsonfile.readFile(file,function(err,pageRanks){
         if(err)
         {
@@ -100,12 +102,12 @@ var updateCharacters = function(file,callback) {
             process.exit();
         }
 
-        var config = require('../cfg/config');
-        var mongoose = require('mongoose');
+        let config = require('../cfg/config');
+        let mongoose = require('mongoose');
 
         //Create the DB connection string
-        var databaseParams = config.database;
-        var dbConnection = "mongodb://";
+        let databaseParams = config.database;
+        let dbConnection = "mongodb://";
         if (databaseParams.username.length > 0 && databaseParams.password.length > 0) {
             dbConnection += databaseParams.username + ":" + databaseParams.password + "@";
         }
@@ -114,7 +116,7 @@ var updateCharacters = function(file,callback) {
 //Create the connection to mongodb
         console.log("Going to connect to " + dbConnection);
         mongoose.connect(dbConnection);
-        var db = mongoose.connection;
+        let db = mongoose.connection;
 
 // CONNECTION EVENTS: When successfully connected
         db.on('connected', function () {
@@ -133,7 +135,7 @@ var updateCharacters = function(file,callback) {
 
         db.on('open', function () {
 
-            var filler = require(__appbase + 'controllers/filler/characters');
+            let filler = require(__appbase + 'controllers/filler/characters');
             filler.updatePageRanks(pageRanks,function(){
                 callback(false);
             });

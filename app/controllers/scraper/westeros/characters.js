@@ -482,4 +482,4 @@ class CharacterScraper extends Scraper {
     }
 }
 
-module.exports = new CharacterScraper();
+module.exports = CharacterScraper;

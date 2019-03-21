@@ -2,8 +2,9 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 const Scraper = require("../scraper");
 
-const charactersScraper = require("./characters");
-const City = require( "../../../models/city");
+const CharactersScraper = require("./characters");
+const charactersScraper = new CharactersScraper();
+const City = require( "../../../models/westeros/city");
 
 class CharacterLocationScraper extends Scraper {
     constructor()
@@ -110,4 +111,4 @@ class CharacterLocationScraper extends Scraper {
     }
 }
 
-module.exports = new CharacterLocationScraper();
+module.exports = CharacterLocationScraper;

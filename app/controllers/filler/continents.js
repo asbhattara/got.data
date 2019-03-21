@@ -1,14 +1,16 @@
-var Continent = require(__appbase + 'models/continent');
-var Continents = require(__appbase + 'stores/continents');
-var jsonfile = require('jsonfile');
-var async = require('async');
+// TODO remove this file when not needed anymore
+
+let Continent = require(__appbase + 'models/continent');
+let Continents = require(__appbase + 'stores/continents');
+let jsonfile = require('jsonfile');
+let async = require('async');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var afterInsertion = function()
+        let afterInsertion = function()
         {
             console.log('Filling done =).');
             callback(false);
@@ -17,7 +19,7 @@ module.exports = {
         console.log('The continents are hardcoded. Not scrapped from wiki.');
         continents = require(__appbase + '../data/continents');
         
-        var filler = require(__appbase + 'controllers/filler/continents');
+        let filler = require(__appbase + 'controllers/filler/continents');
         filler.insertToDb(continents,afterInsertion);
 
     },
@@ -29,7 +31,7 @@ module.exports = {
     },
     matchToModel: function(continent) {
         // go through the properties of the continent
-        for(var z in continent) {
+        for(let z in continent) {
             // ignore references for now, later gather the ids and edit the entries
             if (!Continent.schema.paths.hasOwnProperty(z)) {
                 delete continent[z];
@@ -46,7 +48,7 @@ module.exports = {
     insertToDb: function(continents, callback) {
         console.log('Inserting into db..');
 
-        var addContinent = function(continent, callb) {
+        let addContinent = function(continent, callb) {
             Continents.add(continent, function (success, data) {
 
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
@@ -54,7 +56,7 @@ module.exports = {
             });
         };
 
-        var insert = function (continents) {
+        let insert = function (continents) {
             // iterate through continents
             async.forEach(continents, function (continent, _callback) {
                     // name is required
@@ -72,9 +74,9 @@ module.exports = {
                         // see if there is such an entry already in the db
                         Continents.getByName(continent.name,function(success,oldContinent){
                             if(success == 1) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in continent) {
+                                for(let z in continent) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldContinent[z] === undefined)) {
                                         if(oldContinent[z] === undefined) {

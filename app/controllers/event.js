@@ -15,7 +15,7 @@ module.exports = {
      * @apiDescription Get all the events currently stored.
      */
     getAll: function (req, res) {
-        var eventsStore = require('../stores/events');
+        var eventsStore = require('../stores/westeros/events');
 
         eventsStore.getAll(function(success,events) {
             if (success === true) {
@@ -57,7 +57,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/event.js" target="_blank">event model</a>.
      */
     get: function(req,res) {
-        var eventsStore = require('../stores/events');
+        var eventsStore = require('../stores/westeros/events');
         eventsStore.get(req.body, function(success, message) {
             if(success === 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -86,7 +86,7 @@ module.exports = {
      * @apiDescription Return the event named :name.
      */
     getByName: function(req, res) {
-        var eventsStore = require('../stores/events');
+        var eventsStore = require('../stores/westeros/events');
 
         eventsStore.getByName(req.params.name, function(success, message) {
             if(success === 1)
@@ -114,7 +114,7 @@ module.exports = {
      * @apiDescription Return the event with the specific :id.
      */
     getById: function(req, res) {
-        var eventsStore = require('../stores/events');
+        var eventsStore = require('../stores/westeros/events');
 
         eventsStore.getById(req.params.id, function(success, message) {
             if(success === 1)

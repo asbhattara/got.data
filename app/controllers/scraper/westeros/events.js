@@ -2,7 +2,8 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 const Scraper = require("../scraper");
 
-const agesScraper = require("./ages");
+const AgesScraper = require("./ages");
+const agesScraper = new AgesScraper();
 
 class EventScraper extends Scraper {
     constructor()
@@ -31,4 +32,4 @@ class EventScraper extends Scraper {
     }
 }
 
-module.exports = new EventScraper();
+module.exports = EventScraper;

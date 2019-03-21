@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var EventSchema = new Schema({
+const EventSchema = new Schema({
     name: {type: String}, // not required and unique since name is not always existing.
     date: Number,
     age : {type: String, ref: 'Age'},

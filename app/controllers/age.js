@@ -15,7 +15,7 @@ module.exports = {
      * @apiDescription Get all the ages currently stored.
      */
     getAll: function (req, res) {
-        var agesStore = require('../stores/ages');
+        var agesStore = require('../stores/westeros/ages');
 
         agesStore.getAll(function(success,ages) {
             if (success === true) {
@@ -58,7 +58,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/age.js" target="_blank">age model</a>.
      */
     get: function(req,res) {
-        var agesStore = require('../stores/ages');
+        var agesStore = require('../stores/westeros/ages');
         agesStore.get(req.body, function(success, message) {
             if(success === 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -87,7 +87,7 @@ module.exports = {
      * @apiDescription Return the age named :name.
      */
     getByName: function(req, res) {
-        var agesStore = require('../stores/ages');
+        var agesStore = require('../stores/westeros/ages');
 
         agesStore.getByName(req.params.name, function(success, message) {
             if(success === 1)
@@ -115,7 +115,7 @@ module.exports = {
      * @apiDescription Return the age with the specific :id.
      */
     getById: function(req, res) {
-        var agesStore = require('../stores/ages');
+        var agesStore = require('../stores/westeros/ages');
 
         agesStore.getById(req.params.id, function(success, message) {
             if(success === 1)

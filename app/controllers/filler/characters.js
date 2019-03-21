@@ -1,18 +1,20 @@
-var Scraper = require(__appbase + 'controllers/scraper/characters');
-var Character = require(__appbase + 'models/character');
-var CharacterPlod = require(__appbase + 'models/characterPlod');
-var Characters = require(__appbase + 'stores/characters');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__base + 'cfg/config.json');
-var pageRankFile = __base + 'data/pageRanks.json';
-var gotplod = require('gotplod');
-var gotarffplod = require('gotarffplod/npm');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/characters');
+let Character = require(__appbase + 'models/character');
+let CharacterPlod = require(__appbase + 'models/characterPlod');
+let Characters = require(__appbase + 'stores/characters');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__base + 'cfg/config.json');
+let pageRankFile = __base + 'data/pageRanks.json';
+let gotplod = require('gotplod');
+let gotarffplod = require('gotarffplod/npm');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
-        var cacheFile = __tmpbase + 'characters.json';
+        let cacheFile = __tmpbase + 'characters.json';
         console.log('Filling started.');
 
         async.waterfall([
@@ -26,7 +28,7 @@ module.exports = {
                     else {
 
                         // cache outdated?
-                        var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                        let cacheAge = ((new Date()) - new Date(obj.createdAt));
                         if(cacheAge > cfg.TTLWikiCache) {
                             cb(null,false); // scrap it!
                         }
@@ -102,7 +104,7 @@ module.exports = {
     },
     matchToModel: function(character) {
         // go through the properties of the character
-        for(var z in character) {
+        for(let z in character) {
             if (!Character.schema.paths.hasOwnProperty(z) || ((z == 'dateOfBirth' || z == 'dateOfDeath') && isNaN(character[z]))) {
                 delete character[z];
             }
@@ -131,8 +133,8 @@ module.exports = {
 
                             // empty db, so just create a new one
                             if (module.exports.policy == 1) {
-                                var characterToSafe = new Character();
-                                for (var prop in character) {
+                                let characterToSafe = new Character();
+                                for (let prop in character) {
                                     characterToSafe[prop] = character[prop];
                                 }
                                 cb(null, characterToSafe);
@@ -146,16 +148,16 @@ module.exports = {
                                         console.log(err);
                                         console.log(oldCharacter);
                                         console.log('---');
-                                        var characterToSafe = new Character();
-                                        for (var prop in character) {
+                                        let characterToSafe = new Character();
+                                        for (let prop in character) {
                                             characterToSafe[prop] = character[prop];
                                         }
                                         cb(null, characterToSafe);
                                     }
                                     // old entry is existing
                                     else {
-                                        var isChange = false;
-                                        for (var p in character) {
+                                        let isChange = false;
+                                        for (let p in character) {
                                             if (module.exports.policy == 2 && oldCharacter[p] != character[p] && p !== '_id') { // just overwrite old perties
                                                 oldCharacter[p] = character[p];
                                                 isChange = true;
@@ -238,10 +240,10 @@ module.exports = {
         });
     },
     updatePlods: function(policy,callback) {
-        var plods = gotplod.getAllCharPLOD();
+        let plods = gotplod.getAllCharPLOD();
 
-        var addNewPlod = function(char, plod, cb) {
-            var newCharPlod = new CharacterPlod();
+        let addNewPlod = function(char, plod, cb) {
+            let newCharPlod = new CharacterPlod();
             newCharPlod.character = char;
             newCharPlod.plod = plod;
             newCharPlod.algorithm = 'gotplod';
@@ -269,7 +271,7 @@ module.exports = {
             });
         }
         else {
-            var slug;
+            let slug;
             async.forEachOf(plods,function(plod, char, cb){
                 slug = char.replace(/'/g,'_').replace(/ /g,'_');
                 CharacterPlod.findOne({'characterSlug':slug,'algorithm':'gotplod'}, function (err, oldChar) {
@@ -310,12 +312,12 @@ module.exports = {
         gotarffplod.init();
         plods = gotarffplod.getAllCharPredictions();
 
-        var addNewPlod = function(char, plod, cb) {
+        let addNewPlod = function(char, plod, cb) {
             if(plod === undefined) {
                 cb(false);
             }
             else {
-                var newCharPlod = new CharacterPlod();
+                let newCharPlod = new CharacterPlod();
                 newCharPlod.character = char;
                 newCharPlod.plod = plod;
                 newCharPlod.algorithm = 'gotarffplod';
@@ -341,7 +343,7 @@ module.exports = {
             });
         }
         else {
-            var slug;
+            let slug;
             async.forEachOf(plods,function(plod, char, cb){
                 if(plod === undefined) {
                     cb();

@@ -162,4 +162,4 @@ class RegionScraper extends Scraper {
     }
 }
 
-module.exports = new RegionScraper();
+module.exports = RegionScraper;

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var EpisodeSchema = new Schema({
+const EpisodeSchema = new Schema({
     totalNr      : Number, // episode nr. overall
     nr           : Number, // episode nr in season
     season       : Number,

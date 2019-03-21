@@ -15,7 +15,7 @@ module.exports = {
      * @apiDescription Get all the characters currently stored.
      */
     getAll: function (req, res) {
-        var charactersStore = require('../stores/characters');
+        var charactersStore = require('../stores/westeros/characters');
 
         charactersStore.getAll(function(success,characters) {
             res.status(200).json(characters);
@@ -52,7 +52,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/character.js" target="_blank">character model</a>.
      */
     get: function(req,res) {
-        var charactersStore = require('../stores/characters');
+        var charactersStore = require('../stores/westeros/characters');
         charactersStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -84,7 +84,7 @@ module.exports = {
      * @apiDescription Return the character named :name.
      */
     getByName: function(req, res) {
-        var charactersStore = require('../stores/characters');
+        var charactersStore = require('../stores/westeros/characters');
         var strict = (req.query.strict === undefined) ? 'false' : req.query.strict;
         if(strict != 'false' && strict != 'true'){
             res.status(400).json({ message: 'Error: Strict option requires to be of type boolean.' });
@@ -119,7 +119,7 @@ module.exports = {
      * @apiDescription Return the character with slug:slug.
      */
     getBySlug: function(req, res) {
-        var charactersStore = require('../stores/characters');
+        var charactersStore = require('../stores/westeros/characters');
         var strict = (req.query.strict === undefined) ? 'false' : req.query.strict;
         if(strict != 'false' && strict != 'true'){
             res.status(400).json({ message: 'Error: Strict option requires to be of type boolean.' });
@@ -151,7 +151,7 @@ module.exports = {
      * @apiDescription Return the character with the specific :id.
      */
     getById: function(req, res) {
-        var charactersStore = require('../stores/characters');
+        var charactersStore = require('../stores/westeros/characters');
 
         charactersStore.getById(req.params.id, function(success, message) {
             if(success == 1)

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var CharacterPlodSchema = new Schema({
+const CharacterPlodSchema = new Schema({
     character: {type: String, ref: 'Character'},
     characterSlug: String,
     plod: {type: Number},           					//% likelihood of death

@@ -210,4 +210,4 @@ class AgesScraper extends Scraper {
     }
 }
 
-module.exports = new AgesScraper();
+module.exports = AgesScraper;

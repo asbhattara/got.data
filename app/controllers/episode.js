@@ -16,7 +16,7 @@ module.exports = {
      * @apiDescription Get all the episodes currently stored.
      */
     getAll: function (req, res) {
-        var episodesStore = require('../stores/episodes');
+        var episodesStore = require('../stores/westeros/episodes');
 
         episodesStore.getAll(function (success, episodes) {
             res.status(200).json(episodes);
@@ -54,7 +54,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/episode.js" target="_blank">episode model</a>.
      */
     get: function (req, res) {
-        var episodesStore = require('../stores/episodes');
+        var episodesStore = require('../stores/westeros/episodes');
         episodesStore.get(req.body, function (success, message) {
             if (success == 1) {
                 res.status(200).json({message: 'Success', data: message});
@@ -88,7 +88,7 @@ module.exports = {
      * @apiDescription Return all episodes named :name.
      */
     getByName: function (req, res) {
-        var episodesStore = require('../stores/episodes');
+        var episodesStore = require('../stores/westeros/episodes');
 
         episodesStore.getByName(req.params.name, function (success, message) {
             if (success == 1) {
@@ -119,7 +119,7 @@ module.exports = {
      * @apiDescription Return the episode with the specific :id.
      */
     getById: function (req, res) {
-        var episodesStore = require('../stores/episodes');
+        var episodesStore = require('../stores/westeros/episodes');
 
         episodesStore.getById(req.params.id, function (success, message) {
             if (success == 1) {
@@ -149,7 +149,7 @@ module.exports = {
      * @apiDescription Search episodes in which the character id appears.
      */
     getEpisodesByCharacter: function (req, res) {
-        var episodesStore = require('../stores/episodes');
+        var episodesStore = require('../stores/westeros/episodes');
         episodesStore.getEpisodesByCharacter(req.params.id, function (success, message) {
             if (success === 1) {
                 res.status(200).json({message: 'Success', data: obj});

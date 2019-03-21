@@ -225,4 +225,4 @@ class HouseScraper extends Scraper{
 
 // sample result: https://pastebin.com/YauBCHjN
 
-module.exports = new HouseScraper();
+module.exports = HouseScraper;

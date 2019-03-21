@@ -1,13 +1,15 @@
-var Scraper = require(__appbase + 'controllers/scraper/episodes');
-var Episode = require(__appbase + 'models/episode');
-var Episodes = require(__appbase + 'stores/episodes');
-var Character = require(__appbase + 'models/character');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/episodes');
+let Episode = require(__appbase + 'models/episode');
+let Episodes = require(__appbase + 'stores/episodes');
+let Character = require(__appbase + 'models/character');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 const FORCENEWCASTFILE = false; // only for testing purposes
-var castFile = __appbase + '../data/cast.json';
+let castFile = __appbase + '../data/cast.json';
 
 module.exports = {
     fill: function(policy,callback) {
@@ -15,7 +17,7 @@ module.exports = {
         console.log('Filling started.');
 
         //load extra episodes from backup file
-        var extraEpisodes = {};
+        let extraEpisodes = {};
         jsonfile.readFile(__appbase + 'data/episodesMissing.json', function(err, obj) {
             if(err) {
                 return;
@@ -23,8 +25,8 @@ module.exports = {
             extraEpisodes = obj.data;
         });
 
-        var afterInsertion = function() {
-            var filler = require(__appbase + 'controllers/filler/episodes');
+        let afterInsertion = function() {
+            let filler = require(__appbase + 'controllers/filler/episodes');
             filler.fillPreAndSuccessor(function(success) {
                 filler.fillCast(function(err) {
                     console.log('Filling done =).');
@@ -33,8 +35,8 @@ module.exports = {
             });
         };
 
-        var file = __tmpbase + 'episodes.json';
-        var scrape = function(){
+        let file = __tmpbase + 'episodes.json';
+        let scrape = function(){
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -44,13 +46,13 @@ module.exports = {
             });
         };
 
-        var afterCast = function() {
+        let afterCast = function() {
             jsonfile.readFile(file, function(err, obj) {
                 if(err) {
                     scrape();
                     return;
                 }
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -103,13 +105,13 @@ module.exports = {
     },
     matchToModel: function(episode) {
         // go through the properties of the house
-        for(var z in episode) {
+        for(let z in episode) {
             // ignore references for now, later gather the ids and edit the entries
             if ( z == 'episodes' || z == 'predecessor' || z == 'successor' || !Episode.schema.paths.hasOwnProperty(z)) {
                 delete episode[z];
             }
             if(z == 'airDate') {
-                var date = new Date(Date.parse(episode[z].replace('th','') + ' EDT'));
+                let date = new Date(Date.parse(episode[z].replace('th','') + ' EDT'));
                 if ( Object.prototype.toString.call(date) === "[object Date]" && isNaN( date.getTime() )) {
                     console.log('Could not translate date for airdate:' + episode[z] );
                     delete episode[z];
@@ -136,7 +138,7 @@ module.exports = {
     insertToDb: function(episodes, callback) {
         console.log('Inserting into db..');
 
-        var addEpisode = function(episode, callb) {
+        let addEpisode = function(episode, callb) {
             Episodes.add(episode, function (success, data) {
 
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
@@ -144,7 +146,7 @@ module.exports = {
             });
         };
 
-        var insert = function (episodes) {
+        let insert = function (episodes) {
             // iterate through episodes
             async.forEach(episodes, function (episode, _callback) {
                     // name is required
@@ -164,9 +166,9 @@ module.exports = {
 
                             // fill characters
                             if(success == 1) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in episode) {
+                                for(let z in episode) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldEpisode[z] === undefined)) {
                                         if(oldEpisode[z] === undefined) {
@@ -213,13 +215,13 @@ module.exports = {
         Episodes.getAll(function(success,episodes) {
             // foreach episode
             async.forEach(episodes, function (episode, _callback) {
-                var pre = episode.totalNr-1,
+                let pre = episode.totalNr-1,
                     next = episode.totalNr+1;
                 if(pre > 0) {
                     Episodes.get({'totalNr': pre},function(success,data) {
                        if(data.length>0)
                        {
-                           var preEpisode = data[0];
+                           let preEpisode = data[0];
                            if( preEpisode.name !== undefined) {
                                episode.predecessor = preEpisode.name;
                                episode.save(episode.id,function(err){});
@@ -231,7 +233,7 @@ module.exports = {
                     Episodes.get({'totalNr': next},function(success,data) {
                         if(data.length>0)
                         {
-                            var nextEpisode = data[0];
+                            let nextEpisode = data[0];
                             if( nextEpisode.name !== undefined) {
                                 episode.successor = nextEpisode.name;
                                 episode.save(episode.id,function(err){});
@@ -250,17 +252,17 @@ module.exports = {
         console.log('Start filling character appearances into db.');
 
         Episodes.getAll(function(success,episodes) {
-            var noMatchesTo = [];
+            let noMatchesTo = [];
             // get cast from file:
             jsonfile.readFile(castFile, function(err, oldCast) {
                 async.forEach(episodes, function (episode, _callback) {
-                    var characters = [];
+                    let characters = [];
                     if(err) {
                         console.log('Problem with filling cast. Error: ' + err);
                         _callback();
                     }
 
-                    var name, actor;
+                    let name, actor;
                     async.forEach(oldCast.data[episode.totalNr],function(entry,_callb){
                         name = entry.character;
                         actor = entry.actor;

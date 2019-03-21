@@ -1,14 +1,16 @@
-var City = require(__appbase + 'models/city');
-var Cities = require(__appbase + 'stores/cities');
-var jsonfile = require('jsonfile');
-var async = require('async');
+// TODO remove this file when not needed anymore
+
+let City = require(__appbase + 'models/city');
+let Cities = require(__appbase + 'stores/cities');
+let jsonfile = require('jsonfile');
+let async = require('async');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var file = __appbase + '../data/cities.json';
+        let file = __appbase + '../data/cities.json';
 
         jsonfile.readFile(file, function(err, obj) {
             if(err) {
@@ -31,7 +33,7 @@ module.exports = {
     },
     matchToModel: function(city) {
         // go through the properties of the city
-        for(var z in city) {
+        for(let z in city) {
             if (!City.schema.paths.hasOwnProperty(z) || z == '_id') {
                 delete city[z];
             }
@@ -47,14 +49,14 @@ module.exports = {
     insertToDb: function(cities, callback) {
         console.log('Inserting into db..');
 
-        var addCity = function(city, callb) {
+        let addCity = function(city, callb) {
             Cities.add(city, function (success, data) {
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
                 callb(true);
             });
         };
 
-        var insert = function (cities) {
+        let insert = function (cities) {
             // iterate through cities
             async.forEach(cities, function (city, _callback) {
                     // name is required
@@ -72,9 +74,9 @@ module.exports = {
                         // see if there is such an entry already in the db
                         Cities.getByName(city.name,function(success,oldCity){
                             if(success == 1) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in city) {
+                                for(let z in city) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldCity[z] === undefined)) {
                                         if(oldCity[z] === undefined) {

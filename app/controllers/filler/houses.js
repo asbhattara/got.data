@@ -1,22 +1,24 @@
-var Scraper = require(__appbase + 'controllers/scraper/houses');
-var House = require(__appbase + 'models/house');
-var Houses = require(__appbase + 'stores/houses');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/houses');
+let House = require(__appbase + 'models/house');
+let Houses = require(__appbase + 'stores/houses');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 module.exports = {
     fill: function(policy, callback) {
         console.log('Filling started.');
         module.exports.policy = policy;
         
-        var afterInsertion = function() {
+        let afterInsertion = function() {
             console.log('Filling done =).');
             callback(false);
         };
 
-        var file = __tmpbase + 'houses.json';
-        var scrape = function(){
+        let file = __tmpbase + 'houses.json';
+        let scrape = function(){
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -28,7 +30,7 @@ module.exports = {
 
         jsonfile.readFile(file, function(err, obj) {
             if(obj !== undefined) {
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -49,7 +51,7 @@ module.exports = {
     },
     matchToModel: function(house) {
         // go through the properties of the house
-        for(var z in house) {
+        for(let z in house) {
             if(z == 'died out') {
                 house.isExtinct = true;
             }
@@ -83,23 +85,23 @@ module.exports = {
     insertToDb: function(houses, callback) {
         console.log('Inserting into db..');
 
-        var addHouse = function(house, callb) {
+        let addHouse = function(house, callb) {
             Houses.add(house, function (success, data) {
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
                 callb(true);
             });
         };
         
-        var downloadImage = function(house, callb) {
-            var fs = require('fs'),
+        let downloadImage = function(house, callb) {
+            let fs = require('fs'),
                 request = require('request');
-            var uri = 'http://awoiaf.westeros.org/' + house.imageLink;
-            var filename = '/misc/images/houses/' + house.name.replace(new RegExp(" ", "g"),"_");
+            let uri = 'http://awoiaf.westeros.org/' + house.imageLink;
+            let filename = '/misc/images/houses/' + house.name.replace(new RegExp(" ", "g"),"_");
             console.log(uri);
             request.head(uri, function(err, res, body){
                 if(!err) {
-                    var type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
-                    var downloadTo = filename+'.'+type;
+                    let type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
+                    let downloadTo = filename+'.'+type;
                     downloadTo = downloadTo.replace(".image",'');
                     request(uri).pipe(fs.createWriteStream(__appbase + '..' + downloadTo)).on('close', function() {
                         callb(false,downloadTo);
@@ -111,7 +113,7 @@ module.exports = {
             });
         };
         
-        var insert = function (house,_callba) {
+        let insert = function (house,_callba) {
             house = module.exports.matchToModel(house);
 
             if(module.exports.policy == 1) { // empty db, so just add it
@@ -121,9 +123,9 @@ module.exports = {
                 // see if there is such an entry already in the db
                 Houses.getByName(house.name,function(success,oldHouse){
                     if(success == 1) { // old entry is existing
-                        var isChange = false;
+                        let isChange = false;
                         // iterate through properties
-                        for(var z in house) {
+                        for(let z in house) {
                             // only change if update policy or property is not yet stored
                             if(z != "_id" && (module.exports.policy == 2 || oldHouse[z] === undefined)) {
                                 if(oldHouse[z] === undefined) {
@@ -153,7 +155,7 @@ module.exports = {
             }
         };
         
-        var insertAll = function (houses, cback) {
+        let insertAll = function (houses, cback) {
             // iterate through houses
             async.forEach(houses, function (house, _callback) {
                 // name is required

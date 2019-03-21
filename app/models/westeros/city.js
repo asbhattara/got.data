@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var CitySchema = new Schema({
+const CitySchema = new Schema({
     name     : {type: String, required: true, unique: true},
     coordX   : String,												//Mongoose only supports Number (Integer)
     coordY   : String,												//For floats or doubles, it automatically converts it to String

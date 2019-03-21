@@ -27,7 +27,7 @@ module.exports = {
      * ]
      */
     getAll: function (req, res) {
-        var housesStore = require('../stores/houses');
+        var housesStore = require('../stores/westeros/houses');
 
         housesStore.getAll(function(success,houses) {
             res.status(200).json(houses);
@@ -81,7 +81,7 @@ module.exports = {
      *     }
      */
     get: function(req,res) {
-        var housesStore = require('../stores/houses');
+        var housesStore = require('../stores/westeros/houses');
         housesStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -125,7 +125,7 @@ module.exports = {
      *     }
      */
     getByName: function(req, res) {
-        var housesStore = require('../stores/houses');
+        var housesStore = require('../stores/westeros/houses');
 
         housesStore.getByName(req.params.houseName, function(success, message) {
             if(success == 1)
@@ -169,7 +169,7 @@ module.exports = {
      *     }
      */
     getById: function(req, res) {
-        var housesStore = require('../stores/houses');
+        var housesStore = require('../stores/westeros/houses');
 
         housesStore.getById(req.params.houseId, function(success, message) {
             if(success == 1)

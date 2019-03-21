@@ -1,13 +1,14 @@
 (function () {
     // compatibility file
     const scraper = require("./westeros/houses");
+    const scraperinstance = new scraper();
 
     module.exports = {
         /*
          * Returns a list of house names
          */
         getAllNames: function (callback) {
-            scraper.getAllNames().then(callback, function () {
+            scraperinstance.getAllNames().then(callback, function () {
                 callback([])
             });
         },
@@ -15,7 +16,7 @@
          * Call when you want to fetch all house information
          */
         getAll: function (callback) {
-            scraper.getAll().then(callback, function () {
+            scraperinstance.getAll().then(callback, function () {
                 callback([])
             });
         },
@@ -24,13 +25,13 @@
          * Fetches details for one house
          */
         get: function (houseName, callback) {
-            scraper.get(houseName, houseName).then(callback, function () {
+            scraperinstance.get(houseName, houseName).then(callback, function () {
                 callback([])
             });
         },
 
         scrapToFile: function (cacheFile, scraperFunction, callback) {
-            scraper.scrapToFile(cacheFile, scraperFunction, callback);
+            scraperinstance.scrapToFile(cacheFile, scraperFunction, callback);
         }
     };
 }());

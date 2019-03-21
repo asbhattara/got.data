@@ -1,23 +1,25 @@
-var Scraper = require(__appbase + 'controllers/scraper/cultures');
-var Culture = require(__appbase + 'models/culture');
-var Cultures = require(__appbase + 'stores/cultures');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/cultures');
+let Culture = require(__appbase + 'models/culture');
+let Cultures = require(__appbase + 'stores/cultures');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var afterInsertion = function()
+        let afterInsertion = function()
         {
             console.log('Filling done =).');
             callback(false);
         };
 
-        var file = __tmpbase + 'cultures.json';
-        var scrape = function(){
+        let file = __tmpbase + 'cultures.json';
+        let scrape = function(){
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -29,7 +31,7 @@ module.exports = {
 
         jsonfile.readFile(file, function(err, obj) {
             if(obj !== undefined) {
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -50,7 +52,7 @@ module.exports = {
     },
     matchToModel: function(culture) {
         // go through the properties of the house
-        for(var z in culture) {
+        for(let z in culture) {
             // ignore references for now, later gather the ids and edit the entries
             if (!Culture.schema.paths.hasOwnProperty(z)) {
                 delete culture[z];
@@ -67,7 +69,7 @@ module.exports = {
     insertToDb: function(cultures, callback) {
         console.log('Inserting into db..');
 
-        var addCulture = function(culture, callb) {
+        let addCulture = function(culture, callb) {
             Cultures.add(culture, function (success, data) {
 
                 console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
@@ -75,7 +77,7 @@ module.exports = {
             });
         };
 
-        var insert = function (cultures) {
+        let insert = function (cultures) {
             // iterate through cultures
             async.forEach(cultures, function (culture, _callback) {
                     // name is required
@@ -93,9 +95,9 @@ module.exports = {
                         // see if there is such an entry already in the db
                         Cultures.getByName(culture.name,function(success,oldCulture){
                             if(success == 1) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in culture) {
+                                for(let z in culture) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldCulture[z] === undefined)) {
                                         if(oldCulture[z] === undefined) {

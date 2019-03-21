@@ -1,22 +1,24 @@
-var Scraper = require(__appbase + 'controllers/scraper/ages');
-var Age = require(__appbase + 'models/age');
-var Ages = require(__appbase + 'stores/ages');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/westeros/ages');
+let Age = require(__appbase + 'models/age');
+let Ages = require(__appbase + 'stores/ages');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 module.exports = {
-    fill: function(policy, callback) {
+    fill: async function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var afterInsertion = function() {
+        let afterInsertion = function() {
             console.log('Filling done =).');
             callback(false);
         };
 
-        var file = __tmpbase + 'ages.json';
-        var scrape = function() {
+        let file = __tmpbase + 'ages.json';
+        let scrape = function() {
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -28,7 +30,7 @@ module.exports = {
 
         jsonfile.readFile(file, function(err, obj) {
             if(obj !== undefined) {
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -41,22 +43,31 @@ module.exports = {
             }
         });
     },
-    clearAll: function(callback) {
-        Age.remove({}, function(err) {
-            console.log('Ages collection removed');
-            callback();
+
+    clearAll: async function() {
+        return new Promise(function(resolve) {
+            Age.remove({}, function(err) {
+                if(err)
+                {
+                    throw err;
+                }
+
+                console.log('Ages collection removed');
+                resolve(true);
+            })
         });
     },
+
     matchToModel: function(age) {
         // go through the properties of the age
-        for(var z in age) {
+        for(let z in age) {
             // ignore references for now, later gather the ids and edit the entries
             if (!Age.schema.paths.hasOwnProperty(z)) {
                 delete age[z];
             }
 
             // translate startDate to (negative) number
-            if( z == 'startDate') {
+            if(z === 'startDate') {
                 if(age[z].indexOf('BC')>-1) {
                     age[z] = 0 - age[z].replace(/[^0-9\.]/g, '');
                 }
@@ -72,7 +83,7 @@ module.exports = {
             }
 
             // translate startDate to (negative) number
-            if( z == 'endDate') {
+            if(z === 'endDate') {
                 if(age[z].indexOf('BC')>-1) {
                     age[z] = 0 - age[z].replace(/[^0-9\.]/g, '');
                 }
@@ -101,76 +112,94 @@ module.exports = {
 
         return age;
     },
-    insertToDb: function(ages, callback) {
+    insertToDb: async function(ages) {
         console.log('Inserting into db..');
 
-        var addAge = function(age, callb) {
-            Ages.add(age, function (success, data) {
-                console.log((success != 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
-                callb(true);
+        async function addAge(age) {
+            return new Promise(function (resolve) {
+                Ages.add(age, function (success, data) {
+                    console.log((success !== 1) ? 'Problem:' + data : 'SUCCESS: ' + data.name);
+
+                    resolve(true);
+                });
             });
-        };
+        }
 
-        var insert = function (ages) {
-            // iterate through ages
-            async.forEach(ages, function (age, _callback) {
-                    // name is required
-                    if (!age.hasOwnProperty('name')) {
-                        _callback();
-                        return;
+        async function getAgeByName(agename) {
+            return new Promise(function (resolve, reject) {
+                Ages.getByName(agename, function(success, oldAge){
+                    if(success !== 1)
+                    {
+                        resolve(null);
                     }
-
-                    age = module.exports.matchToModel(age);
-
-                    if(module.exports.policy == 1) { // empty db, so just add it
-                        addAge(age, function(suc){ _callback(); });
+                    else
+                    {
+                        resolve(oldAge);
                     }
-                    else {
-                        // see if there is such an entry already in the db
-                        Ages.getByName(age.name,function(success,oldAge){
-                            if(success == 1) { // old entry is existing
-                                var isChange = false;
-                                // iterate through properties
-                                for(var z in age) {
-                                    // only change if update policy or property is not yet stored
-                                    if(z != "_id" && (module.exports.policy == 2 || oldAge[z] === undefined)) {
-                                        if(oldAge[z] === undefined) {
-                                            console.log("To old entry the new property "+z+" is added.");
-                                        }
-                                        oldAge[z] = age[z];
-                                        isChange = true;
-                                    }
-                                }
-                                if(isChange) {
-                                    console.log(age.name + " is updated.");
-                                    oldAge.updatedAt = new Date();
-                                    oldAge.save(function(err){
-                                        _callback();
-                                    });
-                                }
-                                else {
-                                    console.log(age.name + " is untouched.");
-                                    _callback();
-                                }
-                            }
-                            else { // not existing, so it is added in every policy
-                                addAge(age, function(suc){_callback();});
-                            }
-                        });
+                });
+            });
+        }
 
-                    }
-                },
-                function (err) { callback(true); }
-            );
-        };
+        async function saveAge(obj) {
+            return new Promise(function (resolve) {
+                obj.save(function () {
+                    resolve();
+                })
+            })
+        }
 
         // delete the collection before the insertion?
-        if(module.exports.policy == 1) {
+        if(module.exports.policy === 1) {
             console.log("Delete and refill policy. Deleting collection..");
-            module.exports.clearAll(function() {insert(ages);});
+
+            await module.exports.clearAll();
         }
-        else {
-            insert(ages);
+
+        for(let i = 0; i < ages.length; i++)
+        {
+            let age = ages[i];
+
+            // name is required
+            if (!age.hasOwnProperty('name')) {
+                return;
+            }
+
+            age = module.exports.matchToModel(age);
+
+            if(module.exports.policy === 1) { // empty db, so just add it
+                await addAge(age);
+            }
+            else {
+                // see if there is such an entry already in the db
+                let oldAge = await getAgeByName(age.name);
+
+                if(oldAge !== null) { // old entry is existing
+                    let isChange = false;
+                    // iterate through properties
+                    for(let z in age) {
+                        // only change if update policy or property is not yet stored
+                        if(z !== "_id" && (module.exports.policy === 2 || oldAge[z] === undefined)) {
+                            if(oldAge[z] === undefined) {
+                                console.log("To old entry the new property "+z+" is added.");
+                            }
+                            oldAge[z] = age[z];
+                            isChange = true;
+                        }
+                    }
+                    if(isChange) {
+                        console.log(age.name + " is updated.");
+                        oldAge.updatedAt = new Date();
+
+                        await saveAge(oldAge);
+                    }
+                    else {
+                        console.log(age.name + " is untouched.");
+                    }
+                }
+                else { // not existing, so it is added in every policy
+                    await addAge(age);
+                }
+            }
         }
     }
 };

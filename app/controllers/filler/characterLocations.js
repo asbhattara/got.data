@@ -1,22 +1,24 @@
-var Scraper = require(__appbase + 'controllers/scraper/characterLocations');
-var CharacterLocations = require(__appbase + 'models/characterLocations');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__appbase + '../cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/characterLocations');
+let CharacterLocations = require(__appbase + 'models/characterLocations');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__appbase + '../cfg/config.json');
 
 module.exports = {
     fill: function(policy, callback) {
         module.exports.policy = policy;
         console.log('Filling started.');
 
-        var afterInsertion = function()
+        let afterInsertion = function()
         {
             console.log('Filling done =).');
             callback(false);
         };
 
-        var file = __tmpbase + 'characterLocations.json';
-        var scrape = function(){
+        let file = __tmpbase + 'characterLocations.json';
+        let scrape = function(){
             Scraper.scrapToFile(file, Scraper.getAll, function (err, obj) {
                 if (err !== null) {
                     console.log(err);
@@ -28,7 +30,7 @@ module.exports = {
 
         jsonfile.readFile(file, function(err, obj) {
             if(obj !== undefined) {
-                var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                let cacheAge = ((new Date()) - new Date(obj.createdAt));
                 if(cacheAge > cfg.TTLWikiCache) {
                     console.log('Cache file outdated.');
                     scrape();
@@ -49,7 +51,7 @@ module.exports = {
     },
     matchToModel: function(characterLocation) {
         // go through the properties of the house
-        for(var z in characterLocation) {
+        for(let z in characterLocation) {
             // ignore references for now, later gather the ids and edit the entries
             if (!CharacterLocations.schema.paths.hasOwnProperty(z)) {
                 delete characterLocation[z];
@@ -66,12 +68,12 @@ module.exports = {
     insertToDb: function(characterLocations, callback) {
         console.log('Inserting into db..');
 
-        var addCharacterLocations = function(characterLocation, callb) {
+        let addCharacterLocations = function(characterLocation, callb) {
             if(characterLocation.locations.length < 1) {
                 callb(true);
                 return;
             }
-            var entry = new CharacterLocations();
+            let entry = new CharacterLocations();
             entry.name = characterLocation.name;
             entry.slug = characterLocation.slug;
             entry.locations = characterLocation.locations;
@@ -82,7 +84,7 @@ module.exports = {
             });
         };
 
-        var insert = function (characterLocations) {
+        let insert = function (characterLocations) {
             // iterate through regions
             async.forEach(characterLocations, function (characterLocation, _callback) {
                     // name is required
@@ -100,9 +102,9 @@ module.exports = {
                         // see if there is such an entry already in the db
                         CharacterLocations.findOne({'slug':characterLocation.slug},function(err,oldCharacterLocation){
                             if(!err && oldCharacterLocation !== null) { // old entry is existing
-                                var isChange = false;
+                                let isChange = false;
                                 // iterate through properties
-                                for(var z in characterLocation) {
+                                for(let z in characterLocation) {
                                     // only change if update policy or property is not yet stored
                                     if(z != "_id" && (module.exports.policy == 2 || oldCharacterLocation[z] === undefined)) {
                                         if(oldCharacterLocation[z] === undefined) {
