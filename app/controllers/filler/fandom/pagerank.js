@@ -8,6 +8,8 @@ class PageRankFiller {
 
     async fill() {
         // scrape page ranks
+        // ! roughly 5000 entries, so this will take a while!
+        // ? Should this be started in the filler or should we pass it to this function ? 
         let data = await this.scraper.scrapePageRanks();
 
         // match to db schema

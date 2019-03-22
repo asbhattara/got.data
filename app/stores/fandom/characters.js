@@ -18,7 +18,7 @@ class CharacterStore {
     }
 
     // get list of characters, input: ['name1', 'name2']
-    async get(data) {
+    async getMultiple(data) {
         return await Characters.find({
             name: {$in: data}
         }, (err, chars) => {
@@ -33,7 +33,7 @@ class CharacterStore {
             if (err) return new Error(err);
             if (!chars) return { message: 'Character database empty. Scraping should be started...' };
             return chars;
-        })
+        });
     }
 
     async getByName(name) {

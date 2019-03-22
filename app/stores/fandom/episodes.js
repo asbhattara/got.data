@@ -5,9 +5,9 @@ class EpisodeStore {
 
 
     // get list of episodes, input: ['name1', 'name2']
-    async get(data) {
+    async getMultiple(data) {
         return await Episodes.find({
-            name: {$in: data}
+            title: {$in: data}
         }, (err, eps) => {
             if (err) return new Error(err);
             if (!eps) return { message: 'no episode matched your criteria' };
@@ -23,8 +23,8 @@ class EpisodeStore {
         })
     }
 
-    async getByName(name) {
-        return await Episodes.findOne({name: name}, (err, ep) => {
+    async getByTitle(title) {
+        return await Episodes.findOne({title: title}, (err, ep) => {
             if (err) return new Error(err);
             if (!ep) return { message: 'no episodes matched your criteria' };
             return ep;

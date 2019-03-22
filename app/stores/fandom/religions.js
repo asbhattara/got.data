@@ -1,6 +1,6 @@
 const Religions = require('../../models/fandom/religions')
 
-class PageRankStore {
+class ReligionStore {
     constructor() {}
 
 
@@ -23,7 +23,7 @@ class PageRankStore {
         })
     }
 
-    async getByTitle(name) {
+    async getByName(name) {
         return await Religions.findOne({name: name}, (err, rel) => {
             if (err) return new Error(err);
             if (!rel) return { message: 'No religion matched your criteria' };
