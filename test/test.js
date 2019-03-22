@@ -48,7 +48,7 @@ mongoose.connection.on('connected', () => {
             try {
                 switch (collection.name) {
                     case 'characters':
-                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
+                        await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await charFiller.fill();
@@ -56,7 +56,7 @@ mongoose.connection.on('connected', () => {
                         });
                         break;
                     case 'religions':
-                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
+                        await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await relFiller.fill();
@@ -64,7 +64,7 @@ mongoose.connection.on('connected', () => {
                         });
                         break;
                     case 'pageranks':
-                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
+                        await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await rankFiller.fill();
@@ -72,7 +72,7 @@ mongoose.connection.on('connected', () => {
                         });
                         break;
                     case 'episodes':
-                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
+                        await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await epFiller.fill();
@@ -80,7 +80,7 @@ mongoose.connection.on('connected', () => {
                         });
                         break;
                     default:
-                        console.log('is this working?');
+                        console.log('No collections available - scraping everything...');
                         let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
                         let promises = fillers.map(async (job) => await job);
                         await Promise.all(promises);
@@ -120,32 +120,3 @@ app.use(function(req, res) {
 app.listen(port);
 
 console.log('RESTful API server started on: ' + port);
-
-
-// rankFiller.fill();
-// charFiller.fill();
-// epFiller.fill();
-// relFiller.fill();
-
-// Characters.find({})
-// .populate({ path: 'pagerank', select: 'title rank'})
-// // .populate('ranking')
-// .exec(function(err, data) {
-//     if(err) {
-//         console.warn(err);
-//     } else {
-//         console.log(data);
-//         // data.forEach(element => {
-//         //     console.log(element['pagerank'])
-//         // })
-//     }
-// })
-
-
-// const charStore = new CharacterStore();
-// charStore.getByHouse('Starks').then(char => {
-//     console.log(char);
-// });
-// charStore.getAll().then(characters => {
-//     console.log(characters);
-// });

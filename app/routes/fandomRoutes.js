@@ -7,9 +7,10 @@ const   CharacterController = require('../controllers/fandomController/character
 module.exports = function(app, router) {
 
     const charController = new CharacterController();
-    router.get('/character', charController.getAll.bind(charController));
-    router.get('/character/:name', charController.getByName.bind(charController));
-    router.get('/character/:house', charController.getByHouse.bind(charController));
+    router.get('/characters', charController.getAll.bind(charController));
+    router.get('/characters/:name', charController.getByName.bind(charController));
+    router.get('/characters/bySlug/:slug', charController.getBySlug.bind(charController));
+    router.get('/characters/:house', charController.getByHouse.bind(charController));
 
     const epController = new EpisodeController();
     router.get('/episodes', epController.getAll.bind(epController));

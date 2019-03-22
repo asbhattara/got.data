@@ -28,6 +28,15 @@ class CharacterController {
         }
     }
 
+    async getBySlug(req, res) {
+        let chars = await this.charStore.getBySlug(req.params.slug);
+        if (chars.success === 1) {
+            res.status(200).send(chars.characters);
+        } else {
+            res.status(404).send(chars.message);
+        }
+    }
+
     async getByHouse(req, res) {
         let chars = await this.charStore.getByHouse(req.params.house);
         if (chars.success === 1) {
