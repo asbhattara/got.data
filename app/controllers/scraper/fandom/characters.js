@@ -289,13 +289,15 @@ class CharacterScraper {
 
                 console.log(episode);
 
+                
+
+
+                result["appearances"].push(episode);
+
                 if(episode == lastEp) {
                     sliceEp = true;
                     return false;
                 }
-
-
-                result["appearances"].push(episode);
             });
         });
 
