@@ -23,7 +23,7 @@ class EpisodeStore {
             if (err) return new Error(err);
         });
         if (!data) {
-            return { success: 0, message: 'Episode collection empty. Scraping should be started...' };
+            return { success: -1, message: 'Episode collection empty. Scraping should be started...' };
         } else {
             return { success: 1, episodes: data };
         }

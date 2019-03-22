@@ -48,7 +48,7 @@ class CharacterStore {
             // });
             // console.log(data);
             if (!data) {
-                return { success: 0, message: 'Character database empty. Scraping should be started...' };
+                return { success: -1, message: 'Character collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, characters: data };
             }

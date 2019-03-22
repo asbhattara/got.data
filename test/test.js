@@ -91,6 +91,7 @@ mongoose.connection.on('connected', () => {
             }
         });
         await Promise.all(filling);
+        console.log('Finished fetching data.')
     });
 });
 
@@ -112,6 +113,8 @@ require('../app/routes/fandomRoutes')(app, showRouter);
 app.use('/api/show', showRouter);
 // TODO fix old routes
 // app.use('/api/books', bookRouter);
+
+app.use('/api', express.static('api.html'));
 
 app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})

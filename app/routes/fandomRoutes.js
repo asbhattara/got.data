@@ -10,7 +10,7 @@ module.exports = function(app, router) {
     router.get('/characters', charController.getAll.bind(charController));
     router.get('/characters/:name', charController.getByName.bind(charController));
     router.get('/characters/bySlug/:slug', charController.getBySlug.bind(charController));
-    router.get('/characters/:house', charController.getByHouse.bind(charController));
+    router.get('/characters/byHouse/:house', charController.getByHouse.bind(charController));
 
     const epController = new EpisodeController();
     router.get('/episodes', epController.getAll.bind(epController));

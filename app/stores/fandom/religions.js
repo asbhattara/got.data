@@ -25,7 +25,7 @@ class ReligionStore {
             if (err) return new Error(err);
         });
         if (!data) {
-            return { success: 0, message: 'Religion collection empty. Has scraping been started yet?' };
+            return { success: -1, message: 'Religion collection empty. Has scraping been started yet?' };
         } else {
             return { success: 1, religions: data };
         }

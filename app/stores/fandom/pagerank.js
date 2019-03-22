@@ -23,7 +23,7 @@ class PageRankStore {
             if (err) return new Error(err);
         });
         if (!data) {
-            return { success: 0, message: 'PageRank collection empty. Scraping should be started...' };
+            return { success: -1, message: 'PageRank collection empty. Scraping should be started...' };
         } else {
             return { success: 1, ranks: data };
         }
