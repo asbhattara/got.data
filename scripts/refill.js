@@ -24,7 +24,7 @@ var possibleRefillings = [
     'characterPlods',
     'episodesFandom',
     'charactersFandom',
-    'religionsFandom,
+    'religionsFandom',
     'battleFandom'
 ]
 
