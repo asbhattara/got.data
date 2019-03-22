@@ -40,4 +40,4 @@ CharacterSchema.virtual('pagerank', {
 });
 
 
-module.exports = mongoose.model('Character', CharacterSchema, 'show');
+module.exports = mongoose.model('Character', CharacterSchema);

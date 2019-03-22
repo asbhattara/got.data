@@ -15,4 +15,4 @@ class PageRankController {
         res.status(200).send(ranks);
     }
 }
-exports.module = PageRankController;
+module.exports = PageRankController;

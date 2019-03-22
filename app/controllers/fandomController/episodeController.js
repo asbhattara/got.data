@@ -15,4 +15,4 @@ class EpisodeController {
         res.status(200).send(episodes);
     }
 }
-exports.module = EpisodeController;
+module.exports = EpisodeController;

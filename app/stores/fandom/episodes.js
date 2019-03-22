@@ -6,29 +6,38 @@ class EpisodeStore {
 
     // get list of episodes, input: ['name1', 'name2']
     async getMultiple(data) {
-        return await Episodes.find({
+        let data = await Episodes.find({
             title: {$in: data}
         }, (err, eps) => {
             if (err) return new Error(err);
-            if (!eps) return { message: 'no episode matched your criteria' };
-            return eps;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No episodes matched your criteria' };
+        } else {
+            return { success: 1, episodes: data };
+        }
     }
     
     async getAll() {
-        return await Episodes.find({}, (err, eps) => {
+        let data = await Episodes.find({}, (err, eps) => {
             if (err) return new Error(err);
-            if (!eps) return { message: 'Episode collection empty. Scraping should be started...' };
-            return eps;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'Episode collection empty. Scraping should be started...' };
+        } else {
+            return { success: 1, episodes: data };
+        }
     }
 
     async getByTitle(title) {
-        return await Episodes.findOne({title: title}, (err, ep) => {
+        let data = await Episodes.findOne({title: title}, (err, ep) => {
             if (err) return new Error(err);
-            if (!ep) return { message: 'no episodes matched your criteria' };
-            return ep;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No episodes matched your criteria' };
+        } else {
+            return { success: 1, episodes: data };
+        }
     }
 
 }

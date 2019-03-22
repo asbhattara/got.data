@@ -19,37 +19,72 @@ class CharacterStore {
 
     // get list of characters, input: ['name1', 'name2']
     async getMultiple(data) {
-        return await Characters.find({
-            name: {$in: data}
-        }, (err, chars) => {
-            if (err) return new Error(err);
-            if (!chars) return { message: 'no characters matched your criteria' };
-            return chars;
-        })
+        try {
+            let data = await Characters.find({
+                name: {$in: data}
+            }, (err, chars) => {
+                if (err) return new Error(err);
+            });
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                return { success: 1, characters: data };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+        
     }
     
     async getAll() {
-        return await Characters.find({}, (err, chars) => {
-            if (err) return new Error(err);
-            if (!chars) return { message: 'Character database empty. Scraping should be started...' };
-            return chars;
-        });
+        try {
+            let data = await Characters.find({}, (err, chars) => {
+                if (err) throw new Error(err);
+            })
+            .populate({ path: 'pagerank', select: 'title rank'})
+            .exec(function(err, data) {
+                if(err) throw new Error(err);
+            });
+            if (!data) {
+                return { success: 0, message: 'Character database empty. Scraping should be started...' };
+            } else {
+                return { success: 1, characters: data };
+            }
+            
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
     }
 
     async getByName(name) {
-        return await Characters.findOne({name: name}, (err, char) => {
-            if (err) return new Error(err);
-            if (!char) return { message: 'no characters matched your criteria' };
-            return char;
-        })
+        try {
+            let data = await Characters.findOne({name: name}, (err, char) => {
+                if (err) throw new Error(err);
+            });
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                return { success: 1, characters: data };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+        
     }
 
     async getByHouse(house) {
-        return await Characters.find({house: house}, (err, chars) => {
-            if (err) return new Error(err);
-            if (!chars) return { message: 'no characters matched your criteria' };
-            return chars;
-        });
+        try {
+            let data = await Characters.find({house: house}, (err, chars) => {
+                if (err) throw new Error(err);
+            });
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                return { success: 1, characters: data };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
     }
 
 }

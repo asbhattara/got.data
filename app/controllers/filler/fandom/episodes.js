@@ -17,7 +17,7 @@ class EpisodeFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
             // add to DB
-            await this.insertToDb(data);
+            await this.insertAll(data);
         } catch (error) {
             console.warn(error);
         }
@@ -52,7 +52,7 @@ class EpisodeFiller {
         return episodes.filter(episode => episode['title']);
     }
 
-    async insertToDb(data) {
+    async insertAll(data) {
         Episodes.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
@@ -64,3 +64,6 @@ class EpisodeFiller {
     }
 }
 module.exports = EpisodeFiller;
+
+
+

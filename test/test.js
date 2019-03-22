@@ -35,51 +35,59 @@ const rankFiller = new PageRankFiller();
 mongoose.connection.on('connected', () => {
     console.log('MongoDB default connection open to ' + dbUrl);
 
-    mongoose.connection.db.listCollections().toArray((err, names) => {
+    mongoose.connection.db.listCollections().toArray(async (err, names) => {
         if (err) throw new Error(err);
-        let filling = names.map(async collection => {
+        console.log('filling collections');
+        if (names.length === 0) {
+            let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
+            let promises = fillers.map(async (job) => await job());
+            return await Promise.all(promises);
+        }
+        let filling = names.map(async (collection) => {
+            console.log(collection.name);
             try {
                 switch (collection.name) {
-                    case 'Characters':
-                        mongoose.connection.db.collection(collection.name).count(function(err, count) {
+                    case 'characters':
+                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await charFiller.fill();
                             }
-                            break;
                         });
-                    case 'Religions':
-                        mongoose.connection.db.collection(collection.name).count(function(err, count) {
+                        break;
+                    case 'religions':
+                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await relFiller.fill();
                             }
-                            break;
                         });
-                    case 'PageRanks':
-                        mongoose.connection.db.collection(collection.name).count(function(err, count) {
+                        break;
+                    case 'pageranks':
+                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await rankFiller.fill();
                             }
-                            break;
                         });
-                    case 'Episodes':
-                        mongoose.connection.db.collection(collection.name).count(function(err, count) {
+                        break;
+                    case 'episodes':
+                        await mongoose.connection.db.collection(collection.name).count(async function(err, count) {
                             if (err) throw new Error(err);
                             if( count == 0 ) {
                                 await epFiller.fill();
                             }
-                            break;
                         });
                         break;
                     default:
-                        let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
-                        await Promise.all(fillers);
+                        console.log('is this working?');
+                        let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
+                        let promises = fillers.map(async (job) => await job);
+                        await Promise.all(promises);
                         break;
                 }
             } catch(e) {
-                console.log(e);
+                res.status(404).send({ message: 'error in fetching data ' + e })
             }
         });
         await Promise.all(filling);
@@ -94,13 +102,16 @@ const showRouter = express.Router();
 const bookRouter = express.Router();
 
 require('../app/routes/fandomRoutes')(app, showRouter);
-require('../app/routes/awoiafRoutes')(app, bookRouter);
+// ! old routes not working atm
+// require('../app/routes/awoiafRoutes')(app, bookRouter);
+
 // const fandomRoutes = require('../app/routes/fandomRoutes').default; //importing route
 // const awoiafRoutes = require('../app/routes/awoiafRoutes');
 // fandomRoutes(app); //register the route
 // awoiafRoutes(app);
 app.use('/api/show', showRouter);
-app.use('/api/books', bookRouter);
+// TODO fix old routes
+// app.use('/api/books', bookRouter);
 
 app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})

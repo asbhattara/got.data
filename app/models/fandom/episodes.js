@@ -26,4 +26,4 @@ const EpisodeSchema = new Schema({
     updatedAt: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('Episode', EpisodeSchema, 'show');
+module.exports = mongoose.model('Episode', EpisodeSchema);

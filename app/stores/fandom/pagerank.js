@@ -6,29 +6,38 @@ class PageRankStore {
 
     // get list of pages, input: ['title1', 'title2']
     async getMultiple(data) {
-        return await Episodes.find({
+        let data = await Episodes.find({
             title: {$in: data}
         }, (err, ranks) => {
             if (err) return new Error(err);
-            if (!ranks) return { message: 'no pages matched your criteria' };
-            return ranks;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No page matched your criteria' };
+        } else {
+            return { success: 1, ranks: data };
+        }
     }
     
     async getAll() {
-        return await PageRanks.find({}, (err, ranks) => {
+        let data = await PageRanks.find({}, (err, ranks) => {
             if (err) return new Error(err);
-            if (!ranks) return { message: 'PageRank collection empty. Scraping should be started...' };
-            return ranks;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'PageRank collection empty. Scraping should be started...' };
+        } else {
+            return { success: 1, ranks: data };
+        }
     }
 
     async getByTitle(title) {
-        return await PageRanks.findOne({title: title}, (err, rank) => {
+        let data = await PageRanks.findOne({title: title}, (err, rank) => {
             if (err) return new Error(err);
-            if (!rank) return { message: 'no page matched your criteria' };
-            return rank;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No page matched your criteria' };
+        } else {
+            return { success: 1, ranks: data };
+        }
     }
 
 }

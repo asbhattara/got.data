@@ -16,7 +16,7 @@ class ReligionFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
             // add to DB
-            await this.insertToDb(data);
+            await this.insertAll(data);
         } catch (error) {
             console.warn(error);
         }

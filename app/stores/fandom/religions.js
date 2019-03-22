@@ -6,29 +6,40 @@ class ReligionStore {
 
     // get list of pages, input: ['name1', 'name2']
     async getMultiple(data) {
-        return await Religions.find({
+        let data = await Religions.find({
             name: {$in: data}
         }, (err, rel) => {
             if (err) return new Error(err);
             if (!rel) return { message: 'No religions matched your criteria' };
             return rel;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No religion matched your criteria' };
+        } else {
+            return { success: 1, religions: data };
+        }
     }
     
     async getAll() {
-        return await Religions.find({}, (err, rels) => {
+        let data = await Religions.find({}, (err, rels) => {
             if (err) return new Error(err);
-            if (!rels) return { message: 'Religion collection empty. Has scraping been started yet?' };
-            return rels;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'Religion collection empty. Has scraping been started yet?' };
+        } else {
+            return { success: 1, religions: data };
+        }
     }
 
     async getByName(name) {
-        return await Religions.findOne({name: name}, (err, rel) => {
+        let data = await Religions.findOne({name: name}, (err, rel) => {
             if (err) return new Error(err);
-            if (!rel) return { message: 'No religion matched your criteria' };
-            return rel;
-        })
+        });
+        if (!data) {
+            return { success: 0, message: 'No religion matched your criteria' };
+        } else {
+            return { success: 1, religions: data };
+        }
     }
 
 }

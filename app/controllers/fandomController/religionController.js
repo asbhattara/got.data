@@ -15,4 +15,4 @@ class ReligionController {
         res.status(200).send(religions);
     }
 }
-exports.module = ReligionController;
+module.exports = ReligionController;
