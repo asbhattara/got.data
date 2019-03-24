@@ -3,15 +3,16 @@ var Schema   = mongoose.Schema;
 
 var RegionFandomSchema = new Schema({
     name      : {type: String, required: true, unique: true},
-    continent : {type: Schema.Types.ObjectId, ref: "Continent"},
+    location : {type: String, ref: "Continent"},
     geography: {type: String},
+    rulers: [{type: String, ref: "CharacterFandom"}],
     religion: [{type: String, ref: "ReligionsFandom"}],
     culture: [{type: String, ref: "Culture"}],
-    regionCapital: [{type: String}],
+    regionCapital: {type: String},
     cities: [{type: String}],
     towns: [{type: String}],
-    castles: [{type: String}],
-    founder: {type: String},
+    castles: [{type: String, ref: "CastleFandom"}],
+    founder: [{type: String, ref: "CharacterFandom"}],
     placesOfNote: [{type: String}]
     										//Used for highlighting regions with polygons
 });
