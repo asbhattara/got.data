@@ -48,7 +48,8 @@ class UpdateFandom {
                     self.episodeFiller.fill, 
                     self.religionFiller.fill,
                     self.regionFiller.fill,
-                    self.townFiller.fill
+                    self.townFiller.fill,
+                    self.rankFiller.fill
                 ];
                 let promises = fillers.map(async (job) => await job());
                 return await Promise.all(promises);
