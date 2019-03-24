@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      EpisodesFandom = require('../../../models/fandom/episodes'),
-      EpisodeScraper = require('../../../controllers/scraper/fandom/episodes');
+      Towns = require('../../../models/fandom/town'),
+      TownScraper = require('../../scraper/fandom/town');
 
 
-class EpisodeFiller {
+class TownFandomFiller {
     constructor() {
-        this.scraper = new EpisodeScraper();
+        this.scraper = new TownScraper();
     }
 
     async fill() {
@@ -16,8 +16,10 @@ class EpisodeFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
+
+            console.log(data.length);
             // add to DB
-            await this.insertAll(data);
+            await this.insertToDb(data);
         } catch (error) {
             console.warn(error);
         }
@@ -26,7 +28,7 @@ class EpisodeFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Episodes.deleteMany({}, (err, data) => {
+        Towns.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -36,34 +38,30 @@ class EpisodeFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(episodes) {
+    async matchToModel(towns) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        episodes.map(episode => {
-            let newEp = new EpisodesFandom();
-            for(let attr in episode) {
-                // numbers sometimes return NaN which throws error in DB
-                if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
-                    delete episode[attr];
-                } 
-                newEp[attr] = episode[attr];
+        towns.map(town => {
+            let newEp = new Towns();
+            for(let attr in town) {
+                
+                newEp[attr] = town[attr];
             }
             return newEp;
         });
-        return episodes.filter(episode => episode['title']);
+
+        
+        return towns.filter(town => town['name']);
     }
 
-    async insertAll(data) {
-        EpisodesFandom.insertMany(data, (err, docs) => {
+    async insertToDb(data) {
+        Towns.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' episodes successfully saved to MongoDB!');
+            console.log(docs.length + ' towns successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = EpisodeFiller;
-
-
-
+module.exports = TownFandomFiller;

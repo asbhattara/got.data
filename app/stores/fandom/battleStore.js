@@ -1,4 +1,4 @@
-const BattleFandom = require('../../models/fandom/battles')
+const BattleFandom = require('../../models/fandom/battle')
 
 class BattleStore {
     constructor() {}

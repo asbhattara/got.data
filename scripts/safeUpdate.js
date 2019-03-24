@@ -21,7 +21,18 @@ var possibleRefillings = [
     'characterLocations',
     'characterPaths',
     'characterImages',
-    'characterPlods'
+    'characterPlods',
+    'episodesFandom',
+    'charactersFandom',
+    'religionsFandom',
+    'battleFandom',
+    'bastardFandom',
+    'assassinFandom',
+    'castleFandom',
+    'regionFandom',
+    'animalFandom',
+    'townFandom',
+    'cityFandom'
 ]
 
 if(possibleRefillings.indexOf(requested) < 0) {
@@ -70,7 +81,16 @@ db.on('disconnected', function () {
 });
 
 db.on('open', function () {
-    if(requested != 'characterPlods') {
+
+    if(requested == 'episodesFandom' || requested == 'charactersFandom' || requested == 'religionsFandom' 
+        || requested == 'battleFandom' || requested == 'bastardFandom' || requested == 'assassinFandom' 
+        || requested == 'castleFandom' || requested == 'regionFandom' || requested == 'animalFandom'
+        || requested == 'townFandom' || requested == 'cityFandom') {
+	var scraper = require('../app/controllers/filler/' + requested)
+	var controller = new scraper();
+	controller.fill();
+    }
+    else if(requested != 'characterPlods') {
         var controller = require('../app/controllers/filler/' + requested);
         controller.fill(3,function() {process.exit();});
     }

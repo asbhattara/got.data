@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const EpisodeSchema = new Schema({
+const EpisodeFandomSchema = new Schema({
     title           : {type: String, required: true, unique: true},
     number          : Number,
     season          : Number,
@@ -19,11 +19,11 @@ const EpisodeSchema = new Schema({
     deaths          : [{type: String, ref: 'Character'}],
     places          : [{type: String, ref: 'City'}],
     
-    predecessor     : {type: String, ref: 'Episode'},
-    successor       : {type: String, ref: 'Episode'},
+    predecessor     : {type: String, ref: 'EpisodesFandom'},
+    successor       : {type: String, ref: 'EpisodesFandom'},
     
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('Episode', EpisodeSchema);
+module.exports = mongoose.model('EpisodeFandom', EpisodeFandomSchema);

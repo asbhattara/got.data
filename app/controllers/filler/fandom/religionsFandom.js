@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'),
-      ReligionsFandom = require('../../../models/fandom/religions'),
+      Religions = require('../../../models/fandom/religions'),
       ReligionScraper = require('../../../controllers/scraper/fandom/religions');
 
 
-class ReligionFiller {
+class ReligionFandomFiller {
     constructor() {
         this.scraper = new ReligionScraper();
     }
@@ -25,7 +25,7 @@ class ReligionFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        ReligionsFandom.deleteMany({}, (err, data) => {
+        Religions.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -40,7 +40,7 @@ class ReligionFiller {
     async matchToModel(religions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         religions.map(religion => {
-            let newRel = new ReligionsFandom();
+            let newRel = new Religions();
             for(let attr in religion) {
                 // numbers sometimes return NaN which throws error in DB
                 // if((attr == '') && isNaN(religion[attr])) {
@@ -57,7 +57,7 @@ class ReligionFiller {
         // clear collection
         await this.clearAll();
         try {
-            ReligionsFandom.insertMany(data, (err, docs) => {
+            Religions.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
@@ -70,4 +70,4 @@ class ReligionFiller {
         }
     }
 }
-module.exports = ReligionFiller;
+module.exports = ReligionFandomFiller;

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose'),
-      CharactersFandom = require('../../../models/fandom/characters'),
+      Characters = require('../../../models/fandom/characters'),
       CharacterScraper = require('../../../controllers/scraper/fandom/characters'),
       PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
 
 
-class CharacterFiller {
+class CharacterFandomFiller {
     constructor() {
         this.scraper = new CharacterScraper();
         // this.pageRankScraper = new PageRankScraper();
@@ -40,7 +40,7 @@ class CharacterFiller {
     async matchToModel(characters) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         characters.map(character => {
-            let newChar = new CharactersFandom();
+            let newChar = new Characters();
             for(let attr in character) {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'birth' || attr == 'death' || attr == 'seasons') && isNaN(character[attr])) {
@@ -57,7 +57,7 @@ class CharacterFiller {
         // clear collection
         await this.clearAll();
         try {
-            return CharactersFandom.insertMany(data, (err, docs) => {
+            return Characters.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
@@ -69,4 +69,4 @@ class CharacterFiller {
         }
     }
 }
-module.exports = CharacterFiller;
+module.exports = CharacterFandomFiller;

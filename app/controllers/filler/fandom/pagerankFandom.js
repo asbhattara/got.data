@@ -1,5 +1,5 @@
 const PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
-const PageRanksFandom = require('../../../models/fandom/pagerank');
+const PageRanks = require('../../../models/fandom/pagerank');
 
 class PageRankFiller {
     constructor() {
@@ -23,7 +23,7 @@ class PageRankFiller {
         console.log('matching data to DB model...');
         let ranks = [];
         Object.keys(data).map((key) => {
-            let newRank = new PageRanksFandom();
+            let newRank = new PageRanks();
             newRank['title'] = key;
             newRank['rank'] = data[key];
             ranks.push(newRank);
@@ -34,7 +34,7 @@ class PageRankFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        return PageRanksFandom.deleteMany({}, (err, data) => {
+        return PageRanks.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('Error in removing collection: ' + err);
             } else {
@@ -47,7 +47,7 @@ class PageRankFiller {
         await this.clearAll();
         console.log('writing to db...');
         try {
-            return PageRanksFandom.insertMany(data, (err, docs) => {
+            return PageRanks.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

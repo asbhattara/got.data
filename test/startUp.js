@@ -3,14 +3,15 @@ const Characters = require('../app/models/fandom/characters');
 const Religions = require('../app/models/fandom/religions');
 const Episodes = require('../app/models/fandom/episodes');
 const PageRanks = require('../app/models/fandom/pagerank');
-const CharacterFiller = require('../app/controllers/filler/fandom/characters');
-const EpisodeFiller = require('../app/controllers/filler/fandom/episodes');
-const ReligionFiller = require('../app/controllers/filler/fandom/religions');
-const PageRankFiller = require('../app/controllers/filler/fandom/pagerank');
+const CharacterFiller = require('../app/controllers/filler/fandom/charactersFandom');
+const EpisodeFiller = require('../app/controllers/filler/fandom/episodesFandom');
+const ReligionFiller = require('../app/controllers/filler/fandom/religionsFandom');
+const PageRankFiller = require('../app/controllers/filler/fandom/pagerankFandom');
 const UpdateFandom = require('../scripts/updateFandom');
 // const CharacterStore = require('../app/stores/fandom/characters');
 
 const dbUrl = 'mongodb://127.0.0.1/gotdata';
+// const dbUrl = 'mongodb://127.0.0.1/gottest';
 
 const express = require('express'),
     app = express(),
@@ -28,77 +29,19 @@ mongoose.connect(dbUrl, {useNewUrlParser: true}).then(
     console.log("Connection to database failed");
 });
 
-const charFiller = new CharacterFiller();
-const epFiller = new EpisodeFiller();
-const relFiller = new ReligionFiller();
-const rankFiller = new PageRankFiller();
+// const charFiller = new CharacterFiller();
+// const epFiller = new EpisodeFiller();
+// const relFiller = new ReligionFiller();
+// const rankFiller = new PageRankFiller();
 
 mongoose.connection.on('connected', async () => {
     try {
         console.log('MongoDB default connection open to ' + dbUrl);
         await new UpdateFandom(mongoose.connection.db).basicUpdate();
+        // await updateFandom.basicUpdate();
     } catch(e) {
         console.log(e);
     }
-    
-    // mongoose.connection.db.listCollections().toArray(async (err, names) => {
-    //     if (err) throw new Error(err);
-    //     console.log('filling collections');
-    //     if (names.length === 0) {
-    //         let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
-    //         let promises = fillers.map(async (job) => await job());
-    //         return await Promise.all(promises);
-    //     }
-    //     let filling = names.map(async (collection) => {
-    //         console.log(collection.name);
-    //         try {
-    //             switch (collection.name) {
-    //                 case 'characters':
-    //                     await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
-    //                         if (err) throw new Error(err);
-    //                         if( count == 0 ) {
-    //                             await charFiller.fill();
-    //                         }
-    //                     });
-    //                     break;
-    //                 case 'religions':
-    //                     await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
-    //                         if (err) throw new Error(err);
-    //                         if( count == 0 ) {
-    //                             await relFiller.fill();
-    //                         }
-    //                     });
-    //                     break;
-    //                 case 'pageranks':
-    //                     await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
-    //                         if (err) throw new Error(err);
-    //                         if( count == 0 ) {
-    //                             await rankFiller.fill();
-    //                         }
-    //                     });
-    //                     break;
-    //                 case 'episodes':
-    //                     await mongoose.connection.db.collection(collection.name).countDocuments(async function(err, count) {
-    //                         if (err) throw new Error(err);
-    //                         if( count == 0 ) {
-    //                             await epFiller.fill();
-    //                         }
-    //                     });
-    //                     break;
-    //                 default:
-    //                     console.log('No collections available - scraping everything...');
-    //                     let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
-    //                     let promises = fillers.map(async (job) => await job);
-    //                     await Promise.all(promises);
-    //                     break;
-    //             }
-    //         } catch(e) {
-    //             res.status(404).send({ message: 'error in fetching data ' + e })
-    //         }
-    //     });
-    //     await Promise.all(filling);
-    //     console.log('Finished fetching data.')
-    // });
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
