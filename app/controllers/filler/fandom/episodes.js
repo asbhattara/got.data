@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      Episodes = require('../../../models/fandom/episodes'),
+      EpisodesFandom = require('../../../models/fandom/episodes'),
       EpisodeScraper = require('../../../controllers/scraper/fandom/episodes');
 
 
@@ -39,7 +39,7 @@ class EpisodeFiller {
     async matchToModel(episodes) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         episodes.map(episode => {
-            let newEp = new Episodes();
+            let newEp = new EpisodesFandom();
             for(let attr in episode) {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
@@ -53,7 +53,7 @@ class EpisodeFiller {
     }
 
     async insertAll(data) {
-        Episodes.insertMany(data, (err, docs) => {
+        EpisodesFandom.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;

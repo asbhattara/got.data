@@ -1,5 +1,5 @@
 
-const EpisodeStore = require('../../stores/fandom/episodes');
+const EpisodeStore = require('../../stores/fandom/episodeStore');
 class EpisodeController {
     constructor() {
         this.epStore = new EpisodeStore();
@@ -7,12 +7,20 @@ class EpisodeController {
 
     async getAll(req, res) {
         let episodes = await this.epStore.getAll();
-        res.status(200).send(episodes)
+        if (episodes.success === 1) {
+            res.status(200).send(episodes.data);
+        } else {
+            res.status(404).send(episodes.message);
+        }
     }
     
     async getByTitle(req, res) {
         let episodes = await this.epStore.getByTitle(req.params.title);
-        res.status(200).send(episodes);
+        if (episodes.success === 1) {
+            res.status(200).send(episodes.data);
+        } else {
+            res.status(404).send(episodes.message);
+        }
     }
 }
 module.exports = EpisodeController;

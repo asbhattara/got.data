@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      Characters = require('../../../models/fandom/characters'),
+      CharactersFandom = require('../../../models/fandom/characters'),
       CharacterScraper = require('../../../controllers/scraper/fandom/characters'),
       PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
 
@@ -40,7 +40,7 @@ class CharacterFiller {
     async matchToModel(characters) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         characters.map(character => {
-            let newChar = new Characters();
+            let newChar = new CharactersFandom();
             for(let attr in character) {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'birth' || attr == 'death' || attr == 'seasons') && isNaN(character[attr])) {
@@ -57,7 +57,7 @@ class CharacterFiller {
         // clear collection
         await this.clearAll();
         try {
-            return Characters.insertMany(data, (err, docs) => {
+            return CharactersFandom.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
