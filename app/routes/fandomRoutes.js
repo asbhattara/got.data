@@ -46,9 +46,9 @@ module.exports = function(app, router) {
     router.get('/bastards/:name', bastardController.getByName.bind(bastardController));
     
     const battleController = new BattleController();
-    router.get('/bastards', battleController.getAll.bind(battleController));
-    router.get('/bastards/:name', battleController.getByName.bind(battleController));
-    router.get('/bastards/bySlug/:name', battleController.getBySlug.bind(battleController));
+    router.get('/battles', battleController.getAll.bind(battleController));
+    router.get('/battles/:name', battleController.getByName.bind(battleController));
+    router.get('/battles/bySlug/:name', battleController.getBySlug.bind(battleController));
 
     const castleController = new CastleController();
     router.get('/castles', castleController.getAll.bind(castleController));
