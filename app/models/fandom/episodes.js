@@ -17,7 +17,7 @@ const EpisodeFandomSchema = new Schema({
 
     characters      : [{type: String, ref: 'CharacterFandom'}],
     deaths          : [{type: String, ref: 'CharacterFandom'}],
-    places          : [{type: String, ref: 'City'}],
+    places          : [{type: String, ref: 'CityFandom'}],
     
     predecessor     : {type: String, ref: 'EpisodesFandom'},
     successor       : {type: String, ref: 'EpisodesFandom'},
