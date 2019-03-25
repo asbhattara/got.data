@@ -49,6 +49,8 @@ module.exports = function(app, router) {
     router.get('/battles', battleController.getAll.bind(battleController));
     router.get('/battles/:name', battleController.getByName.bind(battleController));
     router.get('/battles/bySlug/:name', battleController.getBySlug.bind(battleController));
+    router.get('/battles/byLocation/:location', battleController.getByLocation.bind(battleController));
+    router.get('/battles/byConflict/:conflict', battleController.getByConflict.bind(battleController));
 
     const castleController = new CastleController();
     router.get('/castles', castleController.getAll.bind(castleController));

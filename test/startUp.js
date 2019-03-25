@@ -63,7 +63,7 @@ app.use('/api/show', showRouter);
 // TODO fix old routes
 // app.use('/api/books', bookRouter);
 
-app.use('/api', express.static('api.html'));
+app.use('/api', express.static('apiref.html'));
 
 app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})

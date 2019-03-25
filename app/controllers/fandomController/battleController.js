@@ -31,5 +31,23 @@ class BattleController {
             res.status(404).send(battles.message);
         }
     }
+
+    async getByLocation(req, res) {
+        let battles = await this.battleStore.getByLocation(req.params.location);
+        if (battles.success === 1) {
+            res.status(200).send(battles.data);
+        } else {
+            res.status(404).send(battles.message);
+        }
+    }
+
+    async getByConflict(req, res) {
+        let battles = await this.battleStore.getByConflict(req.params.conflict);
+        if (battles.success === 1) {
+            res.status(200).send(battles.data);
+        } else {
+            res.status(404).send(battles.message);
+        }
+    }
 }
 module.exports = BattleController;

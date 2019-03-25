@@ -15,8 +15,8 @@ const EpisodeFandomSchema = new Schema({
     directed_by     : String,
     preview_text    : String,
 
-    characters      : [{type: String, ref: 'Character'}],
-    deaths          : [{type: String, ref: 'Character'}],
+    characters      : [{type: String, ref: 'CharacterFandom'}],
+    deaths          : [{type: String, ref: 'CharacterFandom'}],
     places          : [{type: String, ref: 'City'}],
     
     predecessor     : {type: String, ref: 'EpisodesFandom'},

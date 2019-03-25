@@ -7,7 +7,7 @@ class PageRankStore {
     // get list of pages, input: ['title1', 'title2']
     async getMultiple(data) {
         try {
-            let data = await Episodes.find({
+            let data = await PageRanksFandom.find({
                 title: {$in: data}
             }, (err, ranks) => {
                 if (err) throw new Error(err);
@@ -25,7 +25,7 @@ class PageRankStore {
     
     async getAll() {
         try {
-            let data = await PageRanks.find({}, (err, ranks) => {
+            let data = await PageRanksFandom.find({}, (err, ranks) => {
                 if (err) throw new Error(err);
             });
             if (!data) {
@@ -40,7 +40,7 @@ class PageRankStore {
 
     async getByTitle(title) {
         try {
-            let data = await PageRanks.findOne({title: title}, (err, rank) => {
+            let data = await PageRanksFandom.findOne({title: title}, (err, rank) => {
                 if (err) throw new Error(err);
             });
             if (!data) {

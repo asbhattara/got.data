@@ -68,7 +68,6 @@ class BattleStore {
         }
     }
 
-    // ! change property place to location in model
     async getByLocation(location) {
         try {
             let data = await BattleFandom.find({location: location}, (err, battles) => {

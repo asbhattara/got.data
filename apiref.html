@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api.html</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="got.data-api">GOT.DATA API</h1>
+<p>This document contains all current API routes to our GoT database. It consists of two different data sets:</p>
+<ul>
+<li>data scraped from the <a href="https://gameofthrones.fandom.com/wiki/Game_of_Thrones_Wiki">tv show wiki page</a></li>
+<li>data scraped from the <a href="https://awoiaf.westeros.org/index.php/Main_Page">books wiki page</a></li>
+</ul>
+<p>Please use the API routes as described below.</p>
+<hr>
+<h1 id="show-api-routes">Show API Routes</h1>
+<p>The following table shows all possible API routes. Please use</p>
+<h3 id="httpsgotdata.northeurope.cloudapp.azure.com"><a href="https://gotdata.northeurope.cloudapp.azure.com">https://gotdata.northeurope.cloudapp.azure.com</a></h3>
+<p>as base url followed by the paths described below.</p>
+
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Main Path</th>
+<th>API endpoint</th>
+<th>type*</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Animal</td>
+<td>/api/show/animals</td>
+<td></td>
+<td>GET</td>
+<td>returns all animals</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns animal by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byHabitat/:location</td>
+<td>GET</td>
+<td>returns animal by habitat/location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Assassin</td>
+<td>/api/show/assassins</td>
+<td></td>
+<td>GET</td>
+<td>returns all assassins</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns assassin by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bastard</td>
+<td>/api/show/bastards</td>
+<td></td>
+<td>GET</td>
+<td>returns all bastards</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns bastard by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Battle</td>
+<td>/api/show/battles</td>
+<td></td>
+<td>GET</td>
+<td>returns all battles</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns battle by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/bySlug/:slug</td>
+<td>GET</td>
+<td>returns battle by page name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byLocation/:location</td>
+<td>GET</td>
+<td>returns battle by location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byConflict/:conflict</td>
+<td>GET</td>
+<td>returns battle by conflict</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>City</td>
+<td>/api/show/cities</td>
+<td></td>
+<td>GET</td>
+<td>returns all cities</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns city by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byLocation/:location</td>
+<td>GET</td>
+<td>returns city by location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Character</td>
+<td>/api/show/characters</td>
+<td></td>
+<td>GET</td>
+<td>returns all characters</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns character by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/bySlug/:slug</td>
+<td>GET</td>
+<td>returns character by page title</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byHouse/:house</td>
+<td>GET</td>
+<td>returns character by house</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Castle</td>
+<td>/api/show/castles</td>
+<td></td>
+<td>GET</td>
+<td>returns all castles</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns castle by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byLocation/:location</td>
+<td>GET</td>
+<td>returns castles by location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Episode</td>
+<td>/api/show/episodes</td>
+<td></td>
+<td>GET</td>
+<td>returns all episodes</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:title</td>
+<td>GET</td>
+<td>returns episode by title</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Region</td>
+<td>/api/show/regions</td>
+<td></td>
+<td>GET</td>
+<td>returns all cities</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns city by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byLocation/:location</td>
+<td>GET</td>
+<td>returns city by location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Religion</td>
+<td>/api/show/religions</td>
+<td></td>
+<td>GET</td>
+<td>returns all religions</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:title</td>
+<td>GET</td>
+<td>returns religion by title</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Town</td>
+<td>/api/show/towns</td>
+<td></td>
+<td>GET</td>
+<td>returns all towns</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/:name</td>
+<td>GET</td>
+<td>returns town by name</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byLocation/:location</td>
+<td>GET</td>
+<td>returns town by location</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byRuler/:name</td>
+<td>GET</td>
+<td>returns town by ruler</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>/byReligion/:religion</td>
+<td>GET</td>
+<td>returns town by religion</td>
+</tr>
+</tbody>
+</table><p><em>* POST requests will be added soon</em></p>
+<p>Examples:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript">    https<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>gotdata<span class="token punctuation">.</span>northeurope<span class="token punctuation">.</span>cloudapp<span class="token punctuation">.</span>azure<span class="token punctuation">.</span>com<span class="token operator">/</span>api<span class="token operator">/</span>show<span class="token operator">/</span>characters<span class="token operator">/</span>Jon_Snow
+    https<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>gotdata<span class="token punctuation">.</span>northeurope<span class="token punctuation">.</span>cloudapp<span class="token punctuation">.</span>azure<span class="token punctuation">.</span>com<span class="token operator">/</span>api<span class="token operator">/</span>show<span class="token operator">/</span>towns
+</code></pre>
+<p>Possible error messages:</p>
+<blockquote>
+<p>“No XYZ matched your criteria”<br>
+“XYZ collection empty. Scraping should be started anytime soon…”</p>
+</blockquote>
+<hr>
+<h1 id="data-models">Data Models</h1>
+<p>A short overview of the different data models:</p>
+<h2 id="animalmodel">AnimalModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	type 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	diet 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	status 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	habitat <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	range 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h2 id="assassinmodel">AssassinModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span>
+</code></pre>
+<h2 id="bastardmodel">BastardModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span>
+</code></pre>
+<h2 id="battlemodel">BattleModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 			<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	slug 			<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	conflict 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	dateOfBattle 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Number<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	location 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'Region'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	factionsOne 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'House'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	factionsTwo 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'House'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	commandersOne 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	commandersTwo 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	forcesOne 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	forcesTwo 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	casualties 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	createdAt 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	updatedAt 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="charactermodel">CharacterModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">    name            <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    slug            <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    nicknames       <span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">]</span><span class="token punctuation">,</span>                               
+    titles          <span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">]</span><span class="token punctuation">,</span>                                                        
+    gender          <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    image           <span class="token punctuation">:</span> String<span class="token punctuation">,</span>                                                       
+    alive           <span class="token punctuation">:</span> Boolean<span class="token punctuation">,</span>
+    birth           <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    death           <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    origin          <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    mother          <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    father          <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    siblings        <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    house           <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'House'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    spouse          <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    lovers          <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+    cultures        <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'Culture'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    religions       <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'ReligionFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    allegiances     <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+    first_seen      <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'EpisodeFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    seasons         <span class="token punctuation">:</span> <span class="token punctuation">[</span>Number<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    appearances     <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'EpisodeFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+    actor           <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    createdAt       <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    updatedAt       <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+</code></pre>
+<h2 id="castlemodel">CastleModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	location 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"RegionFandom"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	type 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	religion 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"ReligionsFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	rulers 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"House"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	age 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Number<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	founder 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h2 id="citymodel">CityModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 			<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	location 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Continent"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	type 			<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	rulers 			<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	religion 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"ReligionsFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	founder 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CharacterFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	placesOfNote 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h2 id="episode-model">Episode Model</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">    title           <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    number          <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    season          <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    episode         <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    image           <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    date            <span class="token punctuation">:</span> Date<span class="token punctuation">,</span>
+    viewers         <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+
+    runtime         <span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    written_by      <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    directed_by     <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    preview_text    <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+
+    characters      <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    deaths          <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'CharacterFandom'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    places          <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'City'</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    
+    predecessor     <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'EpisodeFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    successor       <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">'EpisodeFandom'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    
+    createdAt		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span><span class="token punctuation">,</span>
+    updatedAt		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="regionmodel">RegionModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 			<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	location 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Continent"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	geography 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	rulers 			<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CharacterFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	religion 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"ReligionsFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	culture 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Culture"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	regionCapital 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	cities 			<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	towns 			<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	castles 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CastleFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	founder 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CharacterFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	placesOfNote 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h2 id="religion-model">Religion Model</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">    name        <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    slug        <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    image       <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+
+    type        <span class="token punctuation">:</span> <span class="token punctuation">[</span>String<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    clergy      <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CharacterFandom"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    locations   <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"RegionFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    leaders     <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"CharacterFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    center      <span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+
+    neighbors   <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"RegionFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    cultures    <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Culture"</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    events      <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Event"</span><span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h2 id="pagerank-model">PageRank Model</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">    title       <span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    rank        <span class="token punctuation">:</span> Number
+</code></pre>
+<h2 id="townmodel">TownModel</h2>
+<pre class=" language-javascript"><code class="prism  language-javascript">	name 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> unique<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	location 	<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"Continent"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+	type 		<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	rulers 		<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	religion 	<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> ref<span class="token punctuation">:</span> <span class="token string">"ReligionsFandom"</span><span class="token punctuation">}</span><span class="token punctuation">]</span>
+</code></pre>
+<h1 id="questions--feedback">Questions &amp; Feedback</h1>
+<p>Please feel free to ask us (Team A) anything on Slack! We are happy to help!<br>
+Bear in mind that this API is not finished yet. Some attribute names may change and more data models will follow! Stay tuned.</p>
+</div>
+</body>
+
+</html>
