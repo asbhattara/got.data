@@ -17,6 +17,7 @@ const express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
+    cors = require('cors'),
     bodyParser = require('body-parser');
 
 // mongoose instance connection url connection
@@ -46,7 +47,11 @@ mongoose.connection.on('connected', async () => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cors({
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false
+}));
 
 const showRouter = express.Router();
 const bookRouter = express.Router();
