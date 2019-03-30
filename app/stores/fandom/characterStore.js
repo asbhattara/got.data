@@ -40,7 +40,7 @@ class CharacterStore {
     
     async getAll() {
         try {
-            let data = await CharactersFandom.find({}).populate('pagerank');
+            let data = await CharactersFandom.find({}).populate('pagerank', 'rank title');
             
             if (!data) {
                 return { success: -1, message: 'Character collection empty. Scraping should be started...' };
@@ -55,7 +55,7 @@ class CharacterStore {
 
     async getByName(name) {
         try {
-            let data = await CharactersFandom.findOne({name: name}).populate('pagerank');
+            let data = await CharactersFandom.findOne({name: name}).populate('pagerank', 'rank title');
 
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
@@ -67,10 +67,13 @@ class CharacterStore {
         }
     }
 
+    // ! wtf doesn't select only rank.. why?!
+    // https://mongoosejs.com/docs/populate.html
+    // FYI: title = foreign field, see character model
     async getBySlug(slug) {
         try {
-            let data = await CharactersFandom.findOne({slug: slug}).populate('pagerank');
-            
+            let data = await CharactersFandom.findOne({slug: slug}).populate('pagerank', 'rank title');
+
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {

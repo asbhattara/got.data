@@ -38,8 +38,8 @@ const CharacterFandomSchema = new Schema({
 CharacterFandomSchema.virtual('pagerank', {
     ref: 'PageRankFandom',
     localField: 'slug',
-    foreignField: 'title'
-    // justOne: true
+    foreignField: 'title',
+    justOne: true
 });
 
 
