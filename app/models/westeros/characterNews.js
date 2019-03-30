@@ -8,4 +8,4 @@ const CharacterNews = new Schema({
     createdAt: {type: Date, required: true, default: Date.now}
 });
 
-module.exports = mongoose.model('CharacterNews', CharacterNews);
+module.exports = mongoose.model('CharacterNew', CharacterNews);
