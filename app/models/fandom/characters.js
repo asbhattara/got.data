@@ -30,10 +30,13 @@ const CharacterFandomSchema = new Schema({
     actor           : String,
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now},
-}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
+}, { 
+    toJSON: { virtuals: true }, 
+    toObject: { virtuals: true } 
+});
 
 CharacterFandomSchema.virtual('pagerank', {
-    ref: 'PageRank',
+    ref: 'PageRankFandom',
     localField: 'slug',
     foreignField: 'title'
     // justOne: true
