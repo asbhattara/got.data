@@ -30,7 +30,7 @@ module.exports = function(app, router) {
 
     const rankController = new PageRankController();
     router.get('/ranks', rankController.getAll.bind(rankController));
-    router.get('/ranks/:title', rankController.getByTitle.bind(rankController));
+    router.get('/ranks/:slug', rankController.getBySlug.bind(rankController));
 
     const animalController = new AnimalController();
     router.get('/animals', animalController.getAll.bind(animalController));

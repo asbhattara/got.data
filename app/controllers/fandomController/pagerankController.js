@@ -14,8 +14,8 @@ class PageRankController {
         }
     }
     
-    async getByTitle(req, res) {
-        let ranks = await this.rankStore.getByTitle(req.params.title);
+    async getBySlug(req, res) {
+        let ranks = await this.rankStore.getBySlug(req.params.slug);
         if (ranks.success === 1) {
             res.status(200).send(ranks.data);
         } else {

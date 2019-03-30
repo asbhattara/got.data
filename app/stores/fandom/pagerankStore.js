@@ -31,22 +31,22 @@ class PageRankStore {
             if (!data) {
                 return { success: -1, message: 'PageRank collection empty. Scraping should be started...' };
             } else {
-                return { success: 1, ranks: data };
+                return { success: 1, data: data };
             }
         } catch (e) {
             return { success: 0, message: 'error in database query! - ' + e }
         }
     }
 
-    async getByTitle(title) {
+    async getBySlug(slug) {
         try {
-            let data = await PageRanksFandom.findOne({title: title}, (err, rank) => {
+            let data = await PageRanksFandom.findOne({title: slug}, (err, rank) => {
                 if (err) throw new Error(err);
             });
             if (!data) {
                 return { success: 0, message: 'No page matched your criteria' };
             } else {
-                return { success: 1, ranks: data };
+                return { success: 1, data: data };
             }
         } catch (e) {
             return { success: 0, message: 'error in database query! - ' + e }
