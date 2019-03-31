@@ -78,4 +78,3 @@ apidoc
 /wikiData
 /tmp/*.json
 package-lock.json
-test/test.js

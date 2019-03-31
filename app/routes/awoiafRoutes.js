@@ -1,46 +1,53 @@
 module.exports = function (app, router) {
 
-    var defController = require('./app/controllers/default');
+    const defController = require('./app/controllers/default');
     router.get('/start', defController.init);
 
-    var housesController = require(__appbase + 'controllers/house');
+    const housesController = require(__appbase + 'controllers/house');
     router.post('/houses/find', housesController.get);
     router.get('/houses', housesController.getAll);
     router.get('/houses/:houseName', housesController.getByName);
     router.get('/houses/byId/:houseId', housesController.getById);
 
-    var episodeController = require(__appbase + 'controllers/episode');
+    const episodeController = require(__appbase + 'controllers/episode');
     router.post('/episodes/find', episodeController.get);
     router.get('/episodes', episodeController.getAll);
     router.get('/episodes/:name', episodeController.getByName);
     router.get('/episodes/byId/:id', episodeController.getById);
     router.get('/episodes/byCharacter/:name', episodeController.getEpisodesByCharacter);
 
-    var eventsController = require(__appbase + 'controllers/event');
+    const eventsController = require(__appbase + 'controllers/event');
     router.post('/events/find', eventsController.get);
     router.get('/events', eventsController.getAll);
     router.get('/events/:name', eventsController.getByName);
     router.get('/events/byId/:id', eventsController.getById);
     router.get('/episodes/byCharacter/:id', episodeController.getEpisodesByCharacter);
 
-    var ageController = require(__appbase + 'controllers/age');
+    const ageController = require(__appbase + 'controllers/age');
     router.post('/ages/find', ageController.get);
     router.get('/ages', ageController.getAll);
     router.get('/ages/:name', ageController.getByName);
     router.get('/ages/byId/:id', ageController.getById);
 
-    var characterLocations = require(__appbase + 'controllers/characterLocations');
+    const characterLocations = require(__appbase + 'controllers/characterLocations');
     router.get('/characters/locations', characterLocations.getAll);
     router.get('/characters/locations/:name', characterLocations.getByName);
     router.get('/characters/locations/byLocation/:location', characterLocations.getByLocation);
     router.get('/characters/locations/bySlug/:slug', characterLocations.getBySlug);
 
-    var characterPaths = require(__appbase + 'controllers/characterPaths');
+    const characterPaths = require(__appbase + 'controllers/characterPaths');
     router.get('/characters/paths', characterPaths.getAll);
     router.get('/characters/paths/:name', characterPaths.getByName);
 
+    const characterNews = require(__appbase + 'controllers/characterNews');
+    router.post('/characters/news', characterNewsController.add);
+    router.get('characters/news', characterNewsController.getAll);
+    router.get('characters/news/:count', characterNewsController.getByCount);
+    router.get('characters/news/byName/:name', characterNewsController.getByName);
+    router.get('characters/news/bySlug/:slug', characterNewsController.getBySlug);
+    router.get('characters/news/byId/:id', characterNewsController.getById);
 
-    var characterController = require(__appbase + 'controllers/character');
+    const characterController = require(__appbase + 'controllers/character');
     router.post('/characters/find', characterController.get);
     router.get('/characters', characterController.getAll);
     router.get('/characters/:name', characterController.getByName);
@@ -49,7 +56,7 @@ module.exports = function (app, router) {
 
     // This data is not scraped by Project A but inserted via API by Project B! 
     // Percent Likelihood of Death (PLOD) will be inserted by Project B. DO NOT remove modifying routes!
-    var characterPlodController = require(__appbase + 'controllers/characterPlod');
+    const characterPlodController = require(__appbase + 'controllers/characterPlod');
     router.post('/plod', characterPlodController.add);
     router.post('/plod/find', characterPlodController.get);
     router.get('/plod', characterPlodController.getAll);
@@ -63,7 +70,7 @@ module.exports = function (app, router) {
 
     // This data is not scraped by Project A but inserted via API by Project D!
     // Twitter Sentiment will be inserted by Project D. DO NOT remove modifying routes!
-    var characterSentimentController = require(__appbase + 'controllers/characterSentiment');
+    const characterSentimentController = require(__appbase + 'controllers/characterSentiment');
     router.post('/sentiment', characterSentimentController.add);
     router.post('/sentiment/find', characterSentimentController.get);
     router.get('/sentiment', characterSentimentController.getAll);
@@ -74,7 +81,7 @@ module.exports = function (app, router) {
     router.put('/sentiment/edit/:id', characterSentimentController.edit);
     router.delete('/sentiment/remove/:id', characterSentimentController.remove);
 
-    var geographyController = require(__appbase + 'controllers/geography');
+    const geographyController = require(__appbase + 'controllers/geography');
     router.post('/continents/find', geographyController.getContinents);
     router.get('/continents', geographyController.getAllContinents);
     router.get('/continents/:name', geographyController.getContinentByName);
@@ -95,10 +102,9 @@ module.exports = function (app, router) {
     router.get('/cities/:name', geographyController.getCityByName);
     router.get('/cities/byId/:id', geographyController.getCityById);
 
-    var statsController = require(__appbase + 'controllers/statistics');
+    const statsController = require(__appbase + 'controllers/statistics');
     router.get('/stats/', statsController.getStats);
 
-    var twitterController = require('./app/controllers/twitter');
+    const twitterController = require('./app/controllers/twitter');
     router.get('/twitter/search/:byKeywords/:tweetCount', twitterController.searchTwitter);
-
 };

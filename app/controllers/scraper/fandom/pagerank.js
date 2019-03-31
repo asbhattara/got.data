@@ -12,7 +12,7 @@ class PageRankScraper {
         this.visited = [];
         this.pending = [];
 
-        console.log(this.ranks)
+        // console.log(this.ranks)
     }
 
     getPageRank(page) {
@@ -112,7 +112,7 @@ class PageRankScraper {
 
             self.pending.push(nextPage);
         });
-
+        // console.log('page: ' + page + ' rank: ' + this.ranks[page]);
         return true;
     }
 }

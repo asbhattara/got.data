@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Religions = require('../../../models/fandom/religions'),
-      ReligionScraper = require('../../../controllers/scraper/fandom/religions');
+      Citys = require('../../../models/fandom/city'),
+      CityScraper = require('../../scraper/fandom/city');
 
 
-class ReligionFiller {
+class CityFandomFiller {
     constructor() {
-        this.scraper = new ReligionScraper();
+        this.scraper = new CityScraper();
     }
 
     async fill() {
@@ -16,6 +16,8 @@ class ReligionFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
+
+            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -26,7 +28,7 @@ class ReligionFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Religions.deleteMany({}, (err, data) => {
+        Citys.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -36,31 +38,30 @@ class ReligionFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(religions) {
+    async matchToModel(citys) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        religions.map(religion => {
-            let newRel = new Religions();
-            for(let attr in religion) {
-                // numbers sometimes return NaN which throws error in DB
-                // if((attr == '') && isNaN(religion[attr])) {
-                //     delete religion[attr];
-                // } 
-                newRel[attr] = religion[attr];
+        citys.map(city => {
+            let newEp = new Citys();
+            for(let attr in city) {
+                
+                newEp[attr] = city[attr];
             }
-            return newRel;
+            return newEp;
         });
-        return religions.filter(religion => religion['name']);
+
+        
+        return citys.filter(city => city['name']);
     }
 
     async insertToDb(data) {
-        Religions.insertMany(data, (err, docs) => {
+        Citys.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' religions successfully saved to MongoDB!');
+            console.log(docs.length + ' citys successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = ReligionFiller;
+module.exports = CityFandomFiller;

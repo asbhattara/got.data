@@ -48,6 +48,7 @@ class CharacterScraper {
 
                 names.push(info);
             });
+
         });
 
         return names;
@@ -58,7 +59,7 @@ class CharacterScraper {
         let data = [];
 
         for(let i = 0; i < names.length; i++)
-        // for(let i = 0; i < 2; i++)
+        // for(let i = 0; i < 4; i++)
         {
             let character = names[i]["character"];
 
@@ -108,13 +109,18 @@ class CharacterScraper {
             "actor": null,
         };
 
+        console.log("Scrape for" + name);
+
         // scrape character image
         result["image"] = $(".pi-image-thumbnail").attr("src");
 
+        var infobox = $(".portable-infobox");
 
         // scrape personal description (right info box)
-        $(".portable-infobox").find(".pi-item").each(function() {
+        infobox.find(".pi-item").each(function() {
             let rows, i, tmp;
+
+            var lastDeathEpisode;
 
             let $this = $(this);
             let $data = $this.find(".pi-data-value");
@@ -138,6 +144,7 @@ class CharacterScraper {
                     result["first_seen"] = $data.find("a").text();
 
                     break;
+                case "DeathEp":
                 case "Titles":
                     rows = $data.html().split("<br>");
 
@@ -232,7 +239,6 @@ class CharacterScraper {
                 case "Predecessor":
                 case "Successor":
                 case "Children":
-                case "DeathEp":
                 case "Last":
                 case "Age":
                 case "Mentioned":
@@ -253,7 +259,9 @@ class CharacterScraper {
         {
             result["gender"] = "female";
         }
-
+        var sliceEp = false;
+        var lastEp = $('div[data-source=DeathEp]').find(".pi-data-value").text().replace(/\"/g, "").trim()
+        console.log(lastEp);
         // scrape appearances in episodes
         $(".appearances").each(function () {
             let $table = $(this);
@@ -264,6 +272,11 @@ class CharacterScraper {
                 return true;
             }
 
+            if(sliceEp) {
+                sliceEp = false;
+                return false;
+            }
+
             $table.find("td").each(function () {
                 let $td = $(this);
 
@@ -272,10 +285,23 @@ class CharacterScraper {
                 {
                     return true;
                 }
+                var episode = $td.text().trim()
 
-                result["appearances"].push($td.text().trim())
+                console.log(episode);
+
+                
+
+
+                result["appearances"].push(episode);
+
+                if(episode == lastEp) {
+                    sliceEp = true;
+                    return false;
+                }
             });
         });
+
+
 
         return result;
     }
