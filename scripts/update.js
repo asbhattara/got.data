@@ -32,7 +32,8 @@ var possibleRefillings = [
     'regionFandom',
     'animalFandom',
     'townFandom',
-    'cityFandom'
+    'cityFandom',
+    'ageFandom'
 ]
 
 if(possibleRefillings.indexOf(requested) < 0) {
@@ -83,7 +84,7 @@ db.on('disconnected', function () {
 db.on('open', function () {
     if(requested == 'episodesFandom' || requested == 'charactersFandom' || requested == 'religionsFandom' || requested == 'battleFandom' 
         || requested == 'bastardFandom' || requested == 'assassinFandom' || requested == 'castleFandom' || requested == 'regionFandom'
-        || requested == 'animalFandom' || requested == 'townFandom'  || requested == 'cityFandom') {
+        || requested == 'animalFandom' || requested == 'townFandom'  || requested == 'cityFandom' || requested == 'ageFandom') {
 	var scraper = require('../app/controllers/filler/' + requested)
 	var controller = new scraper();
 	controller.fill();
