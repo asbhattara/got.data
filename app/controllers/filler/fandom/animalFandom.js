@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Towns = require('../../models/fandom/town'),
-      TownScraper = require('../scraper/fandom/town');
+      Animals = require('../../../models/fandom/animal'),
+      AnimalScraper = require('../../scraper/fandom/animal');
 
 
-class TownFandomFiller {
+class AnimalFandomFiller {
     constructor() {
-        this.scraper = new TownScraper();
+        this.scraper = new AnimalScraper();
     }
 
     async fill() {
@@ -28,7 +28,7 @@ class TownFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Towns.deleteMany({}, (err, data) => {
+        Animals.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,30 +38,30 @@ class TownFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(towns) {
+    async matchToModel(animals) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        towns.map(town => {
-            let newEp = new Towns();
-            for(let attr in town) {
+        animals.map(animal => {
+            let newEp = new Animals();
+            for(let attr in animal) {
                 
-                newEp[attr] = town[attr];
+                newEp[attr] = animal[attr];
             }
             return newEp;
         });
 
         
-        return towns.filter(town => town['name']);
+        return animals.filter(animal => animal['name']);
     }
 
     async insertToDb(data) {
-        Towns.insertMany(data, (err, docs) => {
+        Animals.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' towns successfully saved to MongoDB!');
+            console.log(docs.length + ' animals successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = TownFandomFiller;
+module.exports = AnimalFandomFiller;

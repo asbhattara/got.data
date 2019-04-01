@@ -1,17 +1,17 @@
 const mongoose = require('mongoose'),
-      Bastards = require('../../models/fandom/bastard'),
-      BastardsScraper = require('../scraper/fandom/bastard');
+      Regions = require('../../../models/fandom/region'),
+      RegionScrapper = require('../../scraper/fandom/regions');
 
 
-class BastardsFandomFiller {
+class RegionFandomFiller {
     constructor() {
-        this.scraper = new BastardsScraper();
+        this.scraper = new RegionScrapper();
     }
 
     async fill() {
         try {
             // start scraping
-            let data = await this.scraper.getAllBastards();
+            let data = await this.scraper.scrapeAll();
             // clear collection
             await this.clearAll();
             // match scraped data to model
@@ -28,7 +28,7 @@ class BastardsFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Bastards.deleteMany({}, (err, data) => {
+        Regions.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,29 +38,35 @@ class BastardsFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(bastards) {
+    async matchToModel(regions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        bastards.map(bastard => {
-            let newEp = new Bastards();
-            for(let attr in bastard) {
-                newEp[attr] = bastard[attr];
+        regions.map(region => {
+            let newEp = new Regions();
+            for(let attr in region) {
+                // numbers sometimes return NaN which throws error in DB
+                if((attr == 'age') && isNaN(region[attr])) {
+                    delete region[attr];
+                    continue;
+                } 
+                newEp[attr] = region[attr];
             }
             return newEp;
         });
 
         
-        return bastards.filter(bastard => bastard['name']);
+        return regions.filter(region => region['name']);
     }
 
     async insertToDb(data) {
-        Bastards.insertMany(data, (err, docs) => {
+        Regions.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' bastards successfully saved to MongoDB!');
+            console.log(docs.length + ' regions successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = BastardsFandomFiller;
+module.exports = RegionFandomFiller;
+//TODO

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Regions = require('../../models/fandom/region'),
-      RegionScrapper = require('../scraper/fandom/regions');
+      Houses = require('../../../models/fandom/house'),
+      HouseScrapper = require('../../scraper/fandom/house');
 
 
-class RegionFandomFiller {
+class HouseFandomFiller {
     constructor() {
-        this.scraper = new RegionScrapper();
+        this.scraper = new HouseScrapper();
     }
 
     async fill() {
@@ -17,7 +17,7 @@ class RegionFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            console.log(data.length);
+            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -28,7 +28,7 @@ class RegionFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Regions.deleteMany({}, (err, data) => {
+        Houses.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,35 +38,30 @@ class RegionFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(regions) {
+    async matchToModel(houses) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        regions.map(region => {
-            let newEp = new Regions();
-            for(let attr in region) {
-                // numbers sometimes return NaN which throws error in DB
-                if((attr == 'age') && isNaN(region[attr])) {
-                    delete region[attr];
-                    continue;
-                } 
-                newEp[attr] = region[attr];
+        houses.map(house => {
+            let newHouse = new Houses();
+            for (attr in house) {
+                newHouse[attr] = house[attr];
             }
-            return newEp;
+            return newHouse;
         });
 
         
-        return regions.filter(region => region['name']);
+        return houses.filter(house => house['name']);
     }
 
     async insertToDb(data) {
-        Regions.insertMany(data, (err, docs) => {
+        Houses.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' regions successfully saved to MongoDB!');
+            console.log(docs.length + ' houses successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = RegionFandomFiller;
+module.exports = HouseFandomFiller;
 //TODO

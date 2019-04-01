@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Ages = require('../../models/fandom/age'),
-      AgeScrapper = require('../scraper/fandom/age');
+      Episodes = require('../../../models/fandom/episodes'),
+      EpisodeScraper = require('../../scraper/fandom/episodes');
 
 
-class AgeFandomFiller {
+class EpisodeFandomFiller {
     constructor() {
-        this.scraper = new AgeScrapper();
+        this.scraper = new EpisodeScraper();
     }
 
     async fill() {
@@ -16,8 +16,6 @@ class AgeFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -28,7 +26,7 @@ class AgeFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Ages.deleteMany({}, (err, data) => {
+        Episodes.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,34 +36,32 @@ class AgeFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(ages) {
+    async matchToModel(episodes) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        ages.map(age => {
-            let newAge = new Ages();
-            for(let attr in age) {
+        episodes.map(episode => {
+            let newEp = new Episodes();
+            for(let attr in episode) {
                 // numbers sometimes return NaN which throws error in DB
-                if((attr == 'age') && isNaN(age[attr])) {
-                    delete age[attr];
+                if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
+                    delete episode[attr];
                     continue;
                 } 
-                newAge[attr] = age[attr];
+                newEp[attr] = episode[attr];
             }
-            return newAge;
+            return newEp;
         });
-
-        
-        return ages.filter(age => age['name']);
+        return episodes.filter(episode => episode['title']);
     }
 
     async insertToDb(data) {
-        Ages.insertMany(data, (err, docs) => {
+        Episodes.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' ages successfully saved to MongoDB!');
+            console.log(docs.length + ' episodes successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = AgeFandomFiller;
+module.exports = EpisodeFandomFiller;

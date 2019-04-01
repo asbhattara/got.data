@@ -1,17 +1,17 @@
 const mongoose = require('mongoose'),
-      Assassins = require('../../models/fandom/assassin'),
-      AssassinsScraper = require('../scraper/fandom/assassin');
+      Battles = require('../../../models/fandom/battle'),
+      BattleScraper = require('../../scraper/fandom/battle');
 
 
-class AssassinsFandomFiller {
+class BattleFandomFiller {
     constructor() {
-        this.scraper = new AssassinsScraper();
+        this.scraper = new BattleScraper();
     }
 
     async fill() {
         try {
             // start scraping
-            let data = await this.scraper.getAllAssassin();
+            let data = await this.scraper.scrapeAll();
             // clear collection
             await this.clearAll();
             // match scraped data to model
@@ -28,7 +28,7 @@ class AssassinsFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Assassins.deleteMany({}, (err, data) => {
+        Battles.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,29 +38,34 @@ class AssassinsFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(assassins) {
+    async matchToModel(battles) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        assassins.map(assassin => {
-            let newEp = new Assassins();
-            for(let attr in assassin) {
-                newEp[attr] = assassin[attr];
+        battles.map(battle => {
+            let newEp = new Battles();
+            for(let attr in battle) {
+                // numbers sometimes return NaN which throws error in DB
+                if((attr == 'dateOfBattle') && isNaN(battle[attr])) {
+                    delete battle[attr];
+                    continue;
+                } 
+                newEp[attr] = battle[attr];
             }
             return newEp;
         });
 
         
-        return assassins.filter(assassin => assassin['name']);
+        return battles.filter(battle => battle['name']);
     }
 
     async insertToDb(data) {
-        Assassins.insertMany(data, (err, docs) => {
+        Battles.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' assassins successfully saved to MongoDB!');
+            console.log(docs.length + ' battles successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = AssassinsFandomFiller;
+module.exports = BattleFandomFiller;

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Events = require('../../models/fandom/event'),
-      EventScraper = require('../scraper/fandom/event');
+      Citys = require('../../../models/fandom/city'),
+      CityScraper = require('../../scraper/fandom/city');
 
 
-class EventFandomFiller {
+class CityFandomFiller {
     constructor() {
-        this.scraper = new EventScraper();
+        this.scraper = new CityScraper();
     }
 
     async fill() {
@@ -28,7 +28,7 @@ class EventFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Events.deleteMany({}, (err, data) => {
+        Citys.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,31 +38,30 @@ class EventFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(events) {
+    async matchToModel(citys) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        events.map(event => {
-            let newChar = new Events();
-            for(let attr in event) {
-                // numbers sometimes return NaN which throws error in DB
-                if((attr == 'dateOfEvent') && isNaN(event[attr])) {
-                    delete event[attr];
-                } 
-                newChar[attr] = event[attr];
+        citys.map(city => {
+            let newEp = new Citys();
+            for(let attr in city) {
+                
+                newEp[attr] = city[attr];
             }
-            return newChar;
+            return newEp;
         });
-        return events.filter(event => event['name']);
+
+        
+        return citys.filter(city => city['name']);
     }
 
     async insertToDb(data) {
-        Events.insertMany(data, (err, docs) => {
+        Citys.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' events successfully saved to MongoDB!');
+            console.log(docs.length + ' citys successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = EventFandomFiller;
+module.exports = CityFandomFiller;

@@ -1,17 +1,17 @@
 const mongoose = require('mongoose'),
-      Animals = require('../../models/fandom/animal'),
-      AnimalScraper = require('../scraper/fandom/animal');
+      Assassins = require('../../../models/fandom/assassin'),
+      AssassinsScraper = require('../../scraper/fandom/assassin');
 
 
-class AnimalFandomFiller {
+class AssassinsFandomFiller {
     constructor() {
-        this.scraper = new AnimalScraper();
+        this.scraper = new AssassinsScraper();
     }
 
     async fill() {
         try {
             // start scraping
-            let data = await this.scraper.scrapeAll();
+            let data = await this.scraper.getAllAssassin();
             // clear collection
             await this.clearAll();
             // match scraped data to model
@@ -28,7 +28,7 @@ class AnimalFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Animals.deleteMany({}, (err, data) => {
+        Assassins.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,30 +38,29 @@ class AnimalFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(animals) {
+    async matchToModel(assassins) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        animals.map(animal => {
-            let newEp = new Animals();
-            for(let attr in animal) {
-                
-                newEp[attr] = animal[attr];
+        assassins.map(assassin => {
+            let newEp = new Assassins();
+            for(let attr in assassin) {
+                newEp[attr] = assassin[attr];
             }
             return newEp;
         });
 
         
-        return animals.filter(animal => animal['name']);
+        return assassins.filter(assassin => assassin['name']);
     }
 
     async insertToDb(data) {
-        Animals.insertMany(data, (err, docs) => {
+        Assassins.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' animals successfully saved to MongoDB!');
+            console.log(docs.length + ' assassins successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = AnimalFandomFiller;
+module.exports = AssassinsFandomFiller;

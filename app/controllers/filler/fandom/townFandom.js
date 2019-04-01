@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Houses = require('../../models/fandom/house'),
-      HouseScrapper = require('../scraper/fandom/house');
+      Towns = require('../../../models/fandom/town'),
+      TownScraper = require('../../scraper/fandom/town');
 
 
-class HouseFandomFiller {
+class TownFandomFiller {
     constructor() {
-        this.scraper = new HouseScrapper();
+        this.scraper = new TownScraper();
     }
 
     async fill() {
@@ -17,7 +17,7 @@ class HouseFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            // console.log(data.length);
+            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -28,7 +28,7 @@ class HouseFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Houses.deleteMany({}, (err, data) => {
+        Towns.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,30 +38,30 @@ class HouseFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(houses) {
+    async matchToModel(towns) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        houses.map(house => {
-            let newHouse = new Houses();
-            for (attr in house) {
-                newHouse[attr] = house[attr];
+        towns.map(town => {
+            let newEp = new Towns();
+            for(let attr in town) {
+                
+                newEp[attr] = town[attr];
             }
-            return newHouse;
+            return newEp;
         });
 
         
-        return houses.filter(house => house['name']);
+        return towns.filter(town => town['name']);
     }
 
     async insertToDb(data) {
-        Houses.insertMany(data, (err, docs) => {
+        Towns.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' houses successfully saved to MongoDB!');
+            console.log(docs.length + ' towns successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = HouseFandomFiller;
-//TODO
+module.exports = TownFandomFiller;

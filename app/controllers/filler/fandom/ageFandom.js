@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Castles = require('../../models/fandom/castle'),
-      CastleScrapper = require('../scraper/fandom/castle');
+      Ages = require('../../../models/fandom/age'),
+      AgeScrapper = require('../../scraper/fandom/age');
 
 
-class CastleFandomFiller {
+class AgeFandomFiller {
     constructor() {
-        this.scraper = new CastleScrapper();
+        this.scraper = new AgeScrapper();
     }
 
     async fill() {
@@ -17,7 +17,7 @@ class CastleFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            console.log(data.length);
+            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -28,7 +28,7 @@ class CastleFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Castles.deleteMany({}, (err, data) => {
+        Ages.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,34 +38,34 @@ class CastleFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(casltes) {
+    async matchToModel(ages) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        casltes.map(castle => {
-            let newEp = new Castles();
-            for(let attr in castle) {
+        ages.map(age => {
+            let newAge = new Ages();
+            for(let attr in age) {
                 // numbers sometimes return NaN which throws error in DB
-                if((attr == 'age') && isNaN(castle[attr])) {
-                    delete castle[attr];
+                if((attr == 'age') && isNaN(age[attr])) {
+                    delete age[attr];
                     continue;
                 } 
-                newEp[attr] = castle[attr];
+                newAge[attr] = age[attr];
             }
-            return newEp;
+            return newAge;
         });
 
         
-        return casltes.filter(castle => castle['name']);
+        return ages.filter(age => age['name']);
     }
 
     async insertToDb(data) {
-        Castles.insertMany(data, (err, docs) => {
+        Ages.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' casltes successfully saved to MongoDB!');
+            console.log(docs.length + ' ages successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = CastleFandomFiller;
+module.exports = AgeFandomFiller;

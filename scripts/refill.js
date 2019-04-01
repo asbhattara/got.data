@@ -89,7 +89,7 @@ db.on('open', function () {
         || requested == 'castleFandom' || requested == 'regionFandom' || requested == 'animalFandom'
         || requested == 'townFandom' || requested == 'cityFandom' || requested == 'ageFandom' || requested == 'houseFandom'
         || requested == 'eventFandom') {
-	var scraper = require('../app/controllers/filler/' + requested)
+	var scraper = require('../app/controllers/filler/fandom/' + requested)
 	var controller = new scraper();
 	controller.fill();
     }

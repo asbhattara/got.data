@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Episodes = require('../../models/fandom/episodes'),
-      EpisodeScraper = require('../scraper/fandom/episodes');
+      Castles = require('../../../models/fandom/castle'),
+      CastleScrapper = require('../../scraper/fandom/castle');
 
 
-class EpisodeFandomFiller {
+class CastleFandomFiller {
     constructor() {
-        this.scraper = new EpisodeScraper();
+        this.scraper = new CastleScrapper();
     }
 
     async fill() {
@@ -16,6 +16,8 @@ class EpisodeFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
+
+            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -26,7 +28,7 @@ class EpisodeFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Episodes.deleteMany({}, (err, data) => {
+        Castles.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -36,32 +38,34 @@ class EpisodeFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(episodes) {
+    async matchToModel(casltes) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        episodes.map(episode => {
-            let newEp = new Episodes();
-            for(let attr in episode) {
+        casltes.map(castle => {
+            let newEp = new Castles();
+            for(let attr in castle) {
                 // numbers sometimes return NaN which throws error in DB
-                if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
-                    delete episode[attr];
+                if((attr == 'age') && isNaN(castle[attr])) {
+                    delete castle[attr];
                     continue;
                 } 
-                newEp[attr] = episode[attr];
+                newEp[attr] = castle[attr];
             }
             return newEp;
         });
-        return episodes.filter(episode => episode['title']);
+
+        
+        return casltes.filter(castle => castle['name']);
     }
 
     async insertToDb(data) {
-        Episodes.insertMany(data, (err, docs) => {
+        Castles.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' episodes successfully saved to MongoDB!');
+            console.log(docs.length + ' casltes successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = EpisodeFandomFiller;
+module.exports = CastleFandomFiller;

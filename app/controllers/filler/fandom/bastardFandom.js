@@ -1,17 +1,17 @@
 const mongoose = require('mongoose'),
-      Battles = require('../../models/fandom/battle'),
-      BattleScraper = require('../scraper/fandom/battle');
+      Bastards = require('../../../models/fandom/bastard'),
+      BastardsScraper = require('../../scraper/fandom/bastard');
 
 
-class BattleFandomFiller {
+class BastardsFandomFiller {
     constructor() {
-        this.scraper = new BattleScraper();
+        this.scraper = new BastardsScraper();
     }
 
     async fill() {
         try {
             // start scraping
-            let data = await this.scraper.scrapeAll();
+            let data = await this.scraper.getAllBastards();
             // clear collection
             await this.clearAll();
             // match scraped data to model
@@ -28,7 +28,7 @@ class BattleFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Battles.deleteMany({}, (err, data) => {
+        Bastards.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -38,34 +38,29 @@ class BattleFandomFiller {
         return;
     }
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(battles) {
+    async matchToModel(bastards) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        battles.map(battle => {
-            let newEp = new Battles();
-            for(let attr in battle) {
-                // numbers sometimes return NaN which throws error in DB
-                if((attr == 'dateOfBattle') && isNaN(battle[attr])) {
-                    delete battle[attr];
-                    continue;
-                } 
-                newEp[attr] = battle[attr];
+        bastards.map(bastard => {
+            let newEp = new Bastards();
+            for(let attr in bastard) {
+                newEp[attr] = bastard[attr];
             }
             return newEp;
         });
 
         
-        return battles.filter(battle => battle['name']);
+        return bastards.filter(bastard => bastard['name']);
     }
 
     async insertToDb(data) {
-        Battles.insertMany(data, (err, docs) => {
+        Bastards.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' battles successfully saved to MongoDB!');
+            console.log(docs.length + ' bastards successfully saved to MongoDB!');
         });
         return;
     }
 }
-module.exports = BattleFandomFiller;
+module.exports = BastardsFandomFiller;

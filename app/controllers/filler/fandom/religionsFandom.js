@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      Religions = require('../../models/fandom/religions'),
-      ReligionScraper = require('../scraper/fandom/religions');
+      Religions = require('../../../models/fandom/religions'),
+      ReligionScraper = require('../../scraper/fandom/religions');
 
 
 class ReligionFandomFiller {
