@@ -69,7 +69,7 @@ class CharacterImageFiller {
             let fs = require('fs');
             let request = require('request');
 
-            let uri = 'http://awoiaf.westeros.org' + image;
+            let uri = image;
             let filename = '/misc/images/characters/book/' + slug;
 
             console.log('Downloading: ' + uri);

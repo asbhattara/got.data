@@ -33,8 +33,7 @@
     "nodemw": "0.8.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "swig": "^1.4.2",
-    "twitter": "latest"
+    "swig": "^1.4.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

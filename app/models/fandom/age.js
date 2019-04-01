@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var AgeFandomSchema = new Schema({
+const AgeFandomSchema = new Schema({
     name      : {type: String, required: true, unique: true},
     age 	: {type: Number}
 });

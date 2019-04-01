@@ -8,8 +8,8 @@ const HouseSchema = new Schema({
 
     coatOfArms     : String,                                                   // Sable, a dragon thrice-headed gules
     words          : String,                                                        // Fire and Blood
-    currentLord    : {type: String, ref: "Character"},         // Queen Daenerys Targaryen
-    overlords      : [{type: String, ref: "House"}],            // None
+    currentLord    : {type: String, ref: "CharacterWesteros"},         // Queen Daenerys Targaryen
+    overlords      : [{type: String, ref: "HouseWesteros"}],            // None
 
     seat           : String,
     region         : String,
@@ -26,4 +26,4 @@ const HouseSchema = new Schema({
     updatedAt      : {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('House', HouseSchema);
+module.exports = mongoose.model('HouseWesteros', HouseSchema);

@@ -6,7 +6,7 @@ const RegionSchema = new Schema({
     continent : {type: Schema.Types.ObjectId, ref: "Continent"},
     neighbors : [{type: Schema.Types.ObjectId, ref: "Region"}],
     cultures  : [{type: Schema.Types.ObjectId, ref: "Culture"}],
-    events    : [{type: Schema.Types.ObjectId, ref: "Event"}],
+    events    : [{type: Schema.Types.ObjectId, ref: "EventWesteros"}],
     color    : String,
     borders    : [[String]],
     highlights: [String]										//Used for highlighting regions with polygons

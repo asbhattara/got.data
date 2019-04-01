@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    Ages = require('../../../models/westeros/ages'),
+    Ages = require('../../../models/westeros/age'),
     AgesScraper = require('../../../controllers/scraper/westeros/ages');
 
 

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var CityFandomSchema = new Schema({
+const CityFandomSchema = new Schema({
     name            : {type: String, required: true, unique: true},
     location        : {type: String, ref: "Continent"},
     type            : {type: String},

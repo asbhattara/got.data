@@ -1,4 +1,5 @@
-module.exports = function (app, router) {
+// TODO: can be removed if nobody needs it anymore
+/*module.exports = function (app, router) {
 
     var defController = require('./app/controllers/default');
     router.get('/start', defController.init);
@@ -38,18 +39,15 @@ module.exports = function (app, router) {
     var characterPaths = require(__appbase + 'controllers/characterPaths');
     router.get('/characters/paths', characterPaths.getAll);
     router.get('/characters/paths/:name', characterPaths.getByName);
-<<<<<<< HEAD
 
-=======
-/*
+
     var characterNews = require(__appbase + 'controllers/characterNews');
     router.post('/characters/news', characterNewsController.add);
     router.get('characters/news', characterNewsController.getAll);
     router.get('characters/news/:count', characterNewsController.getByCount);
     router.get('characters/news/byName/:name', characterNewsController.getByName);
     router.get('characters/news/bySlug/:slug', characterNewsController.getBySlug);
-    router.get('characters/news/byId/:id', characterNewsController.getById);*/
->>>>>>> feature_update_old_scrapper
+    router.get('characters/news/byId/:id', characterNewsController.getById);
 
     var characterController = require(__appbase + 'controllers/character');
     router.post('/characters/find', characterController.get);
@@ -113,3 +111,4 @@ module.exports = function (app, router) {
     router.get('/twitter/search/:byKeywords/:tweetCount', twitterController.searchTwitter);
 
 };
+*/
