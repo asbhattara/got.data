@@ -17,7 +17,7 @@ class AgeFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            console.log(data.length);
+            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -41,16 +41,16 @@ class AgeFandomFiller {
     async matchToModel(ages) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         ages.map(age => {
-            let newEp = new Ages();
+            let newAge = new Ages();
             for(let attr in age) {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'age') && isNaN(age[attr])) {
                     delete age[attr];
                     continue;
                 } 
-                newEp[attr] = age[attr];
+                newAge[attr] = age[attr];
             }
-            return newEp;
+            return newAge;
         });
 
         
