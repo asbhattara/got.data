@@ -19,6 +19,7 @@ module.exports = function(app, router) {
     router.get('/characters/:name', charController.getByName.bind(charController));
     router.get('/characters/bySlug/:slug', charController.getBySlug.bind(charController));
     router.get('/characters/byHouse/:house', charController.getByHouse.bind(charController));
+    router.post('/characters/updatePlod', charController.updatePlod.bind(charController));
 
     const episodeController = new EpisodeController();
     router.get('/episodes', episodeController.getAll.bind(episodeController));
