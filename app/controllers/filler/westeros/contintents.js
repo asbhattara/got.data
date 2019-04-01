@@ -12,7 +12,7 @@ class ContinentsFiller {
     }
     
     async getFile() {
-        let file = '../../../../data/continents.json';
+        let file = __appbase + '../data/continents.json';
 
         return new Promise(function (resolve, reject) {
             jsonfile.readFile(file, function(err, obj) {
