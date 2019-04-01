@@ -79,196 +79,36 @@ class CharacterScraper {
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
 
-        let result = {
-            "name": name,
-            "slug": page,
-            "nicknames": [],
-            "titles": [],
-            "gender": null,
-            "image": null,
-
-            "alive": true,
-            "birth": null,
-            "death": null,
-
-            "origin": null,
-            "mother": null,
-            "father": null,
-            "siblings": [],
-            "house": null,
-
-            "spouse": null,
-            "lovers": [],
-
-            "cultures": [],
-            "religions": [],
-            "allegiances": [],
-
-            "first_seen": null,
-            "seasons": [],
-            "appearances": [],
-            "actor": null,
-        };
+        let result = {};
 
         console.log("Scrape for" + name);
 
+        result.name = name;
+        result.slug = page;
         // scrape character image
-        result["image"] = $(".pi-image-thumbnail").attr("src");
+        result.image = $(".pi-image-thumbnail").attr("src");
 
         var infobox = $(".portable-infobox");
 
-        // scrape personal description (right info box)
-        infobox.find(".pi-item").each(function() {
-            let rows, i, tmp;
-
-            var lastDeathEpisode;
-
-            let $this = $(this);
-            let $data = $this.find(".pi-data-value");
-
-            switch ($this.data("source")) {
-                case "Season":
-                    rows = $data.text().replace(" ", "").split(",");
-
-                    for(i = 0; i < rows.length; i++)
-                    {
-                        if(!rows[i])
-                        {
-                            continue;
-                        }
-
-                        result["seasons"].push(parseInt(rows[i]));
-                    }
-
-                    break;
-                case "First":
-                    result["first_seen"] = $data.find("a").text();
-
-                    break;
-                case "DeathEp":
-                case "Titles":
-                    rows = $data.html().split("<br>");
-
-                    for(i = 0; i < rows.length; i++)
-                    {
-                        result["titles"].push($("<div>" + rows[i] + "</div>").text().replace(/\(.*\)/, "").trim())
-                    }
-
-                    break;
-                case "Aka":
-                    rows = $data.html().split("<br>");
-
-                    for(i = 0; i < rows.length; i++)
-                    {
-                        tmp = $("<div>" + rows[i] + "</div>").text().replace(/\(.*\)/, "").replace(/\[.*]/, "").trim();
-
-                        if(!tmp)
-                        {
-                            continue;
-                        }
-
-                        result["nicknames"].push(tmp)
-                    }
-
-                    break;
-                case "Death":
-                    result["death"] = parseInt($data.text().replace(/[^0-9.]/g, ""));
-
-                    break;
-                case "Birth":
-                    result["birth"] = parseInt($data.text().replace(/[^0-9.]/g, ""));
-
-                    break;
-                case "Status":
-                    result["alive"] = $data.find("a").text().toLowerCase() !== "deceased";
-
-                    break;
-                case "Culture":
-                    $data.find("a").each(function () {
-                        result["cultures"].push($(this).text())
-                    });
-
-                    break;
-                case "House":
-                    $data.find("a").each(function () {
-                        result["house"].push($(this).text())
-                    });
-
-                    break;
-                case "Religion":
-                    $data.find("a").each(function () {
-                        result["religions"].push($(this).text())
-                    });
-
-                    break;
-                case "Father":
-                    result["father"] = $($data.find("a")[0]).text();
-
-                    break;
-                case "Mother":
-                    result["mother"] = $($data.find("a")[0]).text();
-
-                    break;
-                case "Siblings":
-                    $data.find("a").each(function () {
-                        result["siblings"].push($(this).text())
-                    });
-
-                    break;
-                case "Spouse":
-                    result["spouse"] = $($data.find("a")[0]).text();
-
-                    break;
-                case "Lovers":
-                    $data.find("a").each(function () {
-                        result["lovers"].push($(this).text())
-                    });
-
-                    break;
-                case "Place":
-                    result["origin"] = $($data.find("a")[0]).text();
-
-                    break;
-                case "Allegiance":
-                    $data.find("a").each(function () {
-                        result["allegiances"].push($(this).text())
-                    });
-
-                    break;
-                case "Actor":
-                    result["actor"] = $($data.find("a")[0]).text();
-
-                    break;
-                // Fields to ignore
-                case "Title":
-                case "Image":
-                case "Appearances":
-                case "Predecessor":
-                case "Successor":
-                case "Children":
-                case "Last":
-                case "Age":
-                case "Mentioned":
-                    break;
-                default:
-                    //console.log($this.data("source"), ":", $data.html());
-            }
-        });
 
         // scrape gender
         let male_counter = (data["parse"]["text"]["*"].match(/\shis\s|\shim\s|He|himself/g) || []).length;
         let female_counter = (data["parse"]["text"]["*"].match(/\sher\s|She|herself/g) || []).length;
 
         if(male_counter > female_counter) {
-            result["gender"] = "male";
+            result.gender = "male";
         }
         else
         {
-            result["gender"] = "female";
+            result.gender = "female";
         }
+
+        // scrape appearance
+        result.appearances = []
+
         var sliceEp = false;
         var lastEp = $('div[data-source=DeathEp]').find(".pi-data-value").text().replace(/\"/g, "").trim()
-        console.log(lastEp);
+        
         // scrape appearances in episodes
         $(".appearances").each(function () {
             let $table = $(this);
@@ -294,12 +134,8 @@ class CharacterScraper {
                 }
                 var episode = $td.text().trim()
 
-                console.log(episode);
 
-                
-
-
-                result["appearances"].push(episode);
+                result.appearances.push(episode);
 
                 if(episode == lastEp) {
                     sliceEp = true;
@@ -310,7 +146,275 @@ class CharacterScraper {
 
 
 
+        //Titles
+        result.titles = []
+        if($('div[data-source=Titles]') != null) {
+
+            var titles = $('div[data-source=Titles]').find(".pi-data-value").html()
+
+            if(titles != null) {
+                titles = titles.match(/title="(.*?)"/g);
+
+                if(titles) {
+                    titles.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.titles.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+        //Alive
+        if($('div[data-source=Status]') != null) {
+            result.alive = $('div[data-source=Status]').find(".pi-data-value").text().toLowerCase() !== "deceased"
+        }
+
+
+
+        //Birth
+        if($('div[data-source=Birth]') != null) {
+            result.birth = parseInt($('div[data-source=Birth]').find(".pi-data-value").text().replace(/\D/g,''));
+        }
+
+        
+
+
+        //Death
+        if($('div[data-source=Death]') != null) {
+            var death = $('div[data-source=Death]').find(".pi-data-value").text();
+
+            
+
+            if(!death.toLowerCase().includes('resurrected')) {
+                
+                result.death = parseInt(death.replace(/\D/g,''))
+            }
+        }
+
+        
+
+        //Origin
+        result.origin = []
+        if($('div[data-source=Place]') != null) {
+
+            var origin = $('div[data-source=Place]').find(".pi-data-value").html()
+
+            if(origin != null) {
+                origin = origin.match(/title="(.*?)"/g);
+
+                if(origin) {
+                    origin.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.origin.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+
+        //Mother
+         if($('div[data-source=Mother]') != null) {
+
+            var mother = $('div[data-source=Mother]').find(".pi-data-value").html()
+
+            if(mother != null) {
+                mother = mother.match(/title="(.*?)"/g);
+
+                if(mother) {
+                    result.mother = mother[0].replace(/title=/g,'').replace(/"/g,'')
+                }
+
+                
+
+                
+            }
+
+        }
+
+
+
+
+        //Father
+
+        if($('div[data-source=Father]') != null) {
+
+            var father = $('div[data-source=Father]').find(".pi-data-value").html()
+
+            if(father != null) {
+                father = father.match(/title="(.*?)"/g);
+
+                if(father) {
+                    result.father = father[0].replace(/title=/g,'').replace(/"/g,'')
+                }
+
+                
+
+                
+            }
+
+        }
+
+
+
+        //Siblings
+        result.siblings = []
+        if($('div[data-source=Siblings]') != null) {
+
+            var siblings = $('div[data-source=Siblings]').find(".pi-data-value").html()
+
+            if(siblings != null) {
+                siblings = siblings.match(/title="(.*?)"/g);
+
+                if(siblings) {
+                    siblings.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.siblings.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+        //Lovers
+        result.lovers = []
+        if($('div[data-source=Lovers]') != null) {
+
+            var lovers = $('div[data-source=Lovers]').find(".pi-data-value").html()
+
+            if(lovers != null) {
+                lovers = lovers.match(/title="(.*?)"/g);
+
+                if(lovers) {
+                    lovers.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.lovers.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+        //Spouse
+        result.spouse = []
+        if($('div[data-source=Spouse]') != null) {
+
+            var spouse = $('div[data-source=Spouse]').find(".pi-data-value").html()
+
+            if(spouse != null) {
+                spouse = spouse.match(/title="(.*?)"/g);
+
+                if(spouse) {
+                    spouse.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.spouse.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+        //Culture
+        if($('div[data-source=Culture]') != null) {
+            result.culture = $('div[data-source=Culture]').find(".pi-data-value").text()
+        }
+
+
+        //Religion
+        if($('div[data-source=Religion]') != null) {
+            result.religion = $('div[data-source=Religion]').find(".pi-data-value").text()
+        }
+
+
+
+
+        //Allegiance
+        result.allegiances = []
+        if($('div[data-source=Allegiance]') != null) {
+
+            var allegiance = $('div[data-source=Allegiance]').find(".pi-data-value").html()
+
+            if(allegiance != null) {
+                allegiance = allegiance.match(/title="(.*?)"/g);
+
+                
+
+                if(allegiance) {
+                    result.house = allegiance[0].replace(/title=/g,'').replace(/"/g,'')
+                    allegiance.forEach(function(element) {
+                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+                    result.allegiances.push(el);
+                });
+                }
+
+                
+            }
+
+        }
+
+
+
+        //First seen
+        if($('div[data-source=First]') != null) {
+            result.first_seen = $('div[data-source=First]').find(".pi-data-value").text()
+        }
+
+
+        //Seasons
+
+        
+        if($('div[data-source=Season]') != null) {
+
+            result.seasons = $('div[data-source=Season]').find(".pi-data-value").text().split(',');
+            //console.log(seasons);
+
+            
+        }
+
+        
+
+        //Actor
+
+        if($('div[data-source=Actor]') != null) {
+
+            var actor = $('div[data-source=Actor]').find(".pi-data-value").html()
+
+            if(actor != null) {
+                actor = actor.match(/title="(.*?)"/g);
+
+                if(actor) {
+                    result.actor = actor[0].replace(/title=/g,'').replace(/"/g,'')
+                }
+                
+
+                
+            }
+
+        }
+
         return result;
+    
     }
 }
 
