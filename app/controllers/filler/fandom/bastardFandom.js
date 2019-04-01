@@ -17,7 +17,7 @@ class BastardsFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            console.log(data.length);
+            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -41,11 +41,11 @@ class BastardsFandomFiller {
     async matchToModel(bastards) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         bastards.map(bastard => {
-            let newEp = new Bastards();
+            let newBastard = new Bastards();
             for(let attr in bastard) {
-                newEp[attr] = bastard[attr];
+                newBastard[attr] = bastard[attr];
             }
-            return newEp;
+            return newBastard;
         });
 
         

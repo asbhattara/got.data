@@ -9,7 +9,9 @@ const   CharacterFiller = require('../app/controllers/filler/fandom/charactersFa
         CastleFiller = require('../app/controllers/filler/fandom/castleFandom'),
         CityFiller = require('../app/controllers/filler/fandom/cityFandom'),
         RegionFiller = require('../app/controllers/filler/fandom/regionFandom'),
-        TownFiller = require('../app/controllers/filler/fandom/townFandom');
+        TownFiller = require('../app/controllers/filler/fandom/townFandom'),
+        AgeFiller = require('../app/controllers/filler/fandom/ageFandom'),
+        HouseFiller = require('../app/controllers/filler/fandom/houseFandom');
 
 
 class UpdateFandom {
@@ -27,6 +29,8 @@ class UpdateFandom {
         this.cityFiller = new CityFiller();
         this.regionFiller = new RegionFiller();
         this.townFiller = new TownFiller();
+        this.ageFiller = new AgeFiller();
+        this.houseFiller = new HouseFiller();
     }
 
     async basicUpdate() {
@@ -49,7 +53,9 @@ class UpdateFandom {
                     self.religionFiller.fill,
                     self.regionFiller.fill,
                     self.townFiller.fill,
-                    self.rankFiller.fill
+                    self.rankFiller.fill,
+                    self.ageFiller.fill,
+                    self.houseFiller.fill
                 ];
                 let promises = fillers.map(async (job) => await job());
                 return await Promise.all(promises);
@@ -58,6 +64,22 @@ class UpdateFandom {
                 console.log(collection.name);
                 try {
                     switch (collection.name) {
+                        case 'agefandoms':
+                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                                if (err) throw new Error(err);
+                                if( count == 0 ) {
+                                    await self.ageFiller.fill();
+                                }
+                            });
+                            break;
+                        case 'housefandoms':
+                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                                if (err) throw new Error(err);
+                                if( count == 0 ) {
+                                    await self.houseFiller.fill();
+                                }
+                            });
+                            break;
                         case 'animalfandoms':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);

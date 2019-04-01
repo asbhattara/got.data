@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      Ages = require('../../models/fandom/age'),
-      AgeScrapper = require('../scraper/fandom/age');
+      Ages = require('../../../models/fandom/age'),
+      AgeScrapper = require('../../scraper/fandom/age');
 
 
 class AgeFandomFiller {

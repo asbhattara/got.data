@@ -1,4 +1,6 @@
 const   CharacterController = require('../controllers/fandomController/characterController'),
+        AgeController = require('../controllers/fandomController/ageController'),
+        HouseController = require('../controllers/fandomController/houseController'),
         ReligionController = require('../controllers/fandomController/religionController'),
         EpisodeController = require('../controllers/fandomController/episodeController'),
         PageRankController = require('../controllers/fandomController/pagerankController'),
@@ -13,6 +15,15 @@ const   CharacterController = require('../controllers/fandomController/character
 
 
 module.exports = function(app, router) {
+
+    const ageController = new AgeController();
+    router.get('/ages', ageController.getAll.bind(ageController));
+    router.get('/ages/:name', ageController.getByName.bind(ageController));
+    router.get('/ages/byAge/:age', ageController.getByAge.bind(ageController));
+
+    const houseController = new HouseController();
+    router.get('/houses', houseController.getAll.bind(houseController));
+    router.get('/houses/:name', houseController.getByName.bind(houseController));
 
     const charController = new CharacterController();
     router.get('/characters', charController.getAll.bind(charController));

@@ -96,7 +96,7 @@ class AgeScraper {
 
         ageItem.age = n - parseInt(dateofbirth)
 
-        console.log(ageItem.age);
+        // console.log(ageItem.age);
 
 
         return ageItem;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      Houses = require('../../models/fandom/house'),
-      HouseScrapper = require('../scraper/fandom/house');
+      Houses = require('../../../models/fandom/house'),
+      HouseScrapper = require('../../scraper/fandom/house');
 
 
 class HouseFandomFiller {
@@ -42,7 +42,7 @@ class HouseFandomFiller {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         houses.map(house => {
             let newHouse = new Houses();
-            for (attr in house) {
+            for (let attr in house) {
                 newHouse[attr] = house[attr];
             }
             return newHouse;
