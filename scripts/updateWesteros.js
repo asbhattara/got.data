@@ -52,7 +52,7 @@ class UpdateWesteros {
                 console.log(collection.name);
                 try {
                     switch (collection.name) {
-                        case 'ages':
+                        case 'agewesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -60,7 +60,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'houses':
+                        case 'housewesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -76,7 +76,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characters':
+                        case 'characterwesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -84,7 +84,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characterlocations':
+                        case 'characterlocationwesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -92,7 +92,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characterpaths':
+                        case 'characterpathwesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -116,7 +116,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'events':
+                        case 'eventwesteross':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
