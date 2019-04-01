@@ -21,7 +21,7 @@ class CharacterController {
     
     async getByName(req, res) {
         let characters = await this.charStore.getByName(req.params.name);
-        if (chararacters.success === 1) {
+        if (characters.success === 1) {
             res.status(200).send(characters.data);
         } else {
             res.status(404).send(characters.message);
