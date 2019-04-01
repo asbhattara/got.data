@@ -3,7 +3,7 @@ const mongoose = require('mongoose'),
     CharacterScraper = require('../../../controllers/scraper/westeros/characters');
 
 
-class CharactersFiller {
+class CharacterFiller {
     constructor(policy) {
         this.POLICY_REFILL = 1;
         this.POLICY_UPDATE = 2;
@@ -39,19 +39,24 @@ class CharactersFiller {
     }
 
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(cultures) {
+    async matchToModel(characterLocations) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        cultures.map(culture => {
+        characterLocations.map(characterLocation => {
             let newChar = new Characters();
 
-            for(let attr in culture) {
-                newChar[attr] = culture[attr];
+            for(let attr in characterLocation) {
+                // remove spaces and html tags
+                if (typeof characterLocation[attr] == 'string') {
+                    characterLocation[attr] = characterLocation[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
+                }
+
+                newChar[attr] = characterLocation[attr];
             }
 
             return newChar;
         });
 
-        return cultures;
+        return characterLocations;
     }
 
     async insertAll(data) {
@@ -71,7 +76,7 @@ class CharactersFiller {
                     console.warn('error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' cultures successfully saved to MongoDB!');
+                console.log(docs.length + ' character locations successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);
@@ -79,4 +84,4 @@ class CharactersFiller {
     }
 }
 
-module.exports = CharactersFiller;
+module.exports = CharacterFiller;
