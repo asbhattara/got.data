@@ -13,16 +13,16 @@ const   CharacterFiller = require('../app/controllers/filler/westeros/characters
 class UpdateWesteros {
     constructor(db) {
         this.db = db;
-        this.characaterFiller = new CharacterFiller();
-        this.characterPathFiller = new CharacterPathFiller();
-        this.characterLoctaionFiller = new CharacterLocationFiller();
-        this.cityFiller = new CityFiller();
-        this.regionFiller = new RegionFiller();
-        this.ageFiller = new AgeFiller();
-        this.houseFiller = new HouseFiller();
-        this.cultureFiller = new CultureFiller();
-        this.continentFiller = new ContinentFiller();
-        this.eventFiller = new EventFiller();
+        this.characaterFiller = new CharacterFiller(1);
+        this.characterPathFiller = new CharacterPathFiller(1);
+        this.characterLoctaionFiller = new CharacterLocationFiller(1);
+        this.cityFiller = new CityFiller(1);
+        this.regionFiller = new RegionFiller(1);
+        this.ageFiller = new AgeFiller(1);
+        this.houseFiller = new HouseFiller(1);
+        this.cultureFiller = new CultureFiller(1);
+        this.continentFiller = new ContinentFiller(1);
+        this.eventFiller = new EventFiller(1);
     }
 
     async basicUpdate() {
