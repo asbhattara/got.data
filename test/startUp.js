@@ -8,6 +8,7 @@ const EpisodeFiller = require('../app/controllers/filler/fandom/episodesFandom')
 const ReligionFiller = require('../app/controllers/filler/fandom/religionsFandom');
 const PageRankFiller = require('../app/controllers/filler/fandom/pagerankFandom');
 const UpdateFandom = require('../scripts/updateFandom');
+const UpdateWesteros = require('../scripts/updateWesteros');
 // const CharacterStore = require('../app/stores/fandom/characters');
 
 const dbUrl = 'mongodb://127.0.0.1/gotdata';
@@ -30,16 +31,15 @@ mongoose.connect(dbUrl, {useNewUrlParser: true}).then(
     console.log("Connection to database failed");
 });
 
-// const charFiller = new CharacterFiller();
-// const epFiller = new EpisodeFiller();
-// const relFiller = new ReligionFiller();
-// const rankFiller = new PageRankFiller();
 
 mongoose.connection.on('connected', async () => {
     try {
+        const db = mongoose.connection.db;
         console.log('MongoDB default connection open to ' + dbUrl);
-        await new UpdateFandom(mongoose.connection.db).basicUpdate();
-        // await updateFandom.basicUpdate();
+        let updateFandom = new UpdateFandom(db).basicUpdate()
+        let updateWesteros = new UpdateWesteros(db).basicUpdate();
+        await Promise.all([await updateFandom, await updateWesteros]);
+
     } catch(e) {
         console.log(e);
     }
@@ -57,16 +57,10 @@ const showRouter = express.Router();
 const bookRouter = express.Router();
 
 require('../app/routes/fandomRoutes')(app, showRouter);
-// ! old routes not working atm
-// require('../app/routes/awoiafRoutes')(app, bookRouter);
+require('../app/routes/westerosRoutes')(app, bookRouter);
 
-// const fandomRoutes = require('../app/routes/fandomRoutes').default; //importing route
-// const awoiafRoutes = require('../app/routes/awoiafRoutes');
-// fandomRoutes(app); //register the route
-// awoiafRoutes(app);
 app.use('/api/show', showRouter);
-// TODO fix old routes
-// app.use('/api/books', bookRouter);
+app.use('/api/book', bookRouter);
 
 app.use('/api', express.static('apiref.html'));
 

@@ -1,13 +1,15 @@
-var Scraper = require(__appbase + 'controllers/scraper/characters');
-var Character = require(__appbase + 'models/character');
-var Characters = require(__appbase + 'stores/characters');
-var jsonfile = require('jsonfile');
-var async = require('async');
-var cfg = require(__base + 'cfg/config.json');
+// TODO remove this file when not needed anymore
+
+let Scraper = require(__appbase + 'controllers/scraper/characters');
+let Character = require(__appbase + 'models/character');
+let Characters = require(__appbase + 'stores/characters');
+let jsonfile = require('jsonfile');
+let async = require('async');
+let cfg = require(__base + 'cfg/config.json');
 
 module.exports = {
     fill: function(policy, callback) {
-        var cacheFile = __tmpbase + 'characters.json';
+        let cacheFile = __tmpbase + 'characters.json';
         console.log('Filling started.');
 
         async.waterfall([
@@ -21,7 +23,7 @@ module.exports = {
                     else {
 
                         // cache outdated?
-                        var cacheAge = ((new Date()) - new Date(obj.createdAt));
+                        let cacheAge = ((new Date()) - new Date(obj.createdAt));
                         if(cacheAge > cfg.TTLWikiCache) {
                             console.log('Cache file is outdated!');
                             cb(null,false); // scrap it!
@@ -55,7 +57,7 @@ module.exports = {
             // downloading images
             function(characters,cb) {
                 console.log('Start downloading images:');
-                var charactersWithDownloadedImages = [];
+                let charactersWithDownloadedImages = [];
                 async.forEach(characters, function (character, _callback) {
                     if (character.imageLink !== undefined) {
                         module.exports.downloadImage(character, function (err, newImageLink) {
@@ -96,15 +98,15 @@ module.exports = {
         });
     },
     downloadImage: function(character,cb) {
-        var fs = require('fs'),
+        let fs = require('fs'),
             request = require('request');
-        var uri = 'http://awoiaf.westeros.org/' + character.imageLink;
-        var filename = '/misc/images/characters/' + character.name.replace(new RegExp(" ", "g"),"_");
+        let uri = 'http://awoiaf.westeros.org/' + character.imageLink;
+        let filename = '/misc/images/characters/' + character.name.replace(new RegExp(" ", "g"),"_");
         console.log('Downloading: ' + uri);
         request.head(uri, function(err, res, body){
             if(!err) {
-                var type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
-                var downloadTo = filename+'.'+type;
+                let type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
+                let downloadTo = filename+'.'+type;
                 downloadTo = downloadTo.replace(".image",'');
                 request(uri).pipe(fs.createWriteStream(__appbase + '..' + downloadTo)).on('close', function() {
                     cb(false,downloadTo);

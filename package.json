@@ -18,8 +18,10 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "body-parser": "~1.15.0",
     "cheerio": "^1.0.0-rc.2",
+    "mwbot": "1.0.10",
+    "mongoose": "^5.4.19",
+    "body-parser": "~1.15.0",
     "console-stamp": "^0.2.0",
     "cors": "^2.7.1",
     "express": "latest",
@@ -27,8 +29,6 @@
     "gotplod": "latest",
     "jsonfile": "^2.2.3",
     "kerberos": "~0.0.17",
-    "mongoose": "^5.4.19",
-    "mwbot": "1.0.10",
     "node-uuid": "latest",
     "nodemw": "0.8.1",
     "request": "^2.88.0",

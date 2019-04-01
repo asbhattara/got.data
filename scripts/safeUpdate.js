@@ -3,12 +3,20 @@ require(__dirname + '/../' + 'constants');
 /*
  * check console input
  */
-var requested = process.env.npm_config_collection;
-if(requested === undefined) {
+let collection = process.env.npm_config_collection;
+let wiki = process.env.npm_config_wiki;
+
+if(collection === undefined) {
     console.log('Provide which collection should be refilled. Example: npm refill --collection=characters ');
     process.exit();
 }
-var possibleRefillings = [
+
+if(wiki !== "fandom")
+{
+    wiki = "westeros";
+}
+
+let possibleRefillings = [
     'ages',
     'characters',
     'episodes',
@@ -37,26 +45,24 @@ var possibleRefillings = [
     'houseFandom'
 ]
 
-if(possibleRefillings.indexOf(requested) < 0) {
-    console.log('Request ' + requested + ' is unknown. Possible refills: ' + possibleRefillings.join(', ') + '.');
+if(possibleRefillings.indexOf(collection) < 0) {
+    console.log('Request ' + collection + ' is unknown. Possible refills: ' + possibleRefillings.join(', ') + '.');
     process.exit();
 }
 /*
  * start
  */
-console.log('Refilling collection: '+ requested);
+console.log('Refilling collection: '+ collection);
 
-var config = require('../cfg/config');
-var mongoose = require('mongoose');
-var express = require('express');
-var app = express();
+let config = require('../cfg/config');
+let mongoose = require('mongoose');
 
 global.__base = __dirname + '/../';
 global.__appbase = __dirname + '/../app/';
 
 //Create the DB connection string
-var databaseParams = config.database;
-var dbConnection = "mongodb://";
+let databaseParams = config.database;
+let dbConnection = "mongodb://";
 if (databaseParams.username.length > 0 && databaseParams.password.length > 0) {
     dbConnection += databaseParams.username + ":" + databaseParams.password + "@";
 }
@@ -65,7 +71,7 @@ dbConnection += databaseParams.uri + ":" + databaseParams.port + "/" + databaseP
 //Create the connection to mongodb
 console.log("Going to connect to " + dbConnection);
 mongoose.connect(dbConnection);
-var db = mongoose.connection;
+let db = mongoose.connection;
 
 // CONNECTION EVENTS: When successfully connected
 db.on('connected', function () {
@@ -97,7 +103,7 @@ db.on('open', function () {
         controller.fill(3,function() {process.exit();});
     }
     else {
-        var controller = require('../app/controllers/filler/characters');
+        let controller = require('../app/controllers/filler/characters');
         controller.updatePlods(3,function(){
             console.log('Finished safeUpdating plods!');
             process.exit();

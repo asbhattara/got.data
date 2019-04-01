@@ -21,7 +21,7 @@ module.exports = {
      *
      */
     getAllContinents: function (req, res) {
-        var continentsStore = require('../stores/continents');
+        var continentsStore = require('../stores/westeros/continents');
 
         continentsStore.getAll(function(success,continents) {
             res.status(200).json(continents);
@@ -59,7 +59,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/continent.js" target="_blank">continent model</a>.
      */
     getContinents: function(req,res) {
-        var continentsStore = require('../stores/continents');
+        var continentsStore = require('../stores/westeros/continents');
         continentsStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -88,7 +88,7 @@ module.exports = {
      * @apiDescription Return the continent named :name.
      */
     getContinentByName: function(req, res) {
-        var continentsStore = require('../stores/continents');
+        var continentsStore = require('../stores/westeros/continents');
 
         continentsStore.getByName(req.params.name, function(success, message) {
             if(success == 1)
@@ -116,7 +116,7 @@ module.exports = {
      * @apiDescription Return the continent with the specific :id.
      */
     getContinentById: function(req, res) {
-        var continentsStore = require('../stores/continents');
+        var continentsStore = require('../stores/westeros/continents');
 
         continentsStore.getById(req.params.id, function(success, message) {
             if(success == 1)
@@ -145,7 +145,7 @@ module.exports = {
      * @apiDescription Get all the regions currently stored.
      */
     getAllRegions: function (req, res) {
-        var regionsStore = require('../stores/regions');
+        var regionsStore = require('../stores/westeros/regions');
 
         regionsStore.getAll(function(success,regions) {
             res.status(200).json(regions);
@@ -182,7 +182,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/region.js" target="_blank">region model</a>.
      */
     getRegions: function(req,res) {
-        var regionsStore = require('../stores/regions');
+        var regionsStore = require('../stores/westeros/regions');
         regionsStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -211,7 +211,7 @@ module.exports = {
      * @apiDescription Return the region named :name.
      */
     getRegionByName: function(req, res) {
-        var regionsStore = require('../stores/regions');
+        var regionsStore = require('../stores/westeros/regions');
 
         regionsStore.getByName(req.params.name, function(success, message) {
             if(success == 1)
@@ -239,7 +239,7 @@ module.exports = {
      * @apiDescription Return the region with the specific :id.
      */
     getRegionById: function(req, res) {
-        var regionsStore = require('../stores/regions');
+        var regionsStore = require('../stores/westeros/regions');
 
         regionsStore.getById(req.params.id, function(success, message) {
             if(success == 1)
@@ -268,7 +268,7 @@ module.exports = {
      * @apiDescription Get all the cultures currently stored.
      */
     getAllCultures: function (req, res) {
-        var culturesStore = require('../stores/cultures');
+        var culturesStore = require('../stores/westeros/cultures');
 
         culturesStore.getAll(function(success,cultures) {
             res.status(200).json(cultures);
@@ -305,7 +305,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/culture.js" target="_blank">culture model</a>.
      */
     getCultures: function(req,res) {
-        var culturesStore = require('../stores/cultures');
+        var culturesStore = require('../stores/westeros/cultures');
         culturesStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -334,7 +334,7 @@ module.exports = {
      * @apiDescription Return the culture named :name.
      */
     getCultureByName: function(req, res) {
-        var culturesStore = require('../stores/cultures');
+        var culturesStore = require('../stores/westeros/cultures');
 
         culturesStore.getByName(req.params.name, function(success, message) {
             if(success == 1)
@@ -362,7 +362,7 @@ module.exports = {
      * @apiDescription Return the culture with the specific :id.
      */
     getCultureById: function(req, res) {
-        var culturesStore = require('../stores/cultures');
+        var culturesStore = require('../stores/westeros/cultures');
 
         culturesStore.getById(req.params.id, function(success, message) {
             if(success == 1)
@@ -395,7 +395,7 @@ module.exports = {
      * Check the <a href="https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/city.js" target="_blank">city model</a>.
      */
     getCities: function(req,res) {
-        var citiesStore = require('../stores/cities');
+        var citiesStore = require('../stores/westeros/cities');
         citiesStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -424,7 +424,7 @@ module.exports = {
      * @apiDescription Get all cities.
      */
     getAllCities: function(req,res) {
-        var citiesStore = require('../stores/cities');
+        var citiesStore = require('../stores/westeros/cities');
         citiesStore.getAll(function(success,cities) {
             res.status(200).json(cities);
         });
@@ -448,7 +448,7 @@ module.exports = {
      * @apiDescription Find a city by the name :name.
      */
     getCityByName: function(req,res) {
-        var citiesStore = require('../stores/cities');
+        var citiesStore = require('../stores/westeros/cities');
         citiesStore.getByName(req.params.name, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -475,7 +475,7 @@ module.exports = {
      * @apiDescription Get city by the id :id.
      */
     getCityById: function(req,res) {
-        var citiesStore = require('../stores/cities');
+        var citiesStore = require('../stores/westeros/cities');
         citiesStore.getById(req.params.id, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });

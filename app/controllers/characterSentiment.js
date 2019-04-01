@@ -18,7 +18,7 @@ module.exports = {
      * @apiDescription Add new character sentiment values. Take a look at https://github.com/Rostlab/JS16_ProjectA/blob/master/app/models/characterSentiment.js to understand how the JSON-body should look like.
      */
     add: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
         charactersSentimentStore.add(req.body, function(success, message) {
             if(success == 1)
                 res.status(201).json({ message: 'Success', data: message });
@@ -46,7 +46,7 @@ module.exports = {
      * @apiDescription Get character sentiment values.
      */
     get: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
         charactersSentimentStore.get(req.body, function(success, message) {
             if(success == 1)
                 res.status(200).json({ message: 'Success', data: message });
@@ -72,7 +72,7 @@ module.exports = {
      * @apiDescription Get all character sentiment values.
      */
     getAll: function (req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.getAll(function(success,characters) {
             if(success)
@@ -98,7 +98,7 @@ module.exports = {
      * @apiDescription Get character sentiment values by a specific date
      */
     getByDate: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.getByDate(req.params.date, function(success, message) {
             if(success)
@@ -125,7 +125,7 @@ module.exports = {
      * @apiDescription Get all character sentiment values within a timerange. Make sure, that your input matches the standard JS date formats: http://www.w3schools.com/js/js_date_formats.asp
      */
     getByTimeRange: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.getByTimeRange(req.query.beginDate, req.query.endDate, function(success, message) {
             if(success == 1)
@@ -152,7 +152,7 @@ module.exports = {
      * @apiDescription Get character sentiment values by :id
      */
     getById: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.getById(req.params.id, function(success, message) {
             if(success == 1)
@@ -177,7 +177,7 @@ module.exports = {
      * @apiDescription Get character sentiment values by :description
      */
     getByDescription: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.getByDescription(req.params.description, function(success, message) {
             if(success == 1)
@@ -206,7 +206,7 @@ module.exports = {
      * @apiDescription Edit character sentiment values by :id
      */
     edit: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.edit(req.params.id, function(success, message) {
             if(success == 1)
@@ -239,7 +239,7 @@ module.exports = {
      * @apiDescription Delete character sentiment values by :id
      */
     remove: function(req, res) {
-        var charactersSentimentStore = require('../stores/charactersSentiment');
+        var charactersSentimentStore = require('../stores/westeros/charactersSentiment');
 
         charactersSentimentStore.remove(req.params.id, function(success, message) {
             if(success == 1)
