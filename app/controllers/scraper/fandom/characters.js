@@ -95,6 +95,7 @@ class CharacterScraper {
             "mother": null,
             "father": null,
             "siblings": [],
+            "house": null,
 
             "spouse": null,
             "lovers": [],
@@ -185,6 +186,12 @@ class CharacterScraper {
                 case "Culture":
                     $data.find("a").each(function () {
                         result["cultures"].push($(this).text())
+                    });
+
+                    break;
+                case "House":
+                    $data.find("a").each(function () {
+                        result["house"].push($(this).text())
                     });
 
                     break;
