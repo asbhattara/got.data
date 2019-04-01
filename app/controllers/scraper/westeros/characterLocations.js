@@ -1,16 +1,13 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
 const CharactersScraper = require("./characters");
 const charactersScraper = new CharactersScraper();
 const City = require( "../../../models/westeros/city");
 
-class CharacterLocationScraper extends Scraper {
+class CharacterLocationScraper {
     constructor()
     {
-        super();
-
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });

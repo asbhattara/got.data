@@ -1,12 +1,9 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
-class AgesScraper extends Scraper {
+class AgesScraper {
     constructor()
     {
-        super();
-
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
