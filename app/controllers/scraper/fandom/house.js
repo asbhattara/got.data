@@ -54,7 +54,7 @@ class HouseScrapper {
                     var house = {"title": null, "reference": null};
                     house.title = $(this).children('a').attr('title')
                     house.reference = $(this).children('a').attr('href')
-                    console.log(house.title);
+                    // console.log(house.title);
 
                     if(!house.title.match(/Category/g)) {
                         houses.push(house);
@@ -68,7 +68,7 @@ class HouseScrapper {
 
 
 
-            console.log(houses);
+            // console.log(houses);
 
             return houses;
 
@@ -189,7 +189,7 @@ class HouseScrapper {
         }
 
         
-        console.log(houseItem);
+        // console.log(houseItem);
         return houseItem;
     }
 
@@ -201,7 +201,7 @@ class HouseScrapper {
             console.log("started scraping ", houses[i]);
             let e = await this.scrape(houses[i]);
 
-            console.log(e);
+            // console.log(e);
 
             if (e)
                 data.push(e);
