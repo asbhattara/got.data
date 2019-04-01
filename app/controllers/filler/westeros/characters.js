@@ -53,7 +53,6 @@ class CharacterFiller {
                     delete character[attr];
                     continue;
                 } 
-
                 newChar[attr] = character[attr];
             }
 
