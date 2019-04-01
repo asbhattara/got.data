@@ -39,24 +39,28 @@ class CharacterFiller {
     }
 
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(characterLocations) {
+    async matchToModel(characters) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        characterLocations.map(characterLocation => {
+        characters.map(character => {
             let newChar = new Characters();
 
-            for(let attr in characterLocation) {
+            for(let attr in character) {
                 // remove spaces and html tags
-                if (typeof characterLocation[attr] == 'string') {
-                    characterLocation[attr] = characterLocation[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
+                if (typeof character[attr] == 'string') {
+                    character[attr] = character[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
+                if((attr == 'dateOfBirth' || attr == 'dateOfDeath') && isNaN(character[attr])) {
+                    delete character[attr];
+                    continue;
+                } 
 
-                newChar[attr] = characterLocation[attr];
+                newChar[attr] = character[attr];
             }
 
             return newChar;
         });
 
-        return characterLocations;
+        return characters;
     }
 
     async insertAll(data) {
