@@ -121,7 +121,8 @@ class CharacterStore {
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {
-                data.longevity = longevity;
+                let arr = JSON.parse(longevity);
+                data.longevity = arr;
                 await data.save();
                 return { success: 1, message: data.name + ' has been updated' };
             }

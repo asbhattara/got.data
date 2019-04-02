@@ -19,7 +19,7 @@ const CharacterFandomSchema = new Schema({
     spouse          : {type: String, ref: 'CharacterFandom'},
     lovers          : [{type: String, ref: 'CharacterFandom'}],
     plod            : {type: Number, default: 0.0},
-    longevity       : [{type: Number, default: 0.0}],
+    longevity       : [{type: Number}],
 
     cultures        : [{type: String, ref: 'Culture'}],
     religions       : [{type: String, ref: 'Religion'}],
