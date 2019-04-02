@@ -115,7 +115,7 @@ class CharacterScraper {
                     }
                 }
 
-                character.male = gender;
+                character.gender = gender;
             }
 
             //fetch the image
