@@ -24,7 +24,7 @@ function routerAuthentication(req, res, next) {
     }
 
     //Otherwise check if we got a token
-    let sentToken = req.query.token;
+    let sentToken = req.query.token ? req.query.token : req.body.token;
     if (!sentToken) {
         console.log('401 - no token sent');
         return res.status(401).send({ //Send a nice little message to remind the user that he needs to supply a token
