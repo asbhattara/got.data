@@ -100,22 +100,7 @@ class CharacterStore {
         }
     }
 
-    async updatePlod(slug, plod) {
-        try {
-            let data = await Characters.findOne({slug: slug});
-            if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
-            } else {
-                data.plod = plod;
-                await data.save();
-                return { success: 1, message: data.name + ' has been updated' };
-            }
-        } catch (e) {
-            return { success: 0, message: 'error in database query! - ' + e }
-        }
-    }
-
-    async updateLongevity(slug, longevity) {
+    async updateGeneral(slug, plod, longevity, longevityStart) {
         try {
             let data = await Characters.findOne({slug: slug});
             if (!data) {
@@ -123,6 +108,8 @@ class CharacterStore {
             } else {
                 let arr = JSON.parse(longevity);
                 data.longevity = arr;
+                data.plod = plod;
+                data.longevityStart = longevityStart
                 await data.save();
                 return { success: 1, message: data.name + ' has been updated' };
             }
@@ -131,5 +118,40 @@ class CharacterStore {
         }
     }
 
+    async updateGroupB(slug, plod, longevity, longevityStart) {
+        try {
+            let data = await Characters.findOne({slug: slug});
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                let arr = JSON.parse(longevity);
+                data.longevityB = arr;
+                data.plodB = plod;
+                data.longevityStartB = longevityStart;
+                await data.save();
+                return { success: 1, message: data.name + ' has been updated' };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+    }
+
+    async updateGroupC(slug, plod, longevity, longevityStart) {
+        try {
+            let data = await Characters.findOne({slug: slug});
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                let arr = JSON.parse(longevity);
+                data.longevityC = arr;
+                data.plodC = plod;
+                data.longevityStartC = longevityStart
+                await data.save();
+                return { success: 1, message: data.name + ' has been updated' };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+    }
 }
 module.exports = CharacterStore;

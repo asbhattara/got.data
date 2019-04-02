@@ -25,8 +25,9 @@ module.exports = function(app, router) {
     router.get('/characters/:name', charController.getByName.bind(charController));
     router.get('/characters/bySlug/:slug', charController.getBySlug.bind(charController));
     router.get('/characters/byHouse/:house', charController.getByHouse.bind(charController));
-    router.post('/characters/updatePlod', charController.updatePlod.bind(charController));
-    router.post('/characters/updateLongevity', charController.updateLongevity.bind(charController));
+    router.post('/characters/updateGeneral', charController.updateGeneral.bind(charController));
+    router.post('/characters/updateGroupB', charController.updateGroupB.bind(charController));
+    router.post('/characters/updateGroupC', charController.updateGroupC.bind(charController));
 
     const characterLocationController = new CharacterLocationController();
     router.get('/characterLocations', characterLocationController.getAll.bind(characterLocationController));
