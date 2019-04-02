@@ -64,7 +64,12 @@ class CharacterScraper {
 
             console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
 
-            data.push(await this.scrape(character["name"], character["slug"]));
+            try {
+                data.push(await this.scrape(character["name"], character["slug"]));
+            }
+            catch (e) {
+                console.log(e.info)
+            }
         }
         return data;
     }

@@ -11,20 +11,20 @@ class BattleScrapper {
 
     async getAllBattlesRaw() {
 
-        var options = {
+        let options = {
             uri: 'https://gameofthrones.fandom.com/wiki/Category:Battles',
             transform: function (body) {
                 return cheerio.load(body);
             }
         };
 
-        var battles = []
+        let battles = [];
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    var battle = {"title": null, "reference": null};
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let battle = {"title": null, "reference": null};
                     battle.title = $(this).children('a').attr('title')
                     battle.reference = $(this).children('a').attr('href')
                     // console.log(battle.title);
@@ -32,16 +32,16 @@ class BattleScrapper {
                     if(!battle.title.match(/Category/g)) {
                         battles.push(battle);
                     }
-                  
+
                 });
 
             })
             .catch(function (err) {
             });
 
-            // console.log(battles);
+        // console.log(battles);
 
-            return battles;
+        return battles;
 
     }
 
@@ -53,11 +53,11 @@ class BattleScrapper {
                 format: "json",
                 page: decodeURIComponent(battle.reference.substr(6))
             });
-        } catch (err) {
+        } catch(err) {
             return false;
         }
 
-        var battleItem = {};
+        let battleItem = {};
 
         battleItem.name = battle.title;
         battleItem.slug = battle.reference.substr(6);
@@ -74,20 +74,18 @@ class BattleScrapper {
         }
 
         if($('div[data-source=place]') != null) {
-            battleItem.place = ($('div[data-source=place]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&")).split(",");
+            battleItem.place = ($('div[data-source=place]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&")).split(",");
         }
-        
-
 
 
         battleItem.factionsOne = []
 
         if($('td[data-source=side1]').html() != null) {
 
-            var side1 = $('td[data-source=side1]').html().split('<br>')
+            let side1 = $('td[data-source=side1]').html().split('<br>')
 
-            side1.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side1.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -95,17 +93,16 @@ class BattleScrapper {
                 }
             });
         }
-        
 
 
         battleItem.factionsTwo = []
 
 
         if($('td[data-source=side2]').html() != null) {
-            var side2 = $('td[data-source=side2]').html().split('<br>')
+            let side2 = $('td[data-source=side2]').html().split('<br>')
 
-            side2.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side2.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -118,10 +115,10 @@ class BattleScrapper {
 
         if($('td[data-source=commanders1]').html() != null) {
 
-            var side1 = $('td[data-source=commanders1]').html().split('<br>')
+            let side1 = $('td[data-source=commanders1]').html().split('<br>')
 
-            side1.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side1.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -129,17 +126,16 @@ class BattleScrapper {
                 }
             });
         }
-        
 
 
         battleItem.commandersTwo = []
 
 
         if($('td[data-source=commanders2]').html() != null) {
-            var side2 = $('td[data-source=commanders2]').html().split('<br>')
+            let side2 = $('td[data-source=commanders2]').html().split('<br>')
 
-            side2.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side2.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -152,10 +148,10 @@ class BattleScrapper {
 
         if($('td[data-source=forces1]').html() != null) {
 
-            var side1 = $('td[data-source=forces1]').html().split('<br>')
+            let side1 = $('td[data-source=forces1]').html().split('<br>')
 
-            side1.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side1.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -163,17 +159,16 @@ class BattleScrapper {
                 }
             });
         }
-        
 
 
         battleItem.forcesTwo = []
 
 
         if($('td[data-source=forces2]').html() != null) {
-            var side2 = $('td[data-source=forces2]').html().split('<br>')
+            let side2 = $('td[data-source=forces2]').html().split('<br>')
 
-            side2.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side2.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -186,10 +181,10 @@ class BattleScrapper {
 
         if($('td[data-source=casual1]').html() != null) {
 
-            var side1 = $('td[data-source=casual1]').html().split('<br>')
+            let side1 = $('td[data-source=casual1]').html().split('<br>')
 
-            side1.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side1.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -197,14 +192,12 @@ class BattleScrapper {
                 }
             });
         }
-        
-
 
         if($('td[data-source=casual2]').html() != null) {
-            var side2 = $('td[data-source=casual2]').html().split('<br>')
+            let side2 = $('td[data-source=casual2]').html().split('<br>')
 
-            side2.forEach(function(element) {
-                var el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            side2.forEach(function (element) {
+                let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
 
                 if(el != "") {
 
@@ -212,12 +205,9 @@ class BattleScrapper {
                 }
             });
         }
-        
-
-
 
         // console.log(battleItem);
-        
+
 
         return battleItem;
     }
@@ -228,17 +218,16 @@ class BattleScrapper {
 
         for(let i = 0; i < battles.length; i++) {
             console.log("started scraping ", battles[i]);
-            let e = await this.scrape(battles[i]);
 
-            // console.log(e);
-
-            if (e)
-                data.push(e);
-            else
-                console.log("invalid page");
+            try {
+                data.push(await this.scrape(battles[i]));
+            }
+            catch(e) {
+                console.log(e.info);
+            }
         }
-        
-        
+
+
         return data;
     }
 }

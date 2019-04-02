@@ -1,4 +1,4 @@
-const Age = require('../../models/westeros/ages');
+const Age = require('../../models/westeros/age');
 
 class AgeStore {
     constructor() {}

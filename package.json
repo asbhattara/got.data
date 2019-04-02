@@ -18,23 +18,21 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "mwbot": "1.0.10",
-    "mongoose": "^5.4.19",
-    "body-parser": "~1.15.0",
-    "console-stamp": "^0.2.0",
-    "cors": "^2.7.1",
-    "express": "latest",
-    "gotarffplod": "latest",
-    "gotplod": "latest",
-    "jsonfile": "^2.2.3",
+    "cheerio": "~1.0.0-rc.2",
+    "mwbot": "~1.0.10",
+    "mongoose": "~5.4.19",
+    "body-parser": "~1.18.3",
+    "express": "~4.16.4",
+    "jsonfile": "~5.0.0",
+    "request": "~2.88.0",
+    "request-promise": "~4.2.4",
+
+    "console-stamp": "~0.2.0",
+    "uuid": "~3.3.2",
+
+    "cors": "~2.7.1",
     "kerberos": "~0.0.17",
-    "node-uuid": "latest",
-    "nodemw": "0.8.1",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "swig": "^1.4.2",
-    "twitter": "latest"
+    "swig": "~1.4.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -8,26 +8,22 @@ class PageRankScraper {
             apiUrl: 'https://gameofthrones.fandom.com/api.php'
         });
 
-        this.ranks = {};
+        this.ranks = false;
         this.visited = [];
         this.pending = [];
 
         // console.log(this.ranks)
     }
 
-    getPageRank(page) {
-        if(page in this.ranks)
-        {
-            return this.ranks[page];
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
     async scrapePageRanks()
     {
+        if(this.ranks)
+        {
+            return this.ranks;
+        }
+
+        this.ranks = {};
+
         // starting page
         await this.scrapePage("Game_of_Thrones_(TV_series)");
 

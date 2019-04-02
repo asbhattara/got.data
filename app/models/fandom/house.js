@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema   = mongoose.Schema;
 
-var HouseFandomSchema = new Schema({
+const HouseFandomSchema = new Schema({
     name           : {type: String, required: true, unique: true},
     sigil          : {type: String},                                                   // Sable, a dragon thrice-headed gules
     words          : {type: String},

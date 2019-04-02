@@ -1,12 +1,9 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
-class CharacterScraper extends Scraper {
+class CharacterScraper {
     constructor()
     {
-        super();
-
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
@@ -52,11 +49,11 @@ class CharacterScraper extends Scraper {
 
         for(let i = 0; i < characters.length; i++)
         {
-            let character = await this.get(characters[i]);
-
-            if(character)
-            {
-                result.push(character);
+            try {
+                result.push(await this.get(characters[i]));
+            }
+            catch (e) {
+                console.log(e.info);
             }
         }
 
@@ -73,21 +70,11 @@ class CharacterScraper extends Scraper {
         console.log("scraping "+characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
-        let data;
-
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                page: pageName,
-                format: "json",
-                redirects: ""
-            });
-        }
-        catch (e) {
-            console.log(e);
-
-            return null;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            page: pageName,
+            format: "json",
+        });
 
         let character = {};
         if (data) {
@@ -103,10 +90,10 @@ class CharacterScraper extends Scraper {
                     if (phrases.length > 1) {
                         let phrase = phrases[1].trim();
                         if (phrase.indexOf("He") === 0 || phrase.indexOf("His") === 0) {
-                            gender = "Male";
+                            gender = "male";
                         }
                         else if (phrase.indexOf("She") === 0 || phrase.indexOf("Her") === 0) {
-                            gender = "Female";
+                            gender = "female";
                         }
                     }
                 }
@@ -117,10 +104,10 @@ class CharacterScraper extends Scraper {
                         let fGender = (secondAttempt.match(/\sher\s|She|herself/g) || []).length;
                         let mGender = (secondAttempt.match(/\shis\s|\shim\s|He|himself/g) || []).length;
                         if (fGender > mGender) {
-                            gender = "Female";
+                            gender = "female";
                         }
                         else if (fGender < mGender) {
-                            gender = "Male";
+                            gender = "male";
                         }
                         else {
                             gender = null;
@@ -128,7 +115,7 @@ class CharacterScraper extends Scraper {
                     }
                 }
 
-                character.male = gender === "Male";
+                character.male = gender;
             }
 
             //fetch the image
@@ -136,10 +123,8 @@ class CharacterScraper extends Scraper {
 
             let imgLink = $('.infobox-image img').attr('src');
             if(imgLink !== undefined) {
-                character.imageLink = imgLink;
+                character.image = "https://awoiaf.westeros.org" + imgLink;
             }
-
-
 
             let infobox = $('.infobox th');
 
@@ -193,24 +178,6 @@ class CharacterScraper extends Scraper {
 
                     character.books.push(book);
                 });
-            }
-
-            // fetch actor
-            let actorTd = infobox.
-            filter(function(i,el) {return $(this).html() === 'Played by' || $(this).html() === '<span style="white-space:nowrap">Played by</span>';}).
-            parent().find('td');
-
-            if(actorTd.html() != null) {
-
-                let actor = actorTd.html();
-                actor = actor.replace(/<a\s(.*?)>/g, '').trim();
-                actor = actor.replace(/<\/a>/g, '').trim();
-
-                actor = actor.replace(/\(\w+\)+/g, '').trim();
-                actor = actor.replace(/&apos;/g,"'");
-                actor = actor.replace(/&amp;/g,"&");
-
-                character.actor = actor;
             }
 
             // fetch culture
@@ -426,19 +393,19 @@ class CharacterScraper extends Scraper {
                     isBirthDate = true;
                 }
                 if(isBirthDate){
-                    character.dateOfBirth = born;
+                    character.birth = born;
                 }
             }
 
-            // fetch dateOfDeath
+            // fetch death
             let diedTd = infobox.
                 filter(function(i, el) {return $(this).html() === 'Died' || $(this).html() === 'Died in';}).
                 parent().find('td')
             ;
+            let isDead = false;
 
             if(diedTd.html() !== null) {
                 let died = diedTd.html();
-                let isDead = false;
 
                 let deathPlace = died.replace(/<[^>]*>/g, '');
                 let checkDeathAt = deathPlace.match(/at/g);
@@ -473,9 +440,11 @@ class CharacterScraper extends Scraper {
                 }
 
                 if(isDead) {
-                    character.dateOfDeath = died;
+                    character.death = died;
                 }
             }
+
+            character.alive = !isDead;
         }
         
         return character;

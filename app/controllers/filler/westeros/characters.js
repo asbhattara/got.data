@@ -49,7 +49,7 @@ class CharacterFiller {
                 if (typeof character[attr] == 'string') {
                     character[attr] = character[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
-                if((attr == 'dateOfBirth' || attr == 'dateOfDeath') && isNaN(character[attr])) {
+                if((attr == 'birth' || attr == 'death') && isNaN(character[attr])) {
                     delete character[attr];
                     continue;
                 } 

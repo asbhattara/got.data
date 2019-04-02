@@ -1,16 +1,13 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
 const CharactersScraper = require("./characters");
 const charactersScraper = new CharactersScraper();
 const City = require( "../../../models/westeros/city");
 
-class CharacterLocationScraper extends Scraper {
+class CharacterLocationScraper {
     constructor()
     {
-        super();
-
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
@@ -51,11 +48,11 @@ class CharacterLocationScraper extends Scraper {
         console.log("started fetching all character locations");
         for(let i = 0; i < characters.length; i++)
         {
-            let characterLocations = await this.get(characters[i], cityNames);
-
-            if(characterLocations)
-            {
-                result.push(characterLocations);
+            try {
+                result.push(await this.get(characters[i], cityNames));
+            }
+            catch (e) {
+                console.log(e.info);
             }
         }
 
@@ -73,21 +70,12 @@ class CharacterLocationScraper extends Scraper {
         console.log("Fetching " + characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
-        let data;
-
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                page: pageName,
-                format: "json",
-                redirects: ""
-            });
-        }
-        catch (e) {
-            console.log(e);
-
-            return null;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            page: pageName,
+            format: "json",
+            redirects: ""
+        });
 
         let character = {};
         let body = data.parse.text["*"];

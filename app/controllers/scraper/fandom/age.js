@@ -65,7 +65,12 @@ class AgeScraper {
 
             console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
 
-            data.push(await this.scrape(character["name"], age["slug"]));
+            try {
+                data.push(await this.scrape(character["name"], age["slug"]));
+            }
+            catch (e) {
+                console.log(e.info);
+            }
         }
         return data;
     }
@@ -79,25 +84,24 @@ class AgeScraper {
 
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
-        var ageItem = {};
+        let ageItem = {};
 
         ageItem.name = name;
 
         let $infobox = $(".portable-infobox");
 
-        var dateofbirth;
+        let dateofbirth;
 
         if($('div[data-source=dateofbirth]') != null) {
             dateofbirth = $('div[data-source=dateofbirth]').find(".pi-data-value").text().match(/(.{4})\s*$/g);
         }
 
-        var d = new Date();
-        var n = d.getFullYear();
+        let d = new Date();
+        let n = d.getFullYear();
 
-        ageItem.age = n - parseInt(dateofbirth)
+        ageItem.age = n - parseInt(dateofbirth);
 
         // console.log(ageItem.age);
-
 
         return ageItem;
     }

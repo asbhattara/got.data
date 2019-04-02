@@ -1,12 +1,9 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
-class HouseScraper extends Scraper{
+class HouseScraper {
     constructor()
     {
-        super();
-
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
@@ -33,7 +30,15 @@ class HouseScraper extends Scraper{
                 sroffset: String(i)
             };
 
-            let data = await this.bot.request(params);
+            let data;
+            try {
+                data = await this.bot.request(params);
+            }
+            catch(e) {
+                console.log(e.info);
+
+                continue;
+            }
 
             totalhits = parseInt(data["query"]["searchinfo"]["totalhits"]);
 
@@ -63,11 +68,11 @@ class HouseScraper extends Scraper{
         {
             console.log("scraping", houses[i]["name"], "(", (i + 1), "/", houses.length, ")");
 
-            let house = await this.get(houses[i]["name"], houses[i]["slug"]);
-
-            if(house)
-            {
-                data.push(house);
+            try {
+                data.push(await this.get(houses[i]["name"], houses[i]["slug"]));
+            }
+            catch (e) {
+                console.log(e.info);
             }
         }
 
@@ -78,20 +83,12 @@ class HouseScraper extends Scraper{
      * Fetches details for one house
      */
     async get(house, page) {
-        let data;
+        let data = await this.bot.request({
+            action: "parse",
+            page: page,
+            format: "json"
+        });
 
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                page: page,
-                format: "json"
-            });
-        }
-        catch (e) {
-            console.log(e);
-
-            return null;
-        }
 
         let $ = cheerio.load(data["parse"]["text"]["*"]);
 

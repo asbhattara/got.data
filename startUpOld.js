@@ -3,7 +3,7 @@
     var express = require('express');
     var bodyParser = require('body-parser');
     var swig = require('swig');
-    var uuid = require('node-uuid');
+    var uuidv4 = require('uuid/v4');
     var cors = require('cors');
     var mongoose = require('mongoose');
     var config = require(__base + 'cfg/config');
@@ -42,7 +42,7 @@
         if (config.server.accessToken) {
             global.accessToken = config.server.accessToken;
         } else {
-            global.accessToken = uuid.v4(); //Generate a default token when none is set
+            global.accessToken = uuidv4(); //Generate a default token when none is set
         }
         console.log('Your requests must contain the following token: ' + accessToken);
     }

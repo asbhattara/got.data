@@ -5,8 +5,8 @@ const AgeSchema = new Schema({
     name       : {type: String, required: true, unique: true},
     startDate  : {type: Number},
     endDate    : {type: Number},
-    predecessor: {type: String, ref: 'Age'},
-    successor  : {type: String, ref: 'Age'}
+    predecessor: {type: String, ref: 'AgeWesteros'},
+    successor  : {type: String, ref: 'AgeWesteros'}
 });
 
-module.exports = mongoose.model('Age', AgeSchema);
+module.exports = mongoose.model('AgeWesteros', AgeSchema);

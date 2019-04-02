@@ -65,16 +65,12 @@ class EpisodeScraper {
     }
 
     async scrape(episode, previous) {
-        let data = null;
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                format: "json",
-                page: decodeURIComponent(episode.reference.substr(6))
-            });
-        } catch (err) {
-            return false;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            format: "json",
+            page: decodeURIComponent(episode.reference.substr(6))
+        });
+
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
         let ret = {
@@ -187,13 +183,17 @@ class EpisodeScraper {
         let previous = null;
         for(let i = 0; i < episodes.length; i++) {
             console.log("started scraping ", episodes[i].title);
-            let e = await this.scrape(episodes[i], previous);
 
-            previous = e;
-            if (e)
-                data.push(e);
-            else
-                console.log("invalid page");
+            try {
+                let episode = await this.scrape(episodes[i], previous);
+
+                data.push(episode);
+
+                previous = episode;
+            }
+            catch (e) {
+                console.log(e.info);
+            }
         }
 
         return data;

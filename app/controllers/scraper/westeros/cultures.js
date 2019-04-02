@@ -1,19 +1,14 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
-const Scraper = require("../scraper");
 
-class CultureScraper extends Scraper {
-    constructor()
-    {
-        super();
-
+class CultureScraper {
+    constructor() {
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
     }
 
-    async getAll()
-    {
+    async getAll() {
         console.log("start getAll");
 
         let data = await this.bot.request({
@@ -21,7 +16,7 @@ class CultureScraper extends Scraper {
             page: "Portal:Culture",
             format: "json"
         });
-        
+
         let cultures = [];
 
         let allData = data.parse.text["*"];
