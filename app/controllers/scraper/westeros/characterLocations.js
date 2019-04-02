@@ -1,9 +1,8 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
+const jsonfile = require('jsonfile');
 
 const CharactersScraper = require("./characters");
-const charactersScraper = new CharactersScraper();
-const City = require( "../../../models/westeros/city");
 
 class CharacterLocationScraper {
     constructor()
@@ -11,17 +10,33 @@ class CharacterLocationScraper {
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
+
+        this.characterscraper = new CharactersScraper();
     }
 
     async getAllCities()
     {
-        return new Promise(function (resolve) {
-            City.find(function(err,cities) {
+        let file = __appbase + '../data/cities.json';
+
+        return new Promise(function (resolve, reject) {
+            jsonfile.readFile(file, function(err, obj) {
                 if(err) {
-                    throw err;
+                    return reject();
                 }
 
-                resolve(cities);
+                console.log('Cities from  file "'+file+'". No scrapping.');
+
+                let names = [];
+
+                for(let i = 0; i < obj.length; i++)
+                {
+                    if(obj[i].name !== undefined && obj[i].name.length > 0)
+                    {
+                        names.push(obj[i]["name"])
+                    }
+                }
+
+                resolve(names);
             });
         });
     }
@@ -30,18 +45,10 @@ class CharacterLocationScraper {
     {
         console.log("fetching cities from db");
 
-        let cities = await this.getAllCities();
-        let cityNames = [];
-
-        for(let i = 0; i < cities.length; i++)
-        {
-            if(cities[i].name !== undefined && cities[i].name.length > 0) {
-                cityNames.push(cities[i].name);
-            }
-        }
+        let cityNames = await this.getAllCities();
 
         console.log("fetching all character names from wiki");
-        let characters = await charactersScraper.getAllNames();
+        let characters = await this.characterscraper.getAllNames();
 
         let result = [];
 
