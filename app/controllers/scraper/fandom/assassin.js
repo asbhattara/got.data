@@ -11,27 +11,27 @@ class AssassinScrapper {
 
     async getAllAssassin() {
 
-        var options = {
+        let options = {
             uri: 'https://gameofthrones.fandom.com/wiki/Category:Assassins',
             transform: function (body) {
                 return cheerio.load(body);
             }
         };
 
-        var assassins = []
+        let assassins = [];
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    var assassin = {"name": null};
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let assassin = {"name": null};
                     assassin.name = $(this).children('a').attr('title')
                     // console.log(assassin);
 
                     if(!assassin.name.match(/Category/g)) {
                         assassins.push(assassin);
                     }
-                  
+
                 });
 
             })
@@ -39,11 +39,10 @@ class AssassinScrapper {
             });
 
 
-            return assassins;
+        return assassins;
 
     }
 }
 
-    
 
 module.exports = AssassinScrapper;

@@ -11,27 +11,27 @@ class HouseScrapper {
 
     async getAllHousesRaw() {
 
-        var options = {
+        let options = {
             uri: 'https://gameofthrones.fandom.com/wiki/Category:Noble_houses',
             transform: function (body) {
                 return cheerio.load(body);
             }
         };
 
-        var houses = []
+        let houses = [];
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    var house = {"title": null, "reference": null};
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let house = {"title": null, "reference": null};
                     house.title = $(this).children('a').attr('title')
                     house.reference = $(this).children('a').attr('href')
-                    
+
                     if(!house.title.match(/Category/g)) {
                         houses.push(house);
                     }
-                  
+
                 });
 
             })
@@ -39,7 +39,7 @@ class HouseScrapper {
             });
 
 
-        var options2 = {
+        let options2 = {
             uri: 'https://gameofthrones.fandom.com/wiki/Category:Noble_houses?from=North%0AHouses+from+the+North',
             transform: function (body) {
                 return cheerio.load(body);
@@ -49,9 +49,9 @@ class HouseScrapper {
         await rp(options2)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    var house = {"title": null, "reference": null};
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let house = {"title": null, "reference": null};
                     house.title = $(this).children('a').attr('title')
                     house.reference = $(this).children('a').attr('href')
                     // console.log(house.title);
@@ -59,19 +59,16 @@ class HouseScrapper {
                     if(!house.title.match(/Category/g)) {
                         houses.push(house);
                     }
-                  
+
                 });
 
             })
             .catch(function (err) {
             });
 
+        // console.log(houses);
 
-
-            // console.log(houses);
-
-            return houses;
-
+        return houses;
     }
 
     async scrape(house) {
@@ -82,11 +79,11 @@ class HouseScrapper {
                 format: "json",
                 page: decodeURIComponent(house.reference.substr(6))
             });
-        } catch (err) {
+        } catch(err) {
             return false;
         }
 
-        var houseItem = {};
+        let houseItem = {};
 
         houseItem.name = house.title;
 
@@ -108,19 +105,19 @@ class HouseScrapper {
 
         if($('div[data-source=Seat]') != null) {
 
-            var seat = $('div[data-source=Seat]').find(".pi-data-value").html()
+            let seat = $('div[data-source=Seat]').find(".pi-data-value").html()
 
             if(seat != null) {
                 seat = seat.match(/title="(.*?)"/g);
 
                 if(seat) {
-                    seat.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    houseItem.seat.push(el);
-                });
+                    seat.forEach(function (element) {
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        houseItem.seat.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
@@ -129,19 +126,19 @@ class HouseScrapper {
 
         if($('div[data-source=Allegiance]') != null) {
 
-            var allegiance = $('div[data-source=Allegiance]').find(".pi-data-value").html()
+            let allegiance = $('div[data-source=Allegiance]').find(".pi-data-value").html()
 
             if(allegiance != null) {
                 allegiance = allegiance.match(/title="(.*?)"/g);
 
                 if(allegiance) {
-                    allegiance.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    houseItem.allegiance.push(el);
-                });
+                    allegiance.forEach(function (element) {
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        houseItem.allegiance.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
@@ -150,19 +147,19 @@ class HouseScrapper {
 
         if($('div[data-source=Religion]') != null) {
 
-            var religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
 
             if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
 
                 if(religion) {
-                    religion.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    houseItem.religion.push(el);
-                });
+                    religion.forEach(function (element) {
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        houseItem.religion.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
@@ -171,25 +168,23 @@ class HouseScrapper {
 
         if($('div[data-source=Region]') != null) {
 
-            var region = $('div[data-source=Region]').find(".pi-data-value").html()
+            let region = $('div[data-source=Region]').find(".pi-data-value").html()
 
             if(region != null) {
                 region = region.match(/title="(.*?)"/g);
 
                 if(region) {
-                    region.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'');
-                    houseItem.region.push(el);
-                });
+                    region.forEach(function (element) {
+                        let el = element.replace(/title=/g, '').replace(/"/g, '');
+                        houseItem.region.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
-        
-        // console.log(houseItem);
         return houseItem;
     }
 
@@ -199,17 +194,15 @@ class HouseScrapper {
 
         for(let i = 0; i < houses.length; i++) {
             console.log("started scraping ", houses[i]);
-            let e = await this.scrape(houses[i]);
 
-            // console.log(e);
-
-            if (e)
-                data.push(e);
-            else
-                console.log("invalid page");
+            try {
+                data.push(await this.scrape(houses[i]));
+            } catch(e) {
+                console.log(e.info);
+            }
         }
-        
-        
+
+
         return data;
     }
 }

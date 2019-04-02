@@ -49,11 +49,11 @@ class CharacterScraper {
 
         for(let i = 0; i < characters.length; i++)
         {
-            let character = await this.get(characters[i]);
-
-            if(character)
-            {
-                result.push(character);
+            try {
+                result.push(await this.get(characters[i]));
+            }
+            catch (e) {
+                console.log(e.info);
             }
         }
 
@@ -70,21 +70,11 @@ class CharacterScraper {
         console.log("scraping "+characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
-        let data;
-
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                page: pageName,
-                format: "json",
-                redirects: ""
-            });
-        }
-        catch (e) {
-            console.log(e);
-
-            return null;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            page: pageName,
+            format: "json",
+        });
 
         let character = {};
         if (data) {

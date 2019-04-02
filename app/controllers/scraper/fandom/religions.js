@@ -47,7 +47,12 @@ class ReligionScraper {
 
             console.log("scraping", religion["name"], "(", (i + 1), "/", religions.length, ")");
 
-            data.push(await this.scrape(religion["name"], religion["slug"]));
+            try {
+                data.push(await this.scrape(religion["name"], religion["slug"]));
+            }
+            catch(e) {
+                console.log(e.info);
+            }
         }
 
         return data;

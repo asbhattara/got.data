@@ -26,13 +26,14 @@ class RegionScraper {
         let regionsCollection = [];
 
         for(let i = 0; i < regions.length; i++) {
-            let region = await this.get(regions[i]);
+            console.log("Fetching regions (" + (regions.length - regionsCollection.length) + " left)");
 
-            if(region) {
-                regionsCollection.push(region);
+            try {
+                regionsCollection.push(await this.get(regions[i]))
             }
-
-            console.log("Still " + (regions.length - regionsCollection.length) + " regions to fetch.");
+            catch (e) {
+                console.log(e.info);
+            }
         }
 
         return regionsCollection;
@@ -47,21 +48,11 @@ class RegionScraper {
         console.log("Fetching " + regionName);
 
         let pageName = regionName.replace(/\s/g, "_");
-        let data;
-
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                page: pageName,
-                format: "json",
-                redirects: ""
-            });
-        }
-        catch (e) {
-            console.log(e);
-
-            return null;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            page: pageName,
+            format: "json",
+        });
 
         let region = {};
 

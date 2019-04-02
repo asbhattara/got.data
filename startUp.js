@@ -1,19 +1,17 @@
-'use strict';
 require(__dirname + '/' + 'constants');
-const Characters = require('./app/models/fandom/characters');
-const Religions = require('./app/models/fandom/religions');
-const Episodes = require('./app/models/fandom/episodes');
-const PageRanks = require('./app/models/fandom/pagerank');
-const CharacterFiller = require('./app/controllers/filler/fandom/charactersFandom');
-const EpisodeFiller = require('./app/controllers/filler/fandom/episodesFandom');
-const ReligionFiller = require('./app/controllers/filler/fandom/religionsFandom');
-const PageRankFiller = require('./app/controllers/filler/fandom/pagerankFandom');
-const UpdateFandom = require('./scripts/updateFandom');
-const UpdateWesteros = require('./scripts/updateWesteros');
-// const CharacterStore = require('../app/stores/fandom/characters');
 
-const dbUrl = 'mongodb://127.0.0.1/gotdata';
-// const dbUrl = 'mongodb://127.0.0.1/gottest';
+const config = require(__base + 'cfg/config');
+
+const UpdateFandom = require(__base + '/scripts/updateFandom');
+const UpdateWesteros = require(__base + '/scripts/updateWesteros');
+
+function getDbString(config) { //Create the DB connection string
+    let dbConnection = "mongodb://";
+    if (config.username.length > 0 && config.password.length > 0) {
+        dbConnection += config.username + ":" + config.password + "@";
+    }
+    return dbConnection + config.uri + ":" + config.port + "/" + config.collection;
+}
 
 const express = require('express'),
     app = express(),
@@ -24,7 +22,7 @@ const express = require('express'),
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect(dbUrl, {useNewUrlParser: true}).then(
+mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
     (res) => {
         console.log("Successfully connected to the database.")
     }
@@ -36,8 +34,8 @@ mongoose.connect(dbUrl, {useNewUrlParser: true}).then(
 mongoose.connection.on('connected', async () => {
     try {
         const db = mongoose.connection.db;
-        console.log('MongoDB default connection open to ' + dbUrl);
-        let updateFandom = new UpdateFandom(db).basicUpdate()
+        console.log('MongoDB connection open');
+        let updateFandom = new UpdateFandom(db).basicUpdate();
         let updateWesteros = new UpdateWesteros(db).basicUpdate();
         await Promise.all([await updateFandom, await updateWesteros]);
 

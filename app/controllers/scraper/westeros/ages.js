@@ -2,15 +2,13 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 
 class AgesScraper {
-    constructor()
-    {
+    constructor() {
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
     }
-    
-    async getAll()
-    {
+
+    async getAll() {
         let ages = [];
         let data = await this.bot.request({
             action: "parse",
@@ -51,8 +49,7 @@ class AgesScraper {
                 let tmp = q[0].match(/\">((.|[\r\n])*?)<\/a>/g);
                 start = tmp[0].substring(2, tmp[0].length - 4);
 
-            }
-            else {
+            } else {
                 let tmp = q[0].match(/>((.|[\r\n])*?)</g);
                 start = tmp[1].substring(1, tmp[1].length - 2);
             }
@@ -65,8 +62,7 @@ class AgesScraper {
                 let tmp = q[q.length - 1].match(/">((.|[\r\n])*?)<\/a>/g);
                 end = tmp[0].substring(2, tmp[0].length - 4);
 
-            }
-            else {
+            } else {
                 let tmp = q[q.length - 1].match(/>((.|[\r\n])*?)</g);
                 end = tmp[1].substring(1, tmp[1].length - 2);
             }
@@ -77,9 +73,8 @@ class AgesScraper {
 
         return ages;
     }
-    
-    async getAllWithEvents() 
-    {
+
+    async getAllWithEvents() {
         let ages = [];
         let index = 0;
 
@@ -88,7 +83,6 @@ class AgesScraper {
             page: "Timeline_of_major_events",
             format: "json"
         });
-
 
         let arrAge = data.parse.text["*"].match(/<span\sclass=\"tocnumber(.*?)>(.*?)<\/a>/g);
         for (let i = 1; i < arrAge.length - 2; i++) {
@@ -123,8 +117,7 @@ class AgesScraper {
                 let tmp = q[0].match(/\">((.|[\r\n])*?)<\/a>/g);
                 start = tmp[0].substring(2, tmp[0].length - 4);
 
-            }
-            else {
+            } else {
                 let tmp = q[0].match(/>((.|[\r\n])*?)</g);
                 start = tmp[1].substring(1, tmp[1].length - 2);
             }
@@ -137,8 +130,7 @@ class AgesScraper {
                 let tmp = q[q.length - 1].match(/\">((.|[\r\n])*?)<\/a>/g);
                 end = tmp[0].substring(2, tmp[0].length - 4);
 
-            }
-            else {
+            } else {
                 let tmp = q[q.length - 1].match(/>((.|[\r\n])*?)</g);
                 end = tmp[1].substring(1, tmp[1].length - 2);
             }
@@ -146,6 +138,7 @@ class AgesScraper {
             ages[i].startDate = start;
             ages[i].endDate = end;
         }
+
         for (let i = 0; i < arr.length; i++) {
             let lines = arr[i].match(/<tr>((.|[\r\n])*?)<\/tr>/g);
             let events = [];
@@ -167,8 +160,7 @@ class AgesScraper {
                     }
                     let tmp = title.match(/\">((.|[\r\n])*?)<\/a>/g);
                     date = tmp[0].substring(2, tmp[0].length - 4);
-                }
-                else {
+                } else {
                     let tmp = title.match(/>((.|[\r\n])*?)</g);
                     date = tmp[0].substring(1, tmp[0].length - 2);
                 }
@@ -181,19 +173,15 @@ class AgesScraper {
                     eventName = eventName.replace(/<\/a>/g, "");
                     eventName = eventName.replace(/<b>/g, "");
                     eventName = eventName.replace(/<\/b>/g, "");
-                }
-                else {
+                } else {
                     eventName = "Unnamed" + index.toString();
                     index++;
                 }
                 event.name = eventName;
 
-                if(date === "Prehistory")
-                {
+                if (date === "Prehistory") {
                     event.date = -15000;
-                }
-                else
-                {
+                } else {
                     event.date = parseInt(String(date).replace("&#32;AC", ""));
                 }
 

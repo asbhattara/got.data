@@ -11,20 +11,20 @@ class TownScrapper {
 
     async getAllTownsRaw() {
 
-        var options = {
+        let options = {
             uri: 'https://gameofthrones.fandom.com/wiki/Category:Towns',
             transform: function (body) {
                 return cheerio.load(body);
             }
         };
 
-        var towns = []
+        let towns = []
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    var town = {"title": null, "reference": null};
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let town = {"title": null, "reference": null};
                     town.title = $(this).children('a').attr('title')
                     town.reference = $(this).children('a').attr('href')
                     // console.log(town.title);
@@ -32,32 +32,26 @@ class TownScrapper {
                     if(!town.title.match(/Category/g)) {
                         towns.push(town);
                     }
-                  
+
                 });
 
             })
             .catch(function (err) {
             });
 
-            // console.log(towns);
+        // console.log(towns);
 
-            return towns;
-
+        return towns;
     }
 
     async scrape(town) {
-        let data = null;
-        try {
-            data = await this.bot.request({
-                action: "parse",
-                format: "json",
-                page: decodeURIComponent(town.reference.substr(6))
-            });
-        } catch (err) {
-            return false;
-        }
+        let data = await this.bot.request({
+            action: "parse",
+            format: "json",
+            page: decodeURIComponent(town.reference.substr(6))
+        });
 
-        var townItem = {};
+        let townItem = {};
 
         townItem.name = town.title;
 
@@ -66,48 +60,47 @@ class TownScrapper {
         let $infobox = $(".portable-infobox");
 
         if($('div[data-source=Location]') != null) {
-            townItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
+            townItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
         }
 
         if($('div[data-source=Type]') != null) {
-            townItem.type = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&");
+            townItem.type = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
         }
 
         townItem.rulers = []
 
         if($('div[data-source=Rulers]') != null) {
-            var rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
+            let rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
 
             if(rulers != null) {
                 rulers = rulers.match(/title="(.*?)"/g);
 
                 if(rulers) {
-                    rulers.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'');
-                    townItem.rulers.push(el);
-                });
+                    rulers.forEach(function (element) {
+                        let el = element.replace(/title=/g, '').replace(/"/g, '');
+                        townItem.rulers.push(el);
+                    });
                 }
 
-                
+
             }
         }
 
-        townItem.religion = []
+        townItem.religion = [];
 
         if($('div[data-source=Religion]') != null) {
 
-            var religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
 
             if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
 
-                religion.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'');
+                religion.forEach(function (element) {
+                    let el = element.replace(/title=/g, '').replace(/"/g, '');
                     townItem.religion.push(el);
                 });
             }
 
-            
 
         }
 
@@ -120,17 +113,15 @@ class TownScrapper {
 
         for(let i = 0; i < towns.length; i++) {
             console.log("started scraping ", towns[i]);
-            let e = await this.scrape(towns[i]);
 
-            // console.log(e);
-
-            if (e)
-                data.push(e);
-            else
-                console.log("invalid page");
+            try {
+                data.push(await this.scrape(towns[i]));
+            }
+            catch(e) {
+                console.log(e.info);
+            }
         }
-        
-        
+
         return data;
     }
 }
