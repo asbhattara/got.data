@@ -37,8 +37,8 @@ mongoose.connection.on('connected', async () => {
         console.log('MongoDB connection open');
         let updateFandom = new UpdateFandom(db).basicUpdate();
         let updateWesteros = new UpdateWesteros(db).basicUpdate();
-        await Promise.all([await updateFandom, await updateWesteros]);
-
+        await Promise.all([updateFandom, updateWesteros]);
+        console.log("all scraper done")
     } catch(e) {
         console.log(e);
     }

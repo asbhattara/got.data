@@ -30,6 +30,7 @@ class UpdateWesteros {
         this.db.listCollections().toArray(async (err, names) => {
             if (err) throw new Error(err);
             console.log('filling collections');
+            console.log(names);
             if (names.length === 0) {
                 // let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
                 console.log('No collections available... scraping everything. This may take a while...')
@@ -52,7 +53,7 @@ class UpdateWesteros {
                 console.log(collection.name);
                 try {
                     switch (collection.name) {
-                        case 'agewesteross':
+                        case 'agewesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -60,7 +61,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'housewesteross':
+                        case 'housewesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -68,7 +69,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'citys':
+                        case 'city':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -76,7 +77,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characterwesteross':
+                        case 'characterwesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -84,7 +85,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characterlocationwesteross':
+                        case 'characterlocationwesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -92,7 +93,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'characterpathwesteross':
+                        case 'characterpathwesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -116,7 +117,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'eventwesteross':
+                        case 'eventwesteros':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
@@ -133,7 +134,7 @@ class UpdateWesteros {
                             });
                             break;
                         default:
-                            console.log('Unknown collection in database... check updateFandom.js');
+                            console.log('Unknown collection in database... check updateWesteros.js');
                             // let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
                             // let promises = fillers.map(async (job) => await job);
                             // await Promise.all(promises);
