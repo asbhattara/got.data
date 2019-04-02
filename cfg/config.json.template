@@ -9,6 +9,5 @@
     "server":{
         "port": "8080",
         "accessToken": "123secure"
-    },
-    "TTLWikiCache" : 7200000
+    }
 }
