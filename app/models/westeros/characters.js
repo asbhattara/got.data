@@ -23,12 +23,7 @@ const CharacterSchema = new Schema({
     culture         : String,
 
     house           : {type: String, ref: "House"},
-    plod            : {type: Number, default: 0.0},
-    longevity       : [Number],
-    createdAt       : {type: Date, default: Date.now},
-    updatedAt       : {type: Date, default: Date.now},
-    spouse          : [{type: String, ref: 'Character'}],
-    children        : [{type: String, ref: 'Character'}],
+    longevity       : [{type: Number, default: 0.0}],
     allegiance      : [{type: String, ref: 'Character'}],
 
     books           : [String],
