@@ -24,15 +24,14 @@ class ReligionFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Religions.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        await Religions.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
 
     
@@ -57,14 +56,13 @@ class ReligionFandomFiller {
         // clear collection
         await this.clearAll();
         try {
-            Religions.insertMany(data, (err, docs) => {
+            await Religions.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
                 } 
                 console.log(docs.length + ' religions successfully saved to MongoDB!');
             });
-            return;
         } catch(e) {
             throw new Error(e);
         }

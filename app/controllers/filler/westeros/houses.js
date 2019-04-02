@@ -29,7 +29,7 @@ class HousesFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return Houses.deleteMany({}, (err, data) => {
+        return await Houses.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -71,7 +71,7 @@ class HousesFiller {
         }
 
         try {
-            return Houses.insertMany(data, (err, docs) => {
+            return await Houses.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

@@ -27,15 +27,14 @@ class AgeFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Ages.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        await Ages.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(ages) {
@@ -58,14 +57,13 @@ class AgeFandomFiller {
     }
 
     async insertToDb(data) {
-        Ages.insertMany(data, (err, docs) => {
+        await Ages.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' ages successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = AgeFandomFiller;

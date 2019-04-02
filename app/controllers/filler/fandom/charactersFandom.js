@@ -26,7 +26,7 @@ class CharacterFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        return Characters.deleteMany({}, (err, data) => {
+        return await Characters.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -57,7 +57,7 @@ class CharacterFandomFiller {
         // clear collection
         await this.clearAll();
         try {
-            return Characters.insertMany(data, (err, docs) => {
+            return await Characters.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

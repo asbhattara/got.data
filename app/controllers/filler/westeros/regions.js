@@ -71,7 +71,7 @@ class RegionsFiller {
         }
 
         try {
-            return Regions.insertMany(data, (err, docs) => {
+            return await Regions.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

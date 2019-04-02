@@ -28,14 +28,13 @@ class HouseFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Houses.deleteMany({}, (err, data) => {
+        await Houses.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(houses) {
@@ -53,15 +52,13 @@ class HouseFandomFiller {
     }
 
     async insertToDb(data) {
-        Houses.insertMany(data, (err, docs) => {
+        await Houses.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' houses successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = HouseFandomFiller;
-//TODO

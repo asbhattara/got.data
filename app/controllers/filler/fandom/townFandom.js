@@ -27,15 +27,14 @@ class TownFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Towns.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        return await Towns.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(towns) {
@@ -54,14 +53,13 @@ class TownFandomFiller {
     }
 
     async insertToDb(data) {
-        Towns.insertMany(data, (err, docs) => {
+        await Towns.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' towns successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = TownFandomFiller;

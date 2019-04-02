@@ -27,15 +27,14 @@ class AnimalFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Animals.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        await Animals.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(animals) {
@@ -54,14 +53,13 @@ class AnimalFandomFiller {
     }
 
     async insertToDb(data) {
-        Animals.insertMany(data, (err, docs) => {
+        await Animals.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' animals successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = AnimalFandomFiller;

@@ -27,15 +27,14 @@ class BastardsFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Bastards.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        await Bastards.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(bastards) {
@@ -53,14 +52,13 @@ class BastardsFandomFiller {
     }
 
     async insertToDb(data) {
-        Bastards.insertMany(data, (err, docs) => {
+        await Bastards.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' bastards successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = BastardsFandomFiller;

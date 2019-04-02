@@ -43,7 +43,7 @@ class CityFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return CharacterPath.deleteMany({}, (err, data) => {
+        return await CharacterPath.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -85,7 +85,7 @@ class CityFiller {
         }
 
         try {
-            return CharacterPath.insertMany(data, (err, docs) => {
+            return await CharacterPath.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

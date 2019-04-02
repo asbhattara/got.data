@@ -26,15 +26,14 @@ class EventFandomFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
-        Events.deleteMany({}, (err, data) => {
+        console.log('clearing collection...');
+        await Events.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
@@ -54,14 +53,13 @@ class EventFandomFiller {
     }
 
     async insertToDb(data) {
-        Events.insertMany(data, (err, docs) => {
+        await Events.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' events successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = EventFandomFiller;

@@ -34,7 +34,7 @@ class PageRankFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        return PageRanks.deleteMany({}, (err, data) => {
+        return await PageRanks.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('Error in removing collection: ' + err);
             } else {
@@ -47,7 +47,7 @@ class PageRankFiller {
         await this.clearAll();
         console.log('writing to db...');
         try {
-            return PageRanks.insertMany(data, (err, docs) => {
+            return await PageRanks.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

@@ -26,14 +26,13 @@ class EpisodeFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...')
-        Episodes.deleteMany({}, (err, data) => {
+        await Episodes.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
                 console.log('Collection successfully removed');
             }
         });
-        return;
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(episodes) {
@@ -53,14 +52,13 @@ class EpisodeFandomFiller {
     }
 
     async insertAll(data) {
-        Episodes.insertMany(data, (err, docs) => {
+        await Episodes.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
             } 
             console.log(docs.length + ' episodes successfully saved to MongoDB!');
         });
-        return;
     }
 }
 module.exports = EpisodeFandomFiller;

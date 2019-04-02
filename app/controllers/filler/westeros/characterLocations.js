@@ -29,7 +29,7 @@ class CharacterLocationFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return CharacterLocations.deleteMany({}, (err, data) => {
+        return await CharacterLocations.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -71,7 +71,7 @@ class CharacterLocationFiller {
         }
 
         try {
-            return CharacterLocations.insertMany(data, (err, docs) => {
+            return await CharacterLocations.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

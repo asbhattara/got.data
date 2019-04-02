@@ -43,7 +43,7 @@ class ContinentsFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return Continents.deleteMany({}, (err, data) => {
+        return await Continents.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -85,7 +85,7 @@ class ContinentsFiller {
         }
 
         try {
-            return Continents.insertMany(data, (err, docs) => {
+            return await Continents.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;

@@ -29,7 +29,7 @@ class AgesFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return Ages.deleteMany({}, (err, data) => {
+        return await Ages.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -109,7 +109,7 @@ class AgesFiller {
         }
 
         try {
-            return Ages.insertMany(data, (err, docs) => {
+            return await Ages.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
