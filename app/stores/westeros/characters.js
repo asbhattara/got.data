@@ -115,5 +115,20 @@ class CharacterStore {
         }
     }
 
+    async updateLongevity(slug, longevity) {
+        try {
+            let data = await Characters.findOne({slug: slug});
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                data.longevity = longevity;
+                await data.save();
+                return { success: 1, message: data.name + ' has been updated' };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+    }
+
 }
 module.exports = CharacterStore;

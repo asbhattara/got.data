@@ -56,5 +56,16 @@ class CharacterController {
             res.status(404).send(character.message);
         } 
     }
+
+    async updateLongevity(req, res) {
+        let slug = req.params.slug ? req.params.slug : req.body.slug;
+        let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
+        let character = await this.charStore.updateLongevity(slug, longevity);
+        if (character.success === 1) {
+            res.status(200).send(character.message);
+        } else {
+            res.status(404).send(character.message);
+        } 
+    }
 }
 module.exports = CharacterController;

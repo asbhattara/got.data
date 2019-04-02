@@ -237,6 +237,13 @@
 <td>updates plod, specify slug and plod in https header (x-www-form-urlencoded)</td>
 </tr>
 <tr>
+    <td></td>
+    <td></td>
+    <td>/updateLongevity</td>
+    <td>POST</td>
+    <td>updates longevity (array of numbers), specify slug and longevity in https header (x-www-form-urlencoded)</td>
+</tr>
+<tr>
 <td></td>
 <td></td>
 <td></td>
@@ -284,6 +291,48 @@
 <td>/:title</td>
 <td>GET</td>
 <td>returns episode by title</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+    <td>Event</td>
+    <td>/api/show/events</td>
+    <td></td>
+    <td>GET</td>
+    <td>returns all events</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>/:name</td>
+    <td>GET</td>
+    <td>returns event by name</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>/bySlug/:slug</td>
+    <td>GET</td>
+    <td>returns event by slug</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>/byConflict/:conflict</td>
+    <td>GET</td>
+    <td>returns event by conflict</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>/byDate/:date</td>
+    <td>GET</td>
+    <td>returns all events at a specific date</td>
 </tr>
 <tr>
 <td></td>
@@ -515,6 +564,13 @@
 <td>/updatePlod</td>
 <td>POST</td>
 <td>updates plod, specify slug and plod in https header (x-www-form-urlencoded)</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>/updateLongevity</td>
+    <td>POST</td>
+    <td>updates longevity (array of numbers), specify slug and longevity in https header (x-www-form-urlencoded)</td>
 </tr>
 <tr>
 <td></td>

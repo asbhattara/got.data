@@ -11,7 +11,8 @@ const   CharacterFiller = require('../app/controllers/filler/fandom/charactersFa
         RegionFiller = require('../app/controllers/filler/fandom/regionFandom'),
         TownFiller = require('../app/controllers/filler/fandom/townFandom'),
         AgeFiller = require('../app/controllers/filler/fandom/ageFandom'),
-        HouseFiller = require('../app/controllers/filler/fandom/houseFandom');
+        HouseFiller = require('../app/controllers/filler/fandom/houseFandom'),
+        EventFiller = require('../app/controllers/filler/fandom/eventFandom');
 
 
 class UpdateFandom {
@@ -31,6 +32,7 @@ class UpdateFandom {
         this.townFiller = new TownFiller();
         this.ageFiller = new AgeFiller();
         this.houseFiller = new HouseFiller();
+        this.eventFiller = new EventFiller();
     }
 
     async basicUpdate() {
@@ -55,7 +57,8 @@ class UpdateFandom {
                     self.townFiller.fill,
                     self.rankFiller.fill,
                     self.ageFiller.fill,
-                    self.houseFiller.fill
+                    self.houseFiller.fill,
+                    self.eventFiller.fill
                 ];
                 let promises = fillers.map(async (job) => await job());
                 return await Promise.all(promises);
@@ -133,6 +136,14 @@ class UpdateFandom {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.characaterFiller.fill();
+                                }
+                            });
+                            break;
+                        case 'eventfandoms':
+                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                                if (err) throw new Error(err);
+                                if( count == 0 ) {
+                                    await self.eventFiller.fill();
                                 }
                             });
                             break;

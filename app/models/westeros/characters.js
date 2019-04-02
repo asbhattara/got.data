@@ -16,7 +16,8 @@ const CharacterSchema = new Schema({
     placeOfBirth    : {type: String, ref: "Region"},                                                 // Summerhall
     placeOfDeath    : {type: String, ref: "Region"},                                                 // Trident
     house           : {type: String, ref: "House"},
-    plod            : {type: Number, default: 0.0},                   // House Targaryen
+    plod            : {type: Number, default: 0.0},
+    longevity       : [Number],
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now},
     spouse          : [{type: String, ref: 'Character'}],

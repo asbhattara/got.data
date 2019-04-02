@@ -11,7 +11,8 @@ const   CharacterController = require('../controllers/fandomController/character
         CastleController = require('../controllers/fandomController/castleController'),
         CityController = require('../controllers/fandomController/cityController'),
         RegionController = require('../controllers/fandomController/regionController'),
-        TownController = require('../controllers/fandomController/townController');
+        TownController = require('../controllers/fandomController/townController'),
+        EventController = require('../controllers/fandomController/eventController');
 
 
 module.exports = function(app, router) {
@@ -31,6 +32,14 @@ module.exports = function(app, router) {
     router.get('/characters/bySlug/:slug', charController.getBySlug.bind(charController));
     router.get('/characters/byHouse/:house', charController.getByHouse.bind(charController));
     router.post('/characters/updatePlod', charController.updatePlod.bind(charController));
+    router.post('/characters/updateLongevity', charController.updateLongevity.bind(charController));
+
+    const eventController = new EventController();
+    router.get('/events', eventController.getAll.bind(eventController));
+    router.get('/events/:name', eventController.getByName.bind(eventController));
+    router.get('/events/bySlug/:slug', eventController.getBySlug.bind(eventController));
+    router.get('/events/byConflict/:conflict', eventController.getByConflict.bind(eventController));
+    router.get('/events/byDate/:date', eventController.getByDate.bind(eventController));
 
     const episodeController = new EpisodeController();
     router.get('/episodes', episodeController.getAll.bind(episodeController));
