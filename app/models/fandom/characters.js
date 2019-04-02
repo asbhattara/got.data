@@ -21,6 +21,12 @@ const CharacterFandomSchema = new Schema({
     plod            : {type: Number, default: 0.0},
     longevityStart  : Number,
     longevity       : [{type: Number}],
+    plodB           : {type: Number, default: 0.0},
+    plodC           : {type: Number, default: 0.0},
+    longevityB      : [{type: Number}],
+    longevityC      : [{type: Number}],
+    longevityStartB  : Number,
+    longevityStartC  : Number,
 
     cultures        : [{type: String, ref: 'Culture'}],
     religions       : [{type: String, ref: 'Religion'}],
