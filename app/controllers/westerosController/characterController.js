@@ -44,10 +44,12 @@ class CharacterController {
         }
     }
 
-    async updatePlod(req, res) {
+    async updateGeneral(req, res) {
         let slug = req.params.slug ? req.params.slug : req.body.slug;
         let plod = req.params.plod ? req.params.plod : req.body.plod;
-        let character = await this.charStore.updatePlod(slug, plod);
+        let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
+        let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
+        let character = await this.charStore.updateGeneral(slug, plod, longevity, longevityStart);
         if (character.success === 1) {
             res.status(200).send(character.message);
         } else {
@@ -55,10 +57,25 @@ class CharacterController {
         } 
     }
 
-    async updateLongevity(req, res) {
+    async updateGroupB(req, res) {
         let slug = req.params.slug ? req.params.slug : req.body.slug;
+        let plod = req.params.plod ? req.params.plod : req.body.plod;
         let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
-        let character = await this.charStore.updateLongevity(slug, longevity);
+        let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
+        let character = await this.charStore.updateGroupB(slug, plod, longevity, longevityStart);
+        if (character.success === 1) {
+            res.status(200).send(character.message);
+        } else {
+            res.status(404).send(character.message);
+        } 
+    }
+
+    async updateGroupC(req, res) {
+        let slug = req.params.slug ? req.params.slug : req.body.slug;
+        let plod = req.params.plod ? req.params.plod : req.body.plod;
+        let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
+        let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
+        let character = await this.charStore.updateGroupC(slug, plod, longevity, longevityStart);
         if (character.success === 1) {
             res.status(200).send(character.message);
         } else {

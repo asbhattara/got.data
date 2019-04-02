@@ -23,7 +23,6 @@ const CharacterSchema = new Schema({
     culture         : String,
 
     house           : {type: String, ref: "House"},
-    longevity       : [{type: Number, default: 0.0}],
     allegiance      : [{type: String, ref: 'Character'}],
 
     books           : [String],
@@ -31,6 +30,14 @@ const CharacterSchema = new Schema({
     hasPath		    : Boolean,
 
     plod            : {type: Number, default: 0.0},
+    longevityStart  : Number,
+    longevity       : [{type: Number}],
+    plodB           : {type: Number, default: 0.0},
+    plodC           : {type: Number, default: 0.0},
+    longevityB      : [{type: Number}],
+    longevityC      : [{type: Number}],
+    longevityStartB  : Number,
+    longevityStartC  : Number,
 
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now}
