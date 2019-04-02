@@ -69,7 +69,7 @@ class UpdateWesteros {
                                 }
                             });
                             break;
-                        case 'city':
+                        case 'cities':
                             await self.db.collection(collection.name).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
