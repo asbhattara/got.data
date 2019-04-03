@@ -51,6 +51,8 @@ class CharacterScraper {
 
         });
 
+        console.log(names);
+
         return names;
     }
 
@@ -61,6 +63,10 @@ class CharacterScraper {
         for(let i = 0; i < names.length; i++)
         {
             let character = names[i]["character"];
+
+            if(character["name"] == "Brienne") {
+                character["slug"] = "Brienne_of_Tarth";
+            }
 
             console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
 
