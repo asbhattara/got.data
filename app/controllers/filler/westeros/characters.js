@@ -63,23 +63,74 @@ class CharacterFiller {
     }
 
     async insertAll(data) {
-        // clear collection
-        if(this.policy === this.POLICY_REFILL)
-        {
-            await this.clearAll();
+        try {
+            if(this.policy === this.POLICY_REFILL) {
+                console.log('starting whole refill')
+                await this.clearAll();
+                await this.fillCollection(data);
+            }
+            else if (this.policy === this.POLICY_UPDATE) {
+                console.log('starting update');
+                await this.updateCollection(data);
+            } else {
+                console.log('starting safe update');
+                this.safeUpdateCollection(data)
+            }
+            
+        } catch (error) {
+            throw new Error(error);
         }
-        else
-        {
-            // TODO: update ?
-        }
+    }
 
+
+    async updateCollection(data) {
+        try {
+            const bulkOps = data.map(obj => ({
+                updateOne: {
+                    filter: { slug: obj.slug },
+                    update: { $set: obj },
+                    upsert: true
+                }
+            }));
+            return await Characters.collection.bulkWrite(bulkOps, (err, res) => {
+                    if (err) throw new Error(err);
+                    console.log(res.upsertedCount + ' documents newly created.\n' + res.matchedCount + ' documents updated');
+                });
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+
+    async safeUpdateCollection(data) {
+        try {
+            let promises = data.map(async (obj) => {
+                await Characters.find({ slug: obj.slug }).exec((err, docs) => {
+                    if (err) throw new Error(err);
+                    if (docs.length === 0) {
+                        let newChar = new Characters(obj);
+                        newChar.save((err) => {
+                            if (err) throw new Error(err);
+                            console.log(obj.slug + ' successfully added to DB');
+                        })
+                    }
+                });
+
+            });
+            return await Promise.all(promises);
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+
+
+    async fillCollection(data) {
         try {
             return await Characters.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
-                }
-                console.log(docs.length + ' character locations successfully saved to MongoDB!');
+                } 
+                console.log(docs.length + ' characters successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

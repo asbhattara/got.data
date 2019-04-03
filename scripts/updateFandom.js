@@ -15,10 +15,27 @@ const   CharacterFiller = require('../app/controllers/filler/fandom/charactersFa
         EventFiller = require('../app/controllers/filler/fandom/eventFandom');
 
 
+// const collections = [
+//     'agefandoms', 
+//     'animalfandoms', 
+//     'housefandoms', 
+//     'assassinfandoms', 
+//     'bastardfandoms',
+//     'battlefandoms',
+//     'castlefandoms',
+//     'cityfandoms',
+//     'characterfandoms',
+//     'eventfandoms',
+//     'religionfandoms',
+//     'regionfandoms',
+//     'pagerankfandoms',
+//     'episodefandoms',
+//     'townfandoms'
+// ];
 class UpdateFandom {
     constructor(db) {
         this.db = db;
-        this.characaterFiller = new CharacterFiller();
+        this.characterFiller = new CharacterFiller(1);
         this.episodeFiller = new EpisodeFiller();
         this.religionFiller = new ReligionFiller();
         this.rankFiller = new PageRankFiller();
@@ -33,42 +50,38 @@ class UpdateFandom {
         this.ageFiller = new AgeFiller();
         this.houseFiller = new HouseFiller();
         this.eventFiller = new EventFiller();
+
+        this.collections = [
+            'agefandoms', 
+            'animalfandoms', 
+            'housefandoms', 
+            'assassinfandoms', 
+            'bastardfandoms',
+            'battlefandoms',
+            'castlefandoms',
+            'cityfandoms',
+            'characterfandoms',
+            'eventfandoms',
+            'religionfandoms',
+            'regionfandoms',
+            'pagerankfandoms',
+            'episodefandoms',
+            'townfandoms'
+        ];
     }
 
     async basicUpdate() {
         const self = this;
         this.db.listCollections().toArray(async (err, names) => {
             if (err) throw new Error(err);
-            console.log('filling collections');
-            if (names.length === 0) {
-                // let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
-                console.log('No collections available... scraping everything. This may take a while...')
-                let fillers = [
-                    self.animalFiller.fill,
-                    self.assassinFiller.fill,
-                    self.bastardFiller.fill,
-                    self.battleFiller.fill,
-                    self.castleFiller.fill,
-                    self.characaterFiller.fill,
-                    self.cityFiller.fill,
-                    self.episodeFiller.fill, 
-                    self.religionFiller.fill,
-                    self.regionFiller.fill,
-                    self.townFiller.fill,
-                    self.rankFiller.fill,
-                    self.ageFiller.fill,
-                    self.houseFiller.fill,
-                    self.eventFiller.fill
-                ];
-                let promises = fillers.map(async (job) => await job());
-                return await Promise.all(promises);
-            }
-            let filling = names.map(async (collection) => {
-                console.log(collection.name);
+            console.log('filling show collections');
+            let filling = this.collections.map(async (collection) => {
+                // console.log('checking ' + collection.name);
+                console.log('checking ' + collection);
                 try {
-                    switch (collection.name) {
+                    switch (collection) {
                         case 'agefandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.ageFiller.fill();
@@ -76,7 +89,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'housefandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.houseFiller.fill();
@@ -84,7 +97,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'animalfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.animalFiller.fill();
@@ -92,7 +105,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'assassinfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.assassinFiller.fill();
@@ -100,7 +113,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'bastardfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.bastardFiller.fill();
@@ -108,7 +121,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'battlefandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.battleFiller.fill();
@@ -116,7 +129,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'castlefandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.castleFiller.fill();
@@ -124,7 +137,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'cityfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.cityFiller.fill();
@@ -132,15 +145,17 @@ class UpdateFandom {
                             });
                             break;
                         case 'characterfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
-                                    await self.characaterFiller.fill();
+                                    await self.characterFiller.fill();
+                                } else {
+                                    await new CharacterFiller(3).fill();
                                 }
                             });
                             break;
                         case 'eventfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.eventFiller.fill();
@@ -148,7 +163,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'religionfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.religionFiller.fill();
@@ -156,7 +171,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'pagerankfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.rankFiller.fill();
@@ -164,7 +179,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'episodefandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.episodeFiller.fill();
@@ -172,7 +187,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'regionfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.regionFiller.fill();
@@ -180,7 +195,7 @@ class UpdateFandom {
                             });
                             break;
                         case 'townfandoms':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.townFiller.fill();
@@ -188,7 +203,7 @@ class UpdateFandom {
                             });
                             break;
                         default:
-                            console.log('Unknown collection in database... check updateFandom.js');
+                            // console.log('Unknown collection in database... check updateFandom.js');
                             // let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
                             // let promises = fillers.map(async (job) => await job);
                             // await Promise.all(promises);

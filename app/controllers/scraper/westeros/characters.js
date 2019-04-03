@@ -30,7 +30,7 @@ class CharacterScraper {
         allLis.each(function() {
             name = $(this).find('a').first().attr("title").replace(/_/g,' ');
             if(name.indexOf('House ') < 0) {
-                console.log(name);
+                // console.log(name);
                 characters.push(decodeURIComponent(name));
             }
         });

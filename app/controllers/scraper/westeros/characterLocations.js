@@ -74,7 +74,7 @@ class CharacterLocationScraper {
             return null;
         }
 
-        console.log("Fetching " + characterName);
+        // console.log("scraping " + characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
         let data = await this.bot.request({
@@ -99,8 +99,8 @@ class CharacterLocationScraper {
         character.slug = pageName;
         character.locations = locationHits;
 
-        console.log("Fetched " + character.name);
-        console.log("Locations " + character.locations);
+        // console.log("Fetched " + character.name);
+        console.log("scraped locations " + character.locations);
 
         return character;
     }

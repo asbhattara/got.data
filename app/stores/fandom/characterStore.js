@@ -40,8 +40,8 @@ class CharacterStore {
     
     async getAll() {
         try {
-            let data = await CharactersFandom.find({}).populate('pagerank', 'rank title');
-            
+            let data = await CharactersFandom.find({});
+            // .populate('pagerank age', 'rank title name age')
             if (!data) {
                 return { success: -1, message: 'Character collection empty. Scraping should be started...' };
             } else {
@@ -55,7 +55,7 @@ class CharacterStore {
 
     async getByName(name) {
         try {
-            let data = await CharactersFandom.findOne({name: name}).populate('pagerank', 'rank title');
+            let data = await CharactersFandom.findOne({name: name}).populate('pagerank age', 'rank title name age');
 
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
@@ -72,8 +72,8 @@ class CharacterStore {
     // FYI: title = foreign field, see character model
     async getBySlug(slug) {
         try {
-            let data = await CharactersFandom.findOne({slug: slug}).populate('pagerank', 'rank title');
-
+            let data = await CharactersFandom.findOne({slug: slug});
+            // .populate('pagerank age', 'rank age')
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {

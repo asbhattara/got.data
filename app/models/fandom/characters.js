@@ -35,7 +35,7 @@ const CharacterFandomSchema = new Schema({
     first_seen      : {type: String, ref: 'Episode'},
     seasons         : [Number],
     appearances     : [{type: String, ref: 'Episode'}],
-
+    rank : Number,
     actor           : String,
     createdAt       : {type: Date, default: Date.now},
     updatedAt       : {type: Date, default: Date.now},
@@ -51,5 +51,21 @@ CharacterFandomSchema.virtual('pagerank', {
     justOne: true
 });
 
+CharacterFandomSchema.virtual('age', {
+    ref: 'AgeFandom',
+    localField: 'name',
+    foreignField: 'name',
+    justOne: true
+});
+
+let autoPopulate = function(next) {
+    this.populate({ path: 'pagerank', select: {rank: 1, title: 0, _id: 0}});
+    this.populate({ path: 'age', select: {age: 1, name: 0, _id: 0}});
+    next();
+}
+
+CharacterFandomSchema.
+    pre('find', autoPopulate).
+    pre('findOne', autoPopulate);
 
 module.exports = mongoose.model('CharacterFandom', CharacterFandomSchema);

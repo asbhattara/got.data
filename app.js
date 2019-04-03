@@ -7,6 +7,14 @@ const UpdateWesteros = require(__base + '/scripts/updateWesteros');
 
 const uuidv4 = require('uuid/v4');
 
+const express = require('express'),
+    app = express(),
+    port = config.server.port || 3000,
+    mongoose = require('mongoose'),
+    cors = require('cors'),
+    bodyParser = require('body-parser');
+
+
 function getDbString(config) { //Create the DB connection string
     let dbConnection = "mongodb://";
     if (config.username.length > 0 && config.password.length > 0) {
@@ -50,12 +58,7 @@ if (config.server.accessToken) {
 
 console.log('Your requests must contain the following token: ' + accessToken);
 
-const express = require('express'),
-    app = express(),
-    port = config.server.port || 3000,
-    mongoose = require('mongoose'),
-    cors = require('cors'),
-    bodyParser = require('body-parser');
+
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;

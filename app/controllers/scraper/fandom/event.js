@@ -264,7 +264,7 @@ class EventScraper {
         
 
 
-        console.log(eventItem);
+        // console.log(eventItem);
         
 
         return eventItem;

@@ -24,11 +24,11 @@ class AssassinScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let assassin = {"name": null};
-                    assassin.name = $(this).children('a').attr('title')
+                    let assassin = {"slug": null};
+                    assassin.slug = $(this).children('a').attr('href').replace('/wiki/', '')
                     // console.log(assassin);
 
-                    if(!assassin.name.match(/Category/g)) {
+                    if(!assassin.slug.match(/Category/g)) {
                         assassins.push(assassin);
                     }
 

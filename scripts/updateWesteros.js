@@ -13,9 +13,9 @@ const   CharacterFiller = require('../app/controllers/filler/westeros/characters
 class UpdateWesteros {
     constructor(db) {
         this.db = db;
-        this.characaterFiller = new CharacterFiller(1);
+        this.characterFiller = new CharacterFiller(1);
         this.characterPathFiller = new CharacterPathFiller(1);
-        this.characterLoctaionFiller = new CharacterLocationFiller(1);
+        this.characterLocationFiller = new CharacterLocationFiller(1);
         this.cityFiller = new CityFiller(1);
         this.regionFiller = new RegionFiller(1);
         this.ageFiller = new AgeFiller(1);
@@ -23,38 +23,32 @@ class UpdateWesteros {
         this.cultureFiller = new CultureFiller(1);
         this.continentFiller = new ContinentFiller(1);
         this.eventFiller = new EventFiller(1);
+
+        this.collections = [
+            'agewesteros', 
+            'cities',
+            'housewesteros',
+            'characterwesteros',
+            'characterlocationwesteros',
+            'characterpathwesteros',
+            'eventwesteros',
+            'regions',
+            'cultures',
+            'continents'
+        ];
     }
 
     async basicUpdate() {
         const self = this;
         this.db.listCollections().toArray(async (err, names) => {
             if (err) throw new Error(err);
-            console.log('filling collections');
-            console.log(names);
-            if (names.length === 0) {
-                // let fillers = [charFiller.fill, epFiller.fill, relFiller.fill, rankFiller.fill];
-                console.log('No collections available... scraping everything. This may take a while...')
-                let fillers = [
-                    self.characaterFiller.fill,
-                    self.cityFiller.fill,
-                    self.regionFiller.fill,
-                    self.ageFiller.fill,
-                    self.houseFiller.fill,
-                    self.cultureFiller.fill,
-                    self.continentFiller.fill,
-                    self.eventFiller.fill,
-                    self.characterLoctaionFiller.fill,
-                    self.characterPathFiller.fill
-                ];
-                let promises = fillers.map(async (job) => await job());
-                return await Promise.all(promises);
-            }
-            let filling = names.map(async (collection) => {
-                console.log(collection.name);
+            console.log('filling book collections');
+            let filling = this.collections.map(async (collection) => {
+                console.log('checking ' + collection);
                 try {
-                    switch (collection.name) {
+                    switch (collection) {
                         case 'agewesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.ageFiller.fill();
@@ -62,7 +56,7 @@ class UpdateWesteros {
                             });
                             break;
                         case 'housewesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.houseFiller.fill();
@@ -70,7 +64,7 @@ class UpdateWesteros {
                             });
                             break;
                         case 'cities':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.cityFiller.fill();
@@ -78,23 +72,25 @@ class UpdateWesteros {
                             });
                             break;
                         case 'characterwesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
-                                    await self.characaterFiller.fill();
+                                    await self.characterFiller.fill();
+                                } else {
+                                    await new CharacterFiller(3).fill();
                                 }
                             });
                             break;
                         case 'characterlocationwesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
-                                    await self.characterLoctaionFiller.fill();
+                                    await self.characterLocationFiller.fill();
                                 }
                             });
                             break;
                         case 'characterpathwesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.characterPathFiller.fill();
@@ -102,7 +98,7 @@ class UpdateWesteros {
                             });
                             break;
                         case 'regions':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.regionFiller.fill();
@@ -110,7 +106,7 @@ class UpdateWesteros {
                             });
                             break;
                         case 'cultures':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.cultureFiller.fill();
@@ -118,15 +114,15 @@ class UpdateWesteros {
                             });
                             break;
                         case 'eventwesteros':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
-                                    await self.eventFiller.fill();
+                                    // await self.eventFiller.fill();
                                 }
                             });
                             break;
                         case 'continents':
-                            await self.db.collection(collection.name).countDocuments(async function(err, count) {
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.continentFiller.fill();
@@ -134,7 +130,7 @@ class UpdateWesteros {
                             });
                             break;
                         default:
-                            console.log('Unknown collection in database... check updateWesteros.js');
+                            // console.log('Unknown collection in database... check updateWesteros.js');
                             // let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
                             // let promises = fillers.map(async (job) => await job);
                             // await Promise.all(promises);

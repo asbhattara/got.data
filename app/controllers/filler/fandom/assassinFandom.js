@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
       Assassins = require('../../../models/fandom/assassin'),
+      Characters = require('../../../models/fandom/characters'),
       AssassinsScraper = require('../../scraper/fandom/assassin');
 
 
@@ -39,15 +40,25 @@ class AssassinsFandomFiller {
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(assassins) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        assassins.map(assassin => {
+        assassins.map(async (assassin) => {
             let newAssassin = new Assassins();
-            for(let attr in assassin) {
+            // console.log(assassin.slug);
+            // await Characters.findOne({slug: assassin.slug}).exec((err, res) => {
+            //     if (err) throw new Error(err);
+            //     // console.log(res);
+            //     if (res) {
+            //         console.log(res._id);
+            //         newAssassin.assassin = mongoose.Types.ObjectId(res._id);
+            //     }
+            // });
+            for (let attr in assassin) {
                 newAssassin[attr] = assassin[attr];
             }
-            return newAssassin;
+            return newAssassin;  
+            
+            // return newAssassin;
         });
-
-        return assassins.filter(assassin => assassin['name']);
+        return assassins.filter(assassin => assassin['slug']);
     }
 
     async insertToDb(data) {

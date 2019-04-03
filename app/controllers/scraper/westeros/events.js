@@ -2,7 +2,6 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 
 const AgesScraper = require("./ages");
-const agesScraper = new AgesScraper();
 
 class EventScraper {
     constructor()
@@ -10,12 +9,15 @@ class EventScraper {
         this.bot = new MWBot({
             apiUrl: 'https://awoiaf.westeros.org/api.php'
         });
+
+        this.agesScraper = new AgesScraper();
     }
 
     async getAll()
     {
+        console.log('scraping westeros events...')
         let events = [];
-        let ages = await agesScraper.getAllWithEvents();
+        let ages = await this.agesScraper.getAllWithEvents();
 
         for (let i = 0; i < ages.length; i++) {
             for (let j = 0; j < ages[i].events.length; j++) {

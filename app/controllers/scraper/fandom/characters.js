@@ -62,6 +62,11 @@ class CharacterScraper {
         {
             let character = names[i]["character"];
 
+            if (character["name"] === "Brienne") {
+                character["name"] = "Brienne of Tarth";
+                character["slug"] = "Brienne_of_Tarth";
+            }
+
             console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
 
             try {
