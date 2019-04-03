@@ -106,8 +106,8 @@ class CharacterStore {
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {
-                let arr = JSON.parse(longevity);
-                data.longevity = arr;
+                // let arr = JSON.parse(longevity);
+                data.longevity = longevity;
                 data.plod = plod;
                 data.longevityStart = longevityStart
                 await data.save();
@@ -124,8 +124,8 @@ class CharacterStore {
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {
-                let arr = JSON.parse(longevity);
-                data.longevityB = arr;
+                // let arr = JSON.parse(longevity);
+                data.longevityB = longevity;
                 data.plodB = plod;
                 data.longevityStartB = longevityStart;
                 await data.save();
@@ -142,8 +142,8 @@ class CharacterStore {
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
             } else {
-                let arr = JSON.parse(longevity);
-                data.longevityC = arr;
+                // let arr = JSON.parse(longevity);
+                data.longevityC = longevity;
                 data.plodC = plod;
                 data.longevityStartC = longevityStart
                 await data.save();
