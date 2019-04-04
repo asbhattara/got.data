@@ -56,9 +56,7 @@ class CharacterScraper {
         return names;
     }
 
-    async scrapeAll() {
-        let names = await this.getAllNames();
-        let data = [];
+    async fixNameAnomalies(names) {
 
         for(let i = 0; i < names.length; i++)
         {
@@ -68,7 +66,97 @@ class CharacterScraper {
                 character["slug"] = "Brienne_of_Tarth";
             }
 
-            console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
+            if(character["name"] == "Smalljon Umber") {
+                character["slug"] = "Smalljon_Umber";
+            }
+
+            if(character["name"] == "Ramsay Snow") {
+                character["slug"] = "Ramsay_Bolton";
+            }
+
+            if(character["name"] == "Tickler") {
+                character["slug"] = "The_Tickler";
+            }
+
+            if(character["name"] == "Olenna Redwyne") {
+                character["slug"] = "Olenna_Tyrell";
+            }
+
+            if(character["name"] == "Joyeuse Erenford") {
+                character["slug"] = "Joyeuse_Frey";
+            }
+
+            if(character["name"] == "Black Walder Frey") {
+                character["slug"] = "Walder_Rivers";
+            }
+
+            if(character["name"] == "Fat Walda Frey") {
+                character["slug"] = "Walda_Bolton";
+            }
+
+            if(character["name"] == "Talisa Maegyr") {
+                character["slug"] = "Talisa_Stark";
+            }
+
+            if(character["name"] == "Lem Lemoncloak") {
+                character["slug"] = "Lem";
+            }
+
+            if(character["name"] == "Lommy Greenhands") {
+                character["slug"] = "Lommy";
+            }
+
+            if(character["name"] == "Archmaester") {
+                character["slug"] = "Archmaester_(Eastwatch)";
+            }
+
+            if(character["name"] == "Qhorin Halfhand") {
+                character["slug"] = "Qhorin";
+            }
+
+            if(character["name"] == "Karl") {
+                character["slug"] = "Karl_Tanner";
+            }
+
+            if(character["name"] == "Tormund Giantsbane") {
+                character["slug"] = "Tormund";
+            }
+
+            if(character["name"] == "Night's King") {
+                character["slug"] = "Night_King";
+            }
+
+            if(character["name"] == "Khal Drogo") {
+                character["slug"] = "Drogo";
+            }
+
+            if(character["name"] == "The Waif") {
+                character["slug"] = "Waif";
+            }
+
+
+        }
+
+        return names;
+    }
+
+    async scrapeAll() {
+        var names = await this.getAllNames();
+        let finalNames = await this.fixNameAnomalies(names);
+
+        let data = [];
+
+        for(let i = 0; i < finalNames.length; i++)
+        {
+            let character = finalNames[i]["character"];
+
+
+
+            if(character["name"] == "Brienne") {
+                character["slug"] = "Brienne_of_Tarth";
+            }
+
+            console.log("scraping", character["name"], "(", (i + 1), "/", finalNames.length, ")");
 
             data.push(await this.scrape(character["name"], character["slug"]));
         }
@@ -81,6 +169,8 @@ class CharacterScraper {
             format: "json",
             page: page
         });
+
+
 
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
@@ -98,8 +188,8 @@ class CharacterScraper {
 
 
         // scrape gender
-        let male_counter = (data["parse"]["text"]["*"].match(/\shis\s|\shim\s|He|himself/g) || []).length;
-        let female_counter = (data["parse"]["text"]["*"].match(/\sher\s|She|herself/g) || []).length;
+        let male_counter = (data["parse"]["text"]["*"].match(/\shis\s|\shim\s|He|himself|son/g) || []).length;
+        let female_counter = (data["parse"]["text"]["*"].match(/\sher\s|She|herself|daughter/g) || []).length;
 
         if(male_counter > female_counter) {
             result.gender = "male";
