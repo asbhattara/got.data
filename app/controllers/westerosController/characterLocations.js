@@ -7,7 +7,7 @@ class CharacterLocationController {
     async getAll(req, res) {
         let characterLocations = await this.characterLocationStore.getAll();
         if (characterLocations.success === 1) {
-            return res.status(200).send(characterLocations.data);
+            return res.status(200).send({message: 'Success', data: characterLocations.data});
         } else {
             return res.status(404).send(characterLocations.message);
         }
