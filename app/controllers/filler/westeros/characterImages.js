@@ -10,15 +10,14 @@ class CharacterImageFiller {
     }
 
     async fill() {
-        if(this.POLICY_REFILL === 1)
-        {
-            await this.clearAll();
-        }
+        // if(this.POLICY_REFILL === 1)
+        // {
+        //     await this.clearAll();
+        // }
 
-        let data = await CharacterWesteros.find({}, (err, animals) => {
+        let data = await CharacterWesteros.find({}, (err, chars) => {
             if (err) throw new Error(err);
         });
-
         if(!data)
         {
             throw new Error("no character data in database available")

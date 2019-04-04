@@ -1,6 +1,7 @@
 const   CharacterFiller = require('./westeros/characters'),
         CharacterPathFiller = require('./westeros/characterPaths'),
         CharacterLocationFiller = require('./westeros/characterLocations'),
+        CharacterImageFiller = require('./westeros/characterImages'),
         CityFiller = require('./westeros/cities'),
         RegionFiller = require('./westeros/regions'),
         AgeFiller = require('./westeros/ages'),
@@ -17,6 +18,7 @@ class UpdateWesteros {
         this.characterFiller = new CharacterFiller(1);
         this.characterPathFiller = new CharacterPathFiller(1);
         this.characterLocationFiller = new CharacterLocationFiller(1);
+        this.characterImageFiller = new CharacterImageFiller(1);
         this.cityFiller = new CityFiller(1);
         this.regionFiller = new RegionFiller(1);
         this.ageFiller = new AgeFiller(1);
@@ -37,7 +39,8 @@ class UpdateWesteros {
             'pagerankwesteros',
             'regions',
             'cultures',
-            'continents'
+            'continents',
+            'images'
         ];
     }
 
@@ -137,6 +140,17 @@ class UpdateWesteros {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.continentFiller.fill();
+                                }
+                            });
+                            break;
+                        case 'images':
+                            let fs = require('fs');
+                            let imgDir = __dirname + '/../../../misc/images/characters/book/';
+                            await fs.readdir(imgDir, async (err, files) => {
+                                if (err) throw new Error(err);
+                                if (!files || files.length <= 1) {
+                                    console.log('downloading book character images');
+                                    await self.characterImageFiller.fill();
                                 }
                             });
                             break;
