@@ -47,7 +47,7 @@ const CharacterSchema = new Schema({
 });
 
 CharacterSchema.virtual('pagerank', {
-    ref: 'PageRankFandom',
+    ref: 'PageRankWesteros',
     localField: 'slug',
     foreignField: 'title',
     justOne: true
