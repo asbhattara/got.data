@@ -25,14 +25,14 @@ class CharacterImageFiller {
 
         for(let i = 0; i < data.length; i++)
         {
-            if(!data[i].slug || !data[i].imageLink)
+            if(!data[i].slug || !data[i].image)
             {
                 continue;
             }
 
             console.log("downloading image of", data[i].slug);
 
-            await this.download(data[i].slug, data[i].imageLink)
+            await this.download(data[i].slug, data[i].image)
         }
     }
 

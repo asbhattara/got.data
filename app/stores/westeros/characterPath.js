@@ -21,7 +21,9 @@ class CharacterPathStore {
 
     async getByName(name) {
         try {
-            let data = await CharacterPaths.findOne({name: name});
+            let data = await CharacterPaths.findOne({name: name}, (err, res) => {
+                if (err) throw new Error(err);
+            });
 
             if (!data) {
                 return { success: 0, message: 'No characters matched your criteria' };
