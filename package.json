@@ -1,7 +1,7 @@
 {
   "name": "got-api",
   "version": "1.0.0",
-  "description": "This package provides and api that scrapes data from a wiki",
+  "description": "This package provides an api that scrapes data from a wiki",
   "main": "app.js",
   "author": "",
   "license": "ISC",
@@ -32,9 +32,8 @@
   },
   "scripts": {
     "start": "node app.js",
-
     "refill": "node scripts/refill.js",
     "update": "node scripts/update.js",
-    "safeupdate": "node scripts/safeupdate.js",
+    "safeupdate": "node scripts/safeupdate.js"
   }
 }

@@ -15,23 +15,6 @@ const   CharacterFiller = require('./fandom/charactersFandom'),
         EventFiller = require('./fandom/eventFandom');
 
 
-// const collections = [
-//     'agefandoms', 
-//     'animalfandoms', 
-//     'housefandoms', 
-//     'assassinfandoms', 
-//     'bastardfandoms',
-//     'battlefandoms',
-//     'castlefandoms',
-//     'cityfandoms',
-//     'characterfandoms',
-//     'eventfandoms',
-//     'religionfandoms',
-//     'regionfandoms',
-//     'pagerankfandoms',
-//     'episodefandoms',
-//     'townfandoms'
-// ];
 class UpdateFandom {
     constructor(db) {
         this.db = db;
