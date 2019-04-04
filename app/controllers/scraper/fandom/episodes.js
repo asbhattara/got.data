@@ -19,47 +19,38 @@ class EpisodeScraper {
 
         let names = [];
 
-        let episode = {"number": null, "title": null, "reference": null, "image": null, "date": null, "viewers": null, "preview_text": null};
+        
 
         $("table").each(function() {
             let $table = $(this);
 
+
+
             $table.find("tr:not(:first-child)").each(function (i) {
                 let $this = $(this);
 
+
                 if (i % 2 === 0) {
-                    episode = {"number": null, "title": null, "reference": null, "image": null, "date": null, "viewers": null, "preview_text": null};
+                    
                     $this.find("td").each(function(j) {
                         let $e = $(this);
-                        switch (j % 5) {
-                            case 0:
-                                episode.number = parseInt($e.text().replace('\n', '').trim());
-                                break;
+                        var episode = {"title": null, "reference": null};
 
-                            case 1:
-                                episode.image = $e.find("img").attr('data-src');
-                                break;
+                        if(j % 5 == 2) {
+                            episode.reference = $e.find("a").attr('href');
+                            episode.title = $e.find("a").text();
 
-                            case 2:
-                                episode.reference = $e.find("a").attr('href');
-                                episode.title = $e.find("a").text();
-                                break;
-
-                            case 3:
-                                episode.date = $e.text().replace('\n', '').trim();
-                                break;
-
-                            case 4:
-                                episode.viewers = parseFloat($e.text().replace('\n', '').trim());
-                                break;
+                            names.push(episode);
                         }
+
+                        
                     });
-                } else {
-                    episode.preview_text = $this.find("td").first().text().substr(1).replace('\n', '');
-                    names.push(episode);
-                }
+                
+                };
             });
         });
+
+        console.log(names);
 
         return names;
     }
@@ -109,6 +100,10 @@ class EpisodeScraper {
         ret.next = null;
 
         let $infobox = $(".portable-infobox");
+
+        if($('h2[data-source=name]') != null) {
+            ret.title = $('h2[data-source=name]').text();
+        }
 
         // parsing season and episode
         $infobox.find("td").each(function(i) {
