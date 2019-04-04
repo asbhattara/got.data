@@ -51,7 +51,7 @@ class CharacterScraper {
 
         });
 
-        console.log(names);
+        // console.log(names);
 
         return names;
     }
@@ -177,7 +177,7 @@ class CharacterScraper {
 
         let result = {};
 
-        console.log("Scrape for" + name);
+        // console.log("Scrape for" + name);
 
         result.name = name;
         result.slug = page;

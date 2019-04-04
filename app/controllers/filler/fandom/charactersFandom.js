@@ -100,14 +100,24 @@ class CharacterFandomFiller {
     async safeUpdateCollection(data) {
         try {
             let promises = data.map(async (obj) => {
-                await Characters.find({ slug: obj.slug }).exec((err, docs) => {
+                await Characters.findOne({ slug: obj.slug }).exec(async (err, slugdocs) => {
                     if (err) throw new Error(err);
-                    if (docs.length === 0) {
-                        let newChar = new Characters(obj);
-                        newChar.save((err) => {
-                            if (err) throw new Error(err);
-                            console.log(obj.slug + ' successfully added to DB');
-                        })
+                    if (slugdocs.length === 0) {
+                        await Characters.findOne({ name: obj.name }).exec((err, namedocs) => {
+                            if (namedocs === 0) {
+                                let newChar = new Characters(obj);
+                                newChar.save((err) => {
+                                    if (err) throw new Error(err);
+                                    console.log(obj.slug + ' successfully added to DB');
+                                })
+                            } else {
+                                Characters.updateOne({name: obj.name}, {$set: obj}, (err, res) => {
+                                    if (err) throw new Error(err);
+                                });
+                            }
+                        });
+                    
+                        
                     }
                 });
             });
