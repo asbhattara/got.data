@@ -1,13 +1,14 @@
-const   CharacterFiller = require('../app/controllers/filler/westeros/characters'),
-        CharacterPathFiller = require('../app/controllers/filler/westeros/characterPaths'),
-        CharacterLocationFiller = require('../app/controllers/filler/westeros/characterLocations'),
-        CityFiller = require('../app/controllers/filler/westeros/cities'),
-        RegionFiller = require('../app/controllers/filler/westeros/regions'),
-        AgeFiller = require('../app/controllers/filler/westeros/ages'),
-        HouseFiller = require('../app/controllers/filler/westeros/houses'),
-        CultureFiller = require('../app/controllers/filler/westeros/cultures'),
-        ContinentFiller = require('../app/controllers/filler/westeros/contintents'),
-        EventFiller = require('../app/controllers/filler/westeros/events');
+const   CharacterFiller = require('./westeros/characters'),
+        CharacterPathFiller = require('./westeros/characterPaths'),
+        CharacterLocationFiller = require('./westeros/characterLocations'),
+        CityFiller = require('./westeros/cities'),
+        RegionFiller = require('./westeros/regions'),
+        AgeFiller = require('./westeros/ages'),
+        HouseFiller = require('./westeros/houses'),
+        CultureFiller = require('./westeros/cultures'),
+        ContinentFiller = require('./westeros/contintents'),
+        RankFiller = require('./westeros/pagerank'),
+        EventFiller = require('./westeros/events');
 
 
 class UpdateWesteros {
@@ -23,6 +24,7 @@ class UpdateWesteros {
         this.cultureFiller = new CultureFiller(1);
         this.continentFiller = new ContinentFiller(1);
         this.eventFiller = new EventFiller(1);
+        this.rankFiller = new RankFiller(1);
 
         this.collections = [
             'agewesteros', 
@@ -32,6 +34,7 @@ class UpdateWesteros {
             'characterlocationwesteros',
             'characterpathwesteros',
             'eventwesteros',
+            'pagerankwesteros',
             'regions',
             'cultures',
             'continents'
@@ -94,6 +97,14 @@ class UpdateWesteros {
                                 if (err) throw new Error(err);
                                 if( count == 0 ) {
                                     await self.characterPathFiller.fill();
+                                }
+                            });
+                            break;
+                        case 'pagerankwesteros':
+                            await self.db.collection(collection).countDocuments(async function(err, count) {
+                                if (err) throw new Error(err);
+                                if( count == 0 ) {
+                                    await self.rankFiller.fill();
                                 }
                             });
                             break;

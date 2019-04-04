@@ -2,8 +2,8 @@ require(__dirname + '/' + 'constants');
 
 const config = require(__base + 'cfg/config');
 
-const UpdateFandom = require(__base + '/scripts/updateFandom');
-const UpdateWesteros = require(__base + '/scripts/updateWesteros');
+const UpdateFandom = require(__appbase + '/controllers/filler/updateFandom');
+const UpdateWesteros = require(__appbase + '/controllers/filler/updateWesteros');
 
 const uuidv4 = require('uuid/v4');
 

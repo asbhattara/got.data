@@ -1,18 +1,18 @@
-const   CharacterFiller = require('../app/controllers/filler/fandom/charactersFandom'),
-        EpisodeFiller = require('../app/controllers/filler/fandom/episodesFandom'),
-        ReligionFiller = require('../app/controllers/filler/fandom/religionsFandom'),
-        PageRankFiller = require('../app/controllers/filler/fandom/pagerankFandom'),
-        AnimalFiller = require('../app/controllers/filler/fandom/animalFandom'),
-        AssassinFiller = require('../app/controllers/filler/fandom/assassinFandom'),
-        BastardFiller = require('../app/controllers/filler/fandom/bastardFandom'),
-        BattleFiller = require('../app/controllers/filler/fandom/battleFandom'),
-        CastleFiller = require('../app/controllers/filler/fandom/castleFandom'),
-        CityFiller = require('../app/controllers/filler/fandom/cityFandom'),
-        RegionFiller = require('../app/controllers/filler/fandom/regionFandom'),
-        TownFiller = require('../app/controllers/filler/fandom/townFandom'),
-        AgeFiller = require('../app/controllers/filler/fandom/ageFandom'),
-        HouseFiller = require('../app/controllers/filler/fandom/houseFandom'),
-        EventFiller = require('../app/controllers/filler/fandom/eventFandom');
+const   CharacterFiller = require('./fandom/charactersFandom'),
+        EpisodeFiller = require('./fandom/episodesFandom'),
+        ReligionFiller = require('./fandom/religionsFandom'),
+        PageRankFiller = require('./fandom/pagerankFandom'),
+        AnimalFiller = require('./fandom/animalFandom'),
+        AssassinFiller = require('./fandom/assassinFandom'),
+        BastardFiller = require('./fandom/bastardFandom'),
+        BattleFiller = require('./fandom/battleFandom'),
+        CastleFiller = require('./fandom/castleFandom'),
+        CityFiller = require('./fandom/cityFandom'),
+        RegionFiller = require('./fandom/regionFandom'),
+        TownFiller = require('./fandom/townFandom'),
+        AgeFiller = require('./fandom/ageFandom'),
+        HouseFiller = require('./fandom/houseFandom'),
+        EventFiller = require('./fandom/eventFandom');
 
 
 // const collections = [

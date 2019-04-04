@@ -1,13 +1,13 @@
 {
     "database" : {
-        "username": "",
-        "password": "",
+        "username": "user",
+        "password": "pass",
         "port": "27017",
         "uri": "127.0.0.1",
         "db": "database"
     },
     "server":{
-        "port": "8080",
+        "port": "3000",
         "accessToken": "123secure"
     }
 }

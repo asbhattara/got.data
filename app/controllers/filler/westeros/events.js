@@ -40,6 +40,7 @@ class EventsFiller {
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
+
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newChar = new Events();
@@ -51,10 +52,10 @@ class EventsFiller {
                 }
                 // translate date to a number
                 if (attr === 'date') {
-                    if (event[attr].indexOf('AC') > -1 || event[attr].indexOf('ac') > -1) {
+                    if (typeof event[attr] === "string" && (event[attr].indexOf('AC') > -1 || event[attr].indexOf('ac') > -1)) {
                         event[attr] = Math.abs(event[attr].replace(/\D/g, ''));
                     }
-                    else if (event[attr].indexOf('BC') > -1 || event[attr].indexOf('bc') > -1) {
+                    else if (typeof event[attr] === "string" && (event[attr].indexOf('BC') > -1 || event[attr].indexOf('bc') > -1)) {
                         event[attr] = 0 - Math.abs(event[attr].replace(/\D/g, ''));
                     }
                     else {
