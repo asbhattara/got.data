@@ -477,7 +477,16 @@ class CharacterScraper extends Scraper {
                 }
             }
         }
+
+        if(character.dateOfBirth && character.dateOfDeath) {
+            character.age = parseInt(character.dateOfDeath) - parseInt(character.dateOfBirth)
+        }
         
+        if(character.dateOfBirth && !character.dateOfDeath) {
+            character.age = 300 - parseInt(character.dateOfBirth);
+        }
+
+        console.log(character.age);
         return character;
     }
 }
