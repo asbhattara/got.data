@@ -10,10 +10,10 @@ class CharacterImageFiller {
     }
 
     async fill() {
-        if(this.POLICY_REFILL === 1)
+        /*if(this.POLICY_REFILL === 1)
         {
             await this.clearAll();
-        }
+        }*/
 
         let data = await CharacterFandom.find({}, (err) => {
             if (err) throw new Error(err);
