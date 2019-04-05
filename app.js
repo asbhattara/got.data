@@ -105,7 +105,9 @@ app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
 
 app.use('/api', express.static('apiref.html'));
-app.use('/misc/images/', express.static('misc/images'));
+app.use('/api/book/images/', express.static('./misc/images/characters/book'));
+app.use('/api/show/images/', express.static('./misc/images/characters/show'));
+
 
 //Redirect to api reference
 app.get('*', function (req, res) {
