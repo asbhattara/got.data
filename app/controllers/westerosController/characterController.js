@@ -3,10 +3,6 @@ class CharacterController {
     constructor() {
         this.charStore = new CharacterStore();
     }
-    // ! 
-    // async getMultiple(req, res) {
-    //     let characters = await this.charStore.get()
-    // }
 
     async getAll(req, res) {
         let characters = await this.charStore.getAll();

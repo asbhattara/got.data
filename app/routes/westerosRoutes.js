@@ -7,8 +7,8 @@ const   CharacterController = require('../controllers/westerosController/charact
         CultureController = require('../controllers/westerosController/cultureController'),
         RegionController = require('../controllers/westerosController/regionController'),
         ContinentController = require('../controllers/westerosController/continentController'),
-        EventController = require('../controllers/westerosController/eventController');
-
+        EventController = require('../controllers/westerosController/eventController'),
+        BayeseanAttributeController = require('../controllers/fandomController/bayeseanController');
 
 module.exports = function(app, router) {
 
@@ -60,4 +60,7 @@ module.exports = function(app, router) {
     router.get('/events', eventController.getAll.bind(eventController));
     router.get('/events/:name', eventController.getAll.bind(eventController));
 
-}
+    const bayeseanController = new BayeseanAttributeController();
+    router.get("/bayesean-attributes", bayeseanController.getAll.bind(bayeseanController));
+    router.post("/bayesean-attributes/update", bayeseanController.update.bind(bayeseanController));
+};

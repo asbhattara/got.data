@@ -7,7 +7,7 @@ class CharacterController {
     }
     // ! 
     // async getMultiple(req, res) {
-    //     let characters = await this.charStore.get()
+    //     let characters = await this.baStore.get()
     // }
 
     async getAll(req, res) {
