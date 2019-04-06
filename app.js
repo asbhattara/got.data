@@ -74,10 +74,14 @@ mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
 mongoose.connection.on('connected', async () => {
     try {
         const db = mongoose.connection.db;
+
         console.log('MongoDB connection open');
+
         let updateFandom = new UpdateFandom(db).basicUpdate();
         let updateWesteros = new UpdateWesteros(db).basicUpdate();
+
         await Promise.all([updateFandom, updateWesteros]);
+
         console.log("all scraper done")
     } catch(e) {
         console.log(e);
@@ -108,6 +112,14 @@ app.use('/api', express.static('apiref.html'));
 app.use('/api/book/images/', express.static('./misc/images/characters/book'));
 app.use('/api/show/images/', express.static('./misc/images/characters/show'));
 
+// api request not found
+app.get('/api/book/*', function (req, res) {
+    res.send('404');
+});
+
+app.get('/api/show/*', function (req, res) {
+    res.send('404');
+});
 
 //Redirect to api reference
 app.get('*', function (req, res) {
