@@ -57,9 +57,7 @@ class RegionScraper {
         let region = {};
 
         if(data !== null && data !== undefined) {
-            if(data.parse.redirects.length > 0) {
-                regionName = data.parse.redirects[0].to;
-            }
+            regionName = data.parse.title;
         }
 
         region.name = regionName;
@@ -68,8 +66,6 @@ class RegionScraper {
     }
 
     async getWesteros() {
-
-        console.log("start getRegions");
         //Setup the mediawiki bot
 
         let data = await this.bot.request({
@@ -108,8 +104,6 @@ class RegionScraper {
     }
     
     async getEssos() {
-
-        console.log("start getRegions");
         //Setup the mediawiki bot
 
         let data = await this.bot.request({
@@ -144,9 +138,7 @@ class RegionScraper {
     }
 
     async getSothoryos() {
-        console.log("start getRegions");
-
-        return ['Naath','Isle of Tears','Basilisk Point'];
+        return ['Naath', 'Isle of Tears', 'Basilisk Point'];
     }
 }
 

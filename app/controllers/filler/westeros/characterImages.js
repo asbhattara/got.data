@@ -1,3 +1,5 @@
+const jimp = require("jimp");
+
 const CharacterWesteros = require('../../../models/westeros/characters');
 
 class CharacterImageFiller {
@@ -77,10 +79,16 @@ class CharacterImageFiller {
                     let type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
                     let downloadTo = filename+'.'+type;
                     downloadTo = downloadTo.replace(".image",'');
-                    request(uri).pipe(fs.createWriteStream(__appbase + '..' + downloadTo)).on('close', function() {
-                        resolve(downloadTo);
-                        console.log('Downloaded to: ' + downloadTo);
-                    });
+
+                    request(uri).pipe(fs.createWriteStream(__appbase + '..' + downloadTo).on('close', function() {
+                        jimp.read(__appbase + '..' + downloadTo, (err, lenna) => {
+                            if (err) throw err;
+                            lenna.write(__appbase + '..' + filename + '.jpg');
+
+                            resolve(filename + '.jpg');
+                            console.log('Downloaded to: ' + filename + '.jpg');
+                        });
+                    }));
                 }
                 else {
                     reject();

@@ -40,12 +40,12 @@ class UpdateWesteros {
             'regions',
             'cultures',
             'continents',
-            'images'
         ];
     }
 
     async basicUpdate() {
         const self = this;
+
         this.db.listCollections().toArray(async(err, names) => {
             if(err) throw new Error(err);
             console.log('filling book collections');
@@ -54,129 +54,183 @@ class UpdateWesteros {
                 try {
                     switch(collection) {
                         case 'agewesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.ageFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.ageFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'housewesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.houseFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.houseFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'cities':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.cityFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.cityFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'characterwesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.characterFiller.fill();
-                                } else {
-                                    // await new CharacterFiller(3).fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.characterFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'characterlocationwesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.characterLocationFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.characterLocationFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'characterpathwesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.characterPathFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.characterPathFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'pagerankwesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.rankFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.rankFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'regions':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.regionFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.regionFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'cultures':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.cultureFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.cultureFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'eventwesteros':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.eventFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.eventFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         case 'continents':
-                            await self.db.collection(collection).countDocuments(async function (err, count) {
-                                if(err) throw new Error(err);
-                                if(count == 0) {
-                                    console.log("filling " + collection);
-                                    await self.continentFiller.fill();
-                                }
-                            });
-                            break;
-                        case 'images':
-                            let fs = require('fs');
-                            let imgDir = __dirname + '/../../../misc/images/characters/book/';
-                            await fs.readdir(imgDir, async(err, files) => {
-                                if(err) throw new Error(err);
-                                if(!files || files.length <= 1) {
-                                    console.log('downloading book character images');
-                                    await self.characterImageFiller.fill();
-                                }
-                            });
-                            break;
+                            return new Promise((resolve => {
+                                self.db.collection(collection).countDocuments(function (err, count) {
+                                    if(err) throw new Error(err);
+
+                                    if(count === 0) {
+                                        console.log("filling " + collection);
+                                        self.continentFiller.fill().then(() => { resolve() });
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                            }));
                         default:
-                            // console.log('Unknown collection in database... check updateWesteros.js');
-                            // let fillers = [charFiller.fill(), epFiller.fill(), relFiller.fill(), rankFiller.fill()];
-                            // let promises = fillers.map(async (job) => await job);
-                            // await Promise.all(promises);
-                            break;
+                            return new Promise((resolve) => {resolve()});
                     }
                 } catch(e) {
                     console.warn('error in fetching data ' + e);
+
+                    return new Promise((resolve) => {resolve()});
                 }
             });
+
             await Promise.all(filling);
+
+            await new Promise(resolve => {
+                console.log("checking images");
+
+                let fs = require('fs');
+                let imgDir = __dirname + '/../../../misc/images/characters/book/';
+
+                fs.readdir(imgDir, (err, files) => {
+                    if(err) throw new Error(err);
+
+                    if(!files || files.length <= 2) {
+                        console.log('downloading show character images');
+
+                        self.characterImageFiller.fill().then(() => {
+                            resolve();
+                        });
+                    }
+                    else
+                    {
+                        resolve();
+                    }
+                });
+            });
+
             console.log('Finished fetching data.')
         });
     }
