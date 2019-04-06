@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const rp = require('request-promise');
 
 class EventScraper {
+
     constructor() {
         this.bot = new MWBot({
             apiUrl: 'https://gameofthrones.fandom.com/api.php'
@@ -39,7 +40,6 @@ class EventScraper {
             .catch(function (err) {
             });
 
-            // console.log(events);
 
             return events;
 
@@ -262,9 +262,6 @@ class EventScraper {
 
         }
         
-
-
-        // console.log(eventItem);
         
 
         return eventItem;
@@ -292,3 +289,4 @@ class EventScraper {
 }
 
 module.exports = EventScraper;
+

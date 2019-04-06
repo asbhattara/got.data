@@ -1,22 +1,25 @@
 const mongoose = require('mongoose'),
-      Religions = require('../../../models/fandom/religions'),
-      ReligionScraper = require('../../../controllers/scraper/fandom/religions');
+      Regions = require('../../../models/fandom/region'),
+      RegionScrapper = require('../../scraper/fandom/regions');
 
 
-class ReligionFandomFiller {
+class RegionFandomFiller {
     constructor() {
-        this.scraper = new ReligionScraper();
+        this.scraper = new RegionScrapper();
     }
 
     async fill() {
         try {
             // start scraping
             let data = await this.scraper.scrapeAll();
-
+            // clear collection
+            await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
+
+            console.log(data.length);
             // add to DB
-            await this.insertAll(data);
+            await this.insertToDb(data);
         } catch (error) {
             console.warn(error);
         }
@@ -25,7 +28,7 @@ class ReligionFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        await Religions.deleteMany({}, (err, data) => {
+        await Regions.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -33,39 +36,35 @@ class ReligionFandomFiller {
             }
         });
     }
-
-    
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(religions) {
+    async matchToModel(regions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        religions.map(religion => {
-            let newRel = new Religions();
-            for(let attr in religion) {
+        regions.map(region => {
+            let newEp = new Regions();
+            for(let attr in region) {
                 // numbers sometimes return NaN which throws error in DB
-                // if((attr == '') && isNaN(religion[attr])) {
-                //     delete religion[attr];
-                // } 
-                newRel[attr] = religion[attr];
+                if((attr == 'age') && isNaN(region[attr])) {
+                    delete region[attr];
+                    continue;
+                } 
+                newEp[attr] = region[attr];
             }
-            return newRel;
+            return newEp;
         });
-        return religions.filter(religion => religion['name']);
+
+        
+        return regions.filter(region => region['name']);
     }
 
-    async insertAll(data) {
-        // clear collection
-        await this.clearAll();
-        try {
-            await Religions.insertMany(data, (err, docs) => {
-                if (err) {
-                    console.warn('error in saving to db: ' + err);
-                    return;
-                } 
-                console.log(docs.length + ' religions successfully saved to MongoDB!');
-            });
-        } catch(e) {
-            throw new Error(e);
-        }
+    async insertToDb(data) {
+        await Regions.insertMany(data, (err, docs) => {
+            if (err) {
+                console.warn('error in saving to db: ' + err);
+                return;
+            } 
+            console.log(docs.length + ' regions successfully saved to MongoDB!');
+        });
     }
 }
-module.exports = ReligionFandomFiller;
+module.exports = RegionFandomFiller;
+//TODO

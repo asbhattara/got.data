@@ -51,7 +51,6 @@ class CharacterScraper {
 
         });
 
-        // console.log(names);
 
         return names;
     }
@@ -187,9 +186,12 @@ class CharacterScraper {
         var infobox = $(".portable-infobox");
 
 
+        let genderCounter = $('p').slice(0,5).text();
+
         // scrape gender
-        let male_counter = (data["parse"]["text"]["*"].match(/\shis\s|\shim\s|He|himself|son/g) || []).length;
-        let female_counter = (data["parse"]["text"]["*"].match(/\sher\s|She|herself|daughter/g) || []).length;
+        let male_counter = (genderCounter.match(/\shis\s|\shim\s|He|himself|son/g) || []).length;
+        let female_counter = (genderCounter.match(/\sher\s|She|herself|daughter/g) || []).length;
+
 
         if(male_counter > female_counter) {
             result.gender = "male";
@@ -198,6 +200,7 @@ class CharacterScraper {
         {
             result.gender = "female";
         }
+
 
         // scrape appearance
         result.appearances = []
@@ -319,7 +322,8 @@ class CharacterScraper {
 
 
         //Mother
-        if($('div[data-source=Mother]') != null) {
+
+         if($('div[data-source=Mother]') != null) {
 
             var mother = $('div[data-source=Mother]').find(".pi-data-value").html()
 

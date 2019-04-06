@@ -4,6 +4,7 @@ const config = require(__base + 'cfg/config');
 const mongoose = require('mongoose');
 const Filler = require(__appbase + "controllers/filler/filler");
 
+
 const collection = process.env.npm_config_collection;
 const wiki = process.env.npm_config_wiki;
 
@@ -33,5 +34,6 @@ mongoose.connection.on('connected', async () => {
         process.exit();
     } catch(e) {
         console.log(e);
+
     }
 });
