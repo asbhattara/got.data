@@ -59,6 +59,8 @@ node_modules/*
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+package-lock.json
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
@@ -77,3 +79,4 @@ apidoc
 /misc/images
 /wikiData
 /tmp/*.json
+package-lock.json

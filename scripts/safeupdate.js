@@ -15,8 +15,8 @@ function getDbString(config) { //Create the DB connection string
     return dbConnection + config.uri + ":" + config.port + "/" + config.db;
 }
 
-// 2 = update
-let filler = new Filler(wiki, collection, 2);
+// 3 = safe update
+let filler = new Filler(wiki, collection, 3);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
