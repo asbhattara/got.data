@@ -198,7 +198,7 @@ class HouseScrapper {
             try {
                 data.push(await this.scrape(houses[i]));
             } catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

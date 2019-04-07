@@ -32,7 +32,7 @@ class RegionScraper {
                 regionsCollection.push(await this.get(regions[i]))
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

@@ -126,7 +126,7 @@ class AnimalScrapper {
                 data.push(await this.scrape(animals[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

@@ -35,7 +35,7 @@ class HouseScraper {
                 data = await this.bot.request(params);
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
 
                 continue;
             }
@@ -72,7 +72,7 @@ class HouseScraper {
                 data.push(await this.get(houses[i]["name"], houses[i]["slug"]));
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

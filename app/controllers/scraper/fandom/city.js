@@ -155,7 +155,7 @@ class CityScrapper {
                 data.push(await this.scrape(cities[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 
