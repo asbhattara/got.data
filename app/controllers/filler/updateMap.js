@@ -12,21 +12,21 @@ class UpdateMap {
         this.regionFiller = new RegionFiller(1);
 
         this.collections = [
-            'charactermaps',
-            'episodemaps',
-            'regionmaps',
+            'mapcharacters',
+            'mapepisodes',
+            'mapregions',
         ];
     }
 
     async basicUpdate() {
         const self = this;
 
-        console.log('filling book collections');
+        console.log('filling map collections');
         let promises = this.collections.map(async(collection) => {
             console.log('checking ' + collection);
             try {
                 switch(collection) {
-                    case 'charactermaps':
+                    case 'mapcharacters':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -39,7 +39,7 @@ class UpdateMap {
                                 }
                             });
                         }));
-                    case 'episodemaps':
+                    case 'mapepisodes':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -52,7 +52,7 @@ class UpdateMap {
                                 }
                             });
                         }));
-                    case 'regionmaps':
+                    case 'mapregions':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -66,6 +66,8 @@ class UpdateMap {
                             });
                         }));
                     default:
+                        console.error("invalid collection " + collection);
+
                         return new Promise((resolve) => {resolve()});
                 }
             } catch(e) {
@@ -78,7 +80,7 @@ class UpdateMap {
         // execute fillers without dependencies
         await Promise.all(promises);
 
-        console.log('Finished fetching book data.');
+        console.log('Finished fetching map data.');
     }
 }
 

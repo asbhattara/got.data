@@ -7,18 +7,15 @@ const ReligionFandomSchema = new Schema({
     image       : String,
 
     type        : [String],
-    clergy      : {type: String, ref: "CharacterFandom"},
-    locations   : [{type: String, ref: "RegionFandom"}],
-    leaders     : [{type: String, ref: "CharacterFandom"}],
+    clergy      : {type: String, ref: "FandomCharacter"},
+    locations   : [{type: String, ref: "FandomRegion"}],
+    leaders     : [{type: String, ref: "FandomCharacter"}],
     center      : String,
 
-    neighbors   : [{type: String, ref: "RegionFandom"}],
-    cultures    : [{type: String, ref: "Culture"}],
-    events      : [{type: String, ref: "Event"}],
-    // color       : String,
-    // borders     : [[String]],
-    // highlights  : [String]										
+    neighbors   : [{type: String, ref: "FandomRegion"}],
+    cultures    : [{type: String, ref: "FandomCulture"}],
+    events      : [{type: String, ref: "FandomEvent"}],
 });
 
-module.exports = mongoose.model('ReligionFandom', ReligionFandomSchema);
+module.exports = mongoose.model('FandomReligion', ReligionFandomSchema);
 

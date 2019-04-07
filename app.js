@@ -21,7 +21,7 @@ function getDbString(config) { //Create the DB connection string
     if (config.username.length > 0 && config.password.length > 0) {
         dbConnection += config.username + ":" + config.password + "@";
     }
-    return dbConnection + config.uri + ":" + config.port + "/" + config.db;
+    return dbConnection + config.uri + ":" + config.port + "/" + config.collection;
 }
 
 function routerAuthentication(req, res, next) {
@@ -139,6 +139,6 @@ app.get('*', function (req, res) {
 //     res.status(404).send({url: req.originalUrl + ' not found'})
 // });
 
-app.listen(port);
+app.listen(3000);
 
 console.log('RESTful API server started on: ' + port);

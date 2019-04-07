@@ -3,10 +3,10 @@ const Schema   = mongoose.Schema;
 
 const TownFandomSchema = new Schema({
     name        : {type: String, required: true, unique: true},
-    location    : {type: String, ref: "Continent"},
+    location    : {type: String, ref: "WesterosContinent"},
     type        : {type: String},
     rulers      : [{type: String}],
-    religion    : [{type: String, ref: "ReligionsFandom"}]
+    religion    : [{type: String, ref: "FandomReligion"}]
 });
 
-module.exports = mongoose.model('TownFandom', TownFandomSchema);
+module.exports = mongoose.model('FandomTown', TownFandomSchema);

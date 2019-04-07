@@ -19,7 +19,7 @@ COPY ./apiref.html /usr/src/app/
 COPY ./package.json /usr/src/app/
 
 # Use defaults or ENV file
-RUN mv cfg/config.js.template cfg/config.js
+RUN mv cfg/config.template.js cfg/config.js
 
 RUN npm install -g webpack
 

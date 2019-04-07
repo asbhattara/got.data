@@ -37,21 +37,21 @@ class UpdateFandom {
         this.eventFiller = new EventFiller();
 
         this.collections = [
-            'agefandoms',
-            'animalfandoms',
-            'housefandoms',
-            'assassinfandoms',
-            'bastardfandoms',
-            'battlefandoms',
-            'castlefandoms',
-            'cityfandoms',
-            'characterfandoms',
-            'eventfandoms',
-            'religionfandoms',
-            'regionfandoms',
-            'pagerankfandoms',
-            'episodefandoms',
-            'townfandoms'
+            'fandomages',
+            'fandomanimals',
+            'fandomhouses',
+            'fandomassassins',
+            'fandombastards',
+            'fandombattles',
+            'fandomcastles',
+            'fandomcities',
+            'fandomcharacters',
+            'fandomevents',
+            'fandomreligions',
+            'fandomregions',
+            'fandompageranks',
+            'fandomepisodes',
+            'fandomtowns'
         ];
     }
 
@@ -64,7 +64,7 @@ class UpdateFandom {
             console.log('checking ' + collection);
             try {
                 switch(collection) {
-                    case 'agefandoms':
+                    case 'fandomages':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -77,7 +77,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'housefandoms':
+                    case 'fandomhouses':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -90,7 +90,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'animalfandoms':
+                    case 'fandomanimals':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -103,7 +103,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'assassinfandoms':
+                    case 'fandomassassins':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -116,7 +116,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'bastardfandoms':
+                    case 'fandombastards':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -129,7 +129,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'battlefandoms':
+                    case 'fandombattles':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -142,7 +142,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'castlefandoms':
+                    case 'fandomcastles':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -155,7 +155,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'cityfandoms':
+                    case 'fandomcities':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -168,7 +168,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'characterfandoms':
+                    case 'fandomcharacters':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -181,7 +181,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'eventfandoms':
+                    case 'fandomevents':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -194,7 +194,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'religionfandoms':
+                    case 'fandomreligions':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -207,7 +207,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'pagerankfandoms':
+                    case 'fandompageranks':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -220,7 +220,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'episodefandoms':
+                    case 'fandomepisodes':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -233,7 +233,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'regionfandoms':
+                    case 'fandomregions':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -246,7 +246,7 @@ class UpdateFandom {
                                 }
                             });
                         }));
-                    case 'townfandoms':
+                    case 'fandomtowns':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -260,6 +260,7 @@ class UpdateFandom {
                             });
                         }));
                     default:
+                        console.error("invalid collection " + collection);
                         return new Promise((resolve) => {resolve()});
                 }
             } catch(e) {

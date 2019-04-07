@@ -12,4 +12,4 @@ const RegionSchema = new Schema({
     highlights: [String]
 });
 
-module.exports = mongoose.model('RegionMap', RegionSchema);
+module.exports = mongoose.model('MapRegion', RegionSchema);

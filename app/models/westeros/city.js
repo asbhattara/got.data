@@ -8,8 +8,8 @@ const CitySchema = new Schema({
     type     : String,
     priority : {type: Number, min: 0, max: 6},
     link     : String,
-    continent: {type: String, ref: "Continent"},
-    regions  : [{type: String, ref: "Region"}]
+    continent: {type: String, ref: "WesterosContinent"},
+    regions  : [{type: String, ref: "WesterosRegion"}]
 });
 
-module.exports = mongoose.model('City', CitySchema);
+module.exports = mongoose.model('WesterosCity', CitySchema);

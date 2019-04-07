@@ -6,18 +6,18 @@ const HouseSchema = new Schema({
     image          : String,
     titles         : [String],
 
-    coatOfArms     : String,                                                   // Sable, a dragon thrice-headed gules
-    words          : String,                                                        // Fire and Blood
-    currentLord    : {type: String, ref: "CharacterWesteros"},         // Queen Daenerys Targaryen
-    overlords      : [{type: String, ref: "HouseWesteros"}],            // None
+    coatOfArms     : String,
+    words          : String,
+    currentLord    : {type: String, ref: "WesterosCharacter"},
+    overlords      : [{type: String, ref: "WesterosHouse"}],
 
     seat           : String,
     region         : String,
-    ancestralWeapon: [String],                                            // Blackfyre and Dark Sister
+    ancestralWeapon: [String],
 
-    founded        : String,                    // > 126 BC, Age of Heroes
+    founded        : String,
     founder        : String,
-    cadetBranch    : String,                                                  // House Blackfyre is the cadet branch of House Targaryen
+    cadetBranch    : String,
     heir           : String,
 
     isExtinct      : Boolean,
@@ -26,4 +26,4 @@ const HouseSchema = new Schema({
     updatedAt      : {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('HouseWesteros', HouseSchema);
+module.exports = mongoose.model('WesterosHouse', HouseSchema);

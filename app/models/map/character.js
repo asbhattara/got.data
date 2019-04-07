@@ -10,22 +10,22 @@ const CharacterSchema = new Schema({
     dateOfBirth: Number,
     dateOfDeath: Number,
     actor      : String,
-    mother: {type: String, ref: 'CharacterMap'},
-    father: {type: String, ref: 'CharacterMap'},
-    heir  : {type: String, ref: 'CharacterMap'},
-    placeOfBirth: {type: String, ref: "RegionMap"},
-    placeOfDeath: {type: String, ref: "RegionMap"},
-    house       : {type: String, ref: "HouseWesteros"},
+    mother: {type: String, ref: 'MapCharacter'},
+    father: {type: String, ref: 'MapCharacter'},
+    heir  : {type: String, ref: 'MapCharacter'},
+    placeOfBirth: {type: String, ref: "MapRegion"},
+    placeOfDeath: {type: String, ref: "MapRegion"},
+    house       : {type: String, ref: "WesterosHouse"},
     createdAt   : {type: Date, default: Date.now},
     updatedAt   : {type: Date, default: Date.now},
-    spouse             : {type: String, ref: 'CharacterMap'},
-    allegiance         : {type: String, ref: 'CharacterMap'},
+    spouse             : {type: String, ref: 'MapCharacter'},
+    allegiance         : {type: String, ref: 'MapCharacter'},
     pageRank: Number,
     books              : [String],
-    placeOfLastVisit   : {type: String, ref: "RegionMap"},
+    placeOfLastVisit   : {type: String, ref: "MapRegion"},
     imageLink		: String,
     slug		: String,
     hasPath		: Boolean
 });
 
-module.exports = mongoose.model('CharacterMap', CharacterSchema);
+module.exports = mongoose.model('MapCharacter', CharacterSchema);

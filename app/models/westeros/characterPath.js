@@ -6,4 +6,4 @@ const CharacterPathSchema = new Schema({
     path: Array
 });
 
-module.exports = mongoose.model('CharacterPathWesteros', CharacterPathSchema);
+module.exports = mongoose.model('WesterosCharacterPath', CharacterPathSchema);

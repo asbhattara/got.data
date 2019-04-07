@@ -6,4 +6,4 @@ const PageRankWesterosSchema = new Schema({
     rank        : Number
 });
 
-module.exports = mongoose.model('PageRankWesteros', PageRankWesterosSchema);
+module.exports = mongoose.model('WesterosPageRank', PageRankWesterosSchema);

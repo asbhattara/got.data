@@ -9,7 +9,7 @@ const AssassinFandomSchema = new Schema({
 });
 
 AssassinFandomSchema.virtual('assassin', {
-    ref: 'CharacterFandom',
+    ref: 'FandomCharacter',
     localField: 'slug',
     foreignField: 'slug',
     justOne: true
@@ -18,9 +18,10 @@ AssassinFandomSchema.virtual('assassin', {
 let autoPopulate = function(next) {
     this.populate('assassin');
     next();
-}
+};
+
 AssassinFandomSchema
     .pre('find', autoPopulate)
-    .pre('findOne', autoPopulate)
+    .pre('findOne', autoPopulate);
 
-module.exports = mongoose.model('AssassinFandom', AssassinFandomSchema);
+module.exports = mongoose.model('FandomAssassin', AssassinFandomSchema);
