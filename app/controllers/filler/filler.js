@@ -33,16 +33,29 @@ const westerosTranslation = {
     "region": "regions",
 };
 
+const localTranslation = {
+    "character": "map/characterMap",
+    "episode": "map/episodeMap",
+    "region": "map/regionMap",
+};
+
 class Filler {
     constructor(wiki, collection, mode)
     {
         let fclass = null;
 
-        if(wiki == "fandom")
+        if(wiki === "fandom")
         {
             if(typeof fandomTranslation[collection] === "string")
             {
                 fclass = require("./fandom/" + fandomTranslation[collection]);
+            }
+        }
+        else if(wiki === "local")
+        {
+            if(typeof localTranslation[collection] === "string")
+            {
+                fclass = require("./" + localTranslation[collection]);
             }
         }
         else
