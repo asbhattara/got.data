@@ -2,8 +2,9 @@ require(__dirname + '/' + 'constants');
 
 const config = require(__base + 'cfg/config');
 
-const UpdateFandom = require(__appbase + '/controllers/filler/updateFandom');
-const UpdateWesteros = require(__appbase + '/controllers/filler/updateWesteros');
+const UpdateFandom = require('./app/controllers/filler/updateFandom');
+const UpdateWesteros = require('./app/controllers/filler/updateWesteros');
+const UpdateMap = require('./app/controllers/filler/updateMap');
 
 const uuidv4 = require('uuid/v4');
 
@@ -79,6 +80,7 @@ mongoose.connection.on('connected', async () => {
 
         let updateFandom = new UpdateFandom(db).basicUpdate();
         let updateWesteros = new UpdateWesteros(db).basicUpdate();
+        let updateMap = new UpdateMap(db).basicUpdate();
 
         await Promise.all([updateFandom, updateWesteros]);
 
@@ -98,15 +100,18 @@ app.use(cors({
 
 const showRouter = express.Router();
 const bookRouter = express.Router();
+const mapRouter = express.Router();
 
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
 
 require('./app/routes/fandomRoutes')(app, showRouter);
 require('./app/routes/westerosRoutes')(app, bookRouter);
+require('./app/routes/mapRoutes')(app, mapRouter);
 
 app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
+app.use('/api/map', mapRouter);
 
 app.use('/api', express.static('apiref.html'));
 app.use('/api/book/images/', express.static('./misc/images/characters/book'));
@@ -114,11 +119,15 @@ app.use('/api/show/images/', express.static('./misc/images/characters/show'));
 
 // api request not found
 app.get('/api/book/*', function (req, res) {
-    res.send('404');
+    res.status(404).send('404');
 });
 
 app.get('/api/show/*', function (req, res) {
-    res.send('404');
+    res.status(404).send('404');
+});
+
+app.get('/api/map/*', function (req, res) {
+    res.status(404).send('404');
 });
 
 //Redirect to api reference

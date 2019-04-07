@@ -67,4 +67,3 @@ class RegionFandomFiller {
     }
 }
 module.exports = RegionFandomFiller;
-//TODO

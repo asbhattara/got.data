@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
-      Regions = require('../../../models/fandom/region'),
-      RegionScrapper = require('../../scraper/fandom/regions');
+      Religions = require('../../../models/fandom/religions'),
+      ReligionScrapper = require('../../scraper/fandom/religions');
 
 
-class RegionFandomFiller {
+class ReligionFandomFiller {
     constructor() {
-        this.scraper = new RegionScrapper();
+        this.scraper = new ReligionScrapper();
     }
 
     async fill() {
@@ -28,7 +28,7 @@ class RegionFandomFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        await Regions.deleteMany({}, (err, data) => {
+        await Religions.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -40,7 +40,7 @@ class RegionFandomFiller {
     async matchToModel(regions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
         regions.map(region => {
-            let newEp = new Regions();
+            let newEp = new Religions();
             for(let attr in region) {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'age') && isNaN(region[attr])) {
@@ -57,7 +57,7 @@ class RegionFandomFiller {
     }
 
     async insertToDb(data) {
-        await Regions.insertMany(data, (err, docs) => {
+        await Religions.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('error in saving to db: ' + err);
                 return;
@@ -66,5 +66,4 @@ class RegionFandomFiller {
         });
     }
 }
-module.exports = RegionFandomFiller;
-//TODO
+module.exports = ReligionFandomFiller;

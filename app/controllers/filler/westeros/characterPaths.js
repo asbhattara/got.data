@@ -79,10 +79,6 @@ class CityFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await CharacterPath.insertMany(data, (err, docs) => {

@@ -16,10 +16,10 @@ COPY ./tmp /usr/src/app/tmp
 COPY ./app.js /usr/src/app/
 COPY ./constants.js /usr/src/app/
 COPY ./apiref.html /usr/src/app/
-COPY ./package.* /usr/src/app/
+COPY ./package.json /usr/src/app/
 
 # Use defaults or ENV file
-RUN mv cfg/config.json.template cfg/config.json
+RUN mv cfg/config.js.template cfg/config.js
 
 RUN npm install -g webpack
 

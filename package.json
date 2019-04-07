@@ -6,13 +6,13 @@
   "author": "",
   "license": "ISC",
   "private": true,
-  "homepage": "https://github.com/asbhattara/got.data",
+  "homepage": "https://github.com/got-show/got.data",
   "bugs": {
-    "url": "https://github.com/asbhattara/got.data/issues"
+    "url": "https://github.com/got-show/got.data/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asbhattara/got.data.git"
+    "url": "https://github.com/got-show/got.data.git"
   },
   "engines": {
     "node": ">= 10.15.0"

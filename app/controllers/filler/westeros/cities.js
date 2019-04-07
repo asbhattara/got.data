@@ -77,15 +77,10 @@ class CityFiller {
         // clear collection
         if(this.policy === this.POLICY_REFILL)
         {
-            
-        }
-        else
-        {
-            // TODO: update ?
+            await this.clearAll();
         }
 
         try {
-            await this.clearAll();
             return await Cities.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);

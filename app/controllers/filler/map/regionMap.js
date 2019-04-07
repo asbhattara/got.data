@@ -1,22 +1,36 @@
 const mongoose = require('mongoose'),
-    CharacterLocations = require('../../../models/westeros/characterLocations'),
-    CharacterLocationScraper = require('../../../controllers/scraper/westeros/characterLocations');
+    Region = require('../../../models/map/region'),
+    jsonfile = require('jsonfile');
 
-
-class CharacterLocationFiller {
+class RegionFiller {
     constructor(policy) {
         this.POLICY_REFILL = 1;
         this.POLICY_UPDATE = 2;
         this.POLICY_SAFE_UPDATE = 3;
 
-        this.scraper = new CharacterLocationScraper();
         this.policy = policy;
+    }
+
+    async getFile() {
+        let file = __appbase + '../data/regions.json';
+
+        return new Promise(function (resolve, reject) {
+            jsonfile.readFile(file, function(err, obj) {
+                if(err) {
+                    return reject();
+                }
+
+                console.log('Characters from  file "'+file+'". No scrapping.');
+
+                resolve(obj);
+            });
+        });
     }
 
     async fill() {
         try {
-            // start scraping characters
-            let data = await this.scraper.getAll();
+            // start scraping regions
+            let data = await this.getFile();
             // match scraped data to model
             data = await this.matchToModel(data);
             // add to DB
@@ -29,7 +43,7 @@ class CharacterLocationFiller {
     // remove collection
     async clearAll() {
         console.log('clearing collection...');
-        return await CharacterLocations.deleteMany({}, (err, data) => {
+        return await Region.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('error in removing collection: ' + err);
             } else {
@@ -39,24 +53,19 @@ class CharacterLocationFiller {
     }
 
     // match attributes from Scraper to Mongoose Schema
-    async matchToModel(characterLocations) {
+    async matchToModel(regions) {
         console.log('formating and saving scraped data to DB... this may take a few seconds');
-        characterLocations.map(characterLocation => {
-            let newChar = new CharacterLocations();
+        regions.map(region => {
+            let newChar = new Region();
 
-            for(let attr in characterLocation) {
-                // remove spaces and html tags
-                if (typeof characterLocation[attr] == 'string') {
-                    characterLocation[attr] = characterLocation[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
-                }
-
-                newChar[attr] = characterLocation[attr];
+            for(let attr in region) {
+                newChar[attr] = region[attr];
             }
 
             return newChar;
         });
 
-        return characterLocations;
+        return regions;
     }
 
     async insertAll(data) {
@@ -67,12 +76,12 @@ class CharacterLocationFiller {
         }
 
         try {
-            return await CharacterLocations.insertMany(data, (err, docs) => {
+            return await Region.insertMany(data, (err, docs) => {
                 if (err) {
                     console.warn('error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' character locations successfully saved to MongoDB!');
+                console.log(docs.length + ' regions successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);
@@ -80,4 +89,4 @@ class CharacterLocationFiller {
     }
 }
 
-module.exports = CharacterLocationFiller;
+module.exports = RegionFiller;

@@ -60,10 +60,6 @@ class CulturesFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Cultures.insertMany(data, (err, docs) => {

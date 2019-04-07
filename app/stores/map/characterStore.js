@@ -1,19 +1,18 @@
-const City = require('../../models/westeros/city');
+const CharacterMap = require('../../models/map/character');
 
-class CityStore {
+class CharacterStore {
     constructor() {}
 
-    
     async getAll() {
         try {
-            let data = await City.find({}, (err) => {
-                if (err) throw new Error(err);
-            });
+            let data = await CharacterMap.find({});
+
             if (!data) {
-                return { success: -1, message: 'City collection empty. Scraping should be started...' };
+                return { success: -1, message: 'Character collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
+
         } catch (e) {
             return { success: 0, message: 'error in database query! - ' + e }
         }
@@ -21,26 +20,10 @@ class CityStore {
 
     async getByName(name) {
         try {
-            let data = await City.find({name: name}, (err) => {
-                if (err) throw new Error(err);
-            });
-            if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
-            } else {
-                return { success: 1, data: data };
-            }
-        } catch (e) {
-            return { success: 0, message: 'error in database query! - ' + e }
-        }
-    }
+            let data = await CharacterMap.findOne({name: name});
 
-    async getByContinent(continent) {
-        try {
-            let data = await City.find({continent: continent}, (err) => {
-                if (err) throw new Error(err);
-            });
             if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
+                return { success: 0, message: 'No characters matched your criteria' };
             } else {
                 return { success: 1, data: data };
             }
@@ -51,12 +34,10 @@ class CityStore {
 
     async getById(id) {
         try {
-            let data = await City.find({"_id": id}, (err) => {
-                if (err) throw new Error(err);
-            });
+            let data = await CharacterMap.findOne({'_id': id});
 
             if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
+                return { success: 0, message: 'No characters matched your criteria' };
             } else {
                 return { success: 1, data: data };
             }
@@ -64,5 +45,20 @@ class CityStore {
             return { success: 0, message: 'error in database query! - ' + e }
         }
     }
+
+    async getBySlug(slug) {
+        try {
+            let data = await CharacterMap.findOne({slug: slug});
+            if (!data) {
+                return { success: 0, message: 'No characters matched your criteria' };
+            } else {
+                return { success: 1, data: data };
+            }
+
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+    }
+
 }
-module.exports = CityStore;
+module.exports = CharacterStore;

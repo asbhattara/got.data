@@ -79,10 +79,6 @@ class ContinentsFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Continents.insertMany(data, (err, docs) => {
