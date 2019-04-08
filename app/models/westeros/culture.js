@@ -5,4 +5,4 @@ const CultureSchema = new Schema({
     name: {type: String, required: true, unique: true},
 });
 
-module.exports = mongoose.model('Culture', CultureSchema);
+module.exports = mongoose.model('WesterosCulture', CultureSchema);

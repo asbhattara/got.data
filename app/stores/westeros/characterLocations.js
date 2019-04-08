@@ -47,5 +47,18 @@ class CharacterLocationStore {
         }
     }
 
+    async getByLocation(location) {
+        try {
+            let data = await CharacterLocations.findMany({locations: location});
+
+            if (!data) {
+                return { success: 0, message: 'No locations matched your criteria' };
+            } else {
+                return { success: 1, data: data };
+            }
+        } catch (e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
+    }
 }
 module.exports = CharacterLocationStore;

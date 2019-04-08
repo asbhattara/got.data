@@ -10,4 +10,4 @@ const AnimalFandomSchema = new Schema({
     range       : [{type: String}]
 });
 
-module.exports = mongoose.model('AnimalFandom', AnimalFandomSchema);
+module.exports = mongoose.model('FandomAnimal', AnimalFandomSchema);

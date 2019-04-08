@@ -15,15 +15,15 @@ const EpisodeFandomSchema = new Schema({
     directed_by     : String,
     preview_text    : String,
 
-    characters      : [{type: String, ref: 'CharacterFandom'}],
-    deaths          : [{type: String, ref: 'CharacterFandom'}],
-    places          : [{type: String, ref: 'CityFandom'}],
+    characters      : [{type: String, ref: 'FandomCharacter'}],
+    deaths          : [{type: String, ref: 'FandomCharacter'}],
+    places          : [{type: String, ref: 'FandomCity'}],
     
-    predecessor     : {type: String, ref: 'EpisodesFandom'},
-    successor       : {type: String, ref: 'EpisodesFandom'},
+    predecessor     : {type: String, ref: 'FandomEpisode'},
+    successor       : {type: String, ref: 'FandomEpisode'},
     
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('EpisodeFandom', EpisodeFandomSchema);
+module.exports = mongoose.model('FandomEpisode', EpisodeFandomSchema);

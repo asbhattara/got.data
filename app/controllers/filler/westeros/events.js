@@ -78,10 +78,6 @@ class EventsFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Events.insertMany(data, (err, docs) => {

@@ -53,7 +53,7 @@ class CharacterScraper {
                 result.push(await this.get(characters[i]));
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

@@ -6,4 +6,4 @@ const PageRankFandomSchema = new Schema({
     rank        : Number
 });
 
-module.exports = mongoose.model('PageRankFandom', PageRankFandomSchema);
+module.exports = mongoose.model('FandomPageRank', PageRankFandomSchema);

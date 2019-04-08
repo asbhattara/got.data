@@ -6,4 +6,4 @@ const AgeFandomSchema = new Schema({
     age 	: {type: Number}
 });
 
-module.exports = mongoose.model('AgeFandom', AgeFandomSchema);
+module.exports = mongoose.model('FandomAge', AgeFandomSchema);

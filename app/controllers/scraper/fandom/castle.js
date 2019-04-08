@@ -139,7 +139,7 @@ class CastleScrapper {
                 data.push(await this.scrape(castles[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

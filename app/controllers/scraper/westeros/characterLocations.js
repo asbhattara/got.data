@@ -59,7 +59,7 @@ class CharacterLocationScraper {
                 result.push(await this.get(characters[i], cityNames));
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

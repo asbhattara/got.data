@@ -103,10 +103,6 @@ class AgesFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Ages.insertMany(data, (err, docs) => {

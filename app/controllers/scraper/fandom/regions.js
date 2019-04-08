@@ -220,7 +220,7 @@ class RegionScrapper {
                 data.push(await this.scrape(regions[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

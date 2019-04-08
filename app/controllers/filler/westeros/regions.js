@@ -65,10 +65,6 @@ class RegionsFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Regions.insertMany(data, (err, docs) => {

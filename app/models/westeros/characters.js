@@ -10,23 +10,23 @@ const CharacterSchema = new Schema({
     alive           : Boolean,
     birth           : Number,
     death           : Number,
-    placeOfBirth    : {type: String, ref: "Region"},
-    placeOfDeath    : {type: String, ref: "Region"},
+    placeOfBirth    : {type: String, ref: "WesterosRegion"},
+    placeOfDeath    : {type: String, ref: "WesterosRegion"},
     age             : {type: Number, min: 1, max: 200},
 
-    mother          : {type: String, ref: 'CharacterWesteros'},
-    father          : {type: String, ref: 'CharacterWesteros'},
-    spouse          : [{type: String, ref: 'CharacterWesteros'}],
-    children        : [{type: String, ref: 'CharacterWesteros'}],
-    heir            : {type: String, ref: 'CharacterWesteros'},
+    mother          : {type: String, ref: 'WesterosCharacter'},
+    father          : {type: String, ref: 'WesterosCharacter'},
+    spouse          : [{type: String, ref: 'WesterosCharacter'}],
+    children        : [{type: String, ref: 'WesterosCharacter'}],
+    heir            : {type: String, ref: 'WesterosCharacter'},
 
     culture         : String,
 
-    house           : {type: String, ref: "House"},
-    allegiance      : [{type: String, ref: 'Character'}],
+    house           : {type: String, ref: "WesterosHouse"},
+    allegiance      : [{type: String, ref: 'WesterosCharacter'}],
 
     books           : [String],
-    placeOfLastVisit: {type: String, ref: "Region"},
+    placeOfLastVisit: {type: String, ref: "WesterosRegion"},
     hasPath		    : Boolean,
 
     plod            : {type: Number, default: 0.0},
@@ -47,10 +47,10 @@ const CharacterSchema = new Schema({
 });
 
 CharacterSchema.virtual('pagerank', {
-    ref: 'PageRankWesteros',
+    ref: 'WesterosPageRank',
     localField: 'slug',
     foreignField: 'title',
     justOne: true
 });
 
-module.exports = mongoose.model('CharacterWesteros', CharacterSchema);
+module.exports = mongoose.model('WesterosCharacter', CharacterSchema);

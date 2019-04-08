@@ -65,10 +65,6 @@ class CharacterLocationFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await CharacterLocations.insertMany(data, (err, docs) => {

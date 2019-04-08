@@ -2,7 +2,7 @@ require(__dirname + '/../' + 'constants');
 
 const config = require(__base + 'cfg/config');
 const mongoose = require('mongoose');
-const Filler = require(__appbase + "controllers/filler/filler");
+const Filler = require("../app/controllers/filler/filler");
 
 const collection = process.env.npm_config_collection;
 const wiki = process.env.npm_config_wiki;
@@ -12,7 +12,7 @@ function getDbString(config) { //Create the DB connection string
     if (config.username.length > 0 && config.password.length > 0) {
         dbConnection += config.username + ":" + config.password + "@";
     }
-    return dbConnection + config.uri + ":" + config.port + "/" + config.db;
+    return dbConnection + config.uri + ":" + config.port + "/" + config.collection;
 }
 
 // 2 = update

@@ -29,17 +29,17 @@ class UpdateWesteros {
         this.rankFiller = new RankFiller(1);
 
         this.collections = [
-            'agewesteros',
-            'cities',
-            'housewesteros',
-            'characterwesteros',
-            'characterlocationwesteros',
-            'characterpathwesteros',
-            'eventwesteros',
-            'pagerankwesteros',
-            'regions',
-            'cultures',
-            'continents',
+            'westerosages',
+            'westeroscities',
+            'westeroshouses',
+            'westeroscharacters',
+            'westeroscharacterlocations',
+            'westeroscharacterpaths',
+            'westerosevents',
+            'westerospageranks',
+            'westerosregions',
+            'westeroscultures',
+            'westeroscontinents',
         ];
     }
 
@@ -51,7 +51,7 @@ class UpdateWesteros {
             console.log('checking ' + collection);
             try {
                 switch(collection) {
-                    case 'agewesteros':
+                    case 'westerosages':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -64,7 +64,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'housewesteros':
+                    case 'westeroshouses':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -77,7 +77,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'cities':
+                    case 'westeroscities':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -90,7 +90,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'characterwesteros':
+                    case 'westeroscharacters':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -103,7 +103,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'characterlocationwesteros':
+                    case 'westeroscharacterlocations':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -116,7 +116,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'characterpathwesteros':
+                    case 'westeroscharacterpaths':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -129,7 +129,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'pagerankwesteros':
+                    case 'westerospageranks':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -142,7 +142,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'regions':
+                    case 'westerosregions':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -155,7 +155,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'cultures':
+                    case 'westeroscultures':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -168,7 +168,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'eventwesteros':
+                    case 'westerosevents':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -181,7 +181,7 @@ class UpdateWesteros {
                                 }
                             });
                         }));
-                    case 'continents':
+                    case 'westeroscontinents':
                         return new Promise((resolve => {
                             self.db.collection(collection).countDocuments(function (err, count) {
                                 if(err) throw new Error(err);
@@ -195,6 +195,8 @@ class UpdateWesteros {
                             });
                         }));
                     default:
+                        console.error("invalid collection " + collection);
+
                         return new Promise((resolve) => {resolve()});
                 }
             } catch(e) {

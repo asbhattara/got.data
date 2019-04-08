@@ -223,7 +223,7 @@ class BattleScrapper {
                 data.push(await this.scrape(battles[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

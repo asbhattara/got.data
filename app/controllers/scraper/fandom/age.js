@@ -69,7 +69,7 @@ class AgeScraper {
                 data.push(await this.scrape(character["name"], age["slug"]));
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
         return data;

@@ -11,12 +11,12 @@ const CharacterFandomSchema = new Schema({
     birth           : Number,
     death           : Number,
     origin          : [{type: String}],
-    mother          : {type: String, ref: 'CharacterFandom'},
-    father          : {type: String, ref: 'CharacterFandom'},
-    siblings        : [{type: String, ref: 'CharacterFandom'}],
-    house           : {type: String, ref: 'HouseFandom'},
-    spouse          : [{type: String, ref: 'CharacterFandom'}],
-    lovers          : [{type: String, ref: 'CharacterFandom'}],
+    mother          : {type: String, ref: 'FandomCharacter'},
+    father          : {type: String, ref: 'FandomCharacter'},
+    siblings        : [{type: String, ref: 'FandomCharacter'}],
+    house           : {type: String, ref: 'FandomHouse'},
+    spouse          : [{type: String, ref: 'FandomCharacter'}],
+    lovers          : [{type: String, ref: 'FandomCharacter'}],
     plod            : {type: Number, default: 0.0},
     longevityStart  : Number,
     longevity       : [{type: Number}],
@@ -27,13 +27,13 @@ const CharacterFandomSchema = new Schema({
     longevityStartB  : Number,
     longevityStartC  : Number,
 
-    culture        : [{type: String, ref: 'CultureFandom'}],
-    religion       : [{type: String, ref: 'ReligionFandom'}],
-    allegiances     : [{type: String, ref: 'CharacterFandom'}],
+    culture        : [{type: String, ref: 'FandomCulture'}],
+    religion       : [{type: String, ref: 'FandomReligion'}],
+    allegiances     : [{type: String, ref: 'FandomCharacter'}],
 
-    first_seen      : {type: String, ref: 'Episode'},
+    first_seen      : {type: String, ref: 'FandomEpisode'},
     seasons         : [Number],
-    appearances     : [{type: String, ref: 'Episode'}],
+    appearances     : [{type: String, ref: 'FandomEpisode'}],
     rank : Number,
     actor           : String,
     createdAt       : {type: Date, default: Date.now},
@@ -44,14 +44,14 @@ const CharacterFandomSchema = new Schema({
 });
 
 CharacterFandomSchema.virtual('pagerank', {
-    ref: 'PageRankFandom',
+    ref: 'FandomPageRank',
     localField: 'slug',
     foreignField: 'title',
     justOne: true
 });
 
 CharacterFandomSchema.virtual('age', {
-    ref: 'AgeFandom',
+    ref: 'FandomAge',
     localField: 'name',
     foreignField: 'name',
     justOne: true
@@ -61,10 +61,10 @@ let autoPopulate = function(next) {
     this.populate({ path: 'pagerank', select: {rank: 1, title: 0, _id: 0}});
     this.populate({ path: 'age', select: {age: 1, name: 0, _id: 0}});
     next();
-}
+};
 
 CharacterFandomSchema.
     pre('find', autoPopulate).
     pre('findOne', autoPopulate);
 
-module.exports = mongoose.model('CharacterFandom', CharacterFandomSchema);
+module.exports = mongoose.model('FandomCharacter', CharacterFandomSchema);

@@ -187,7 +187,7 @@ class EpisodeScraper {
                 previous = episode;
             }
             catch (e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 

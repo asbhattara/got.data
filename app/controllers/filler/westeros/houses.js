@@ -65,10 +65,6 @@ class HousesFiller {
         {
             await this.clearAll();
         }
-        else
-        {
-            // TODO: update ?
-        }
 
         try {
             return await Houses.insertMany(data, (err, docs) => {

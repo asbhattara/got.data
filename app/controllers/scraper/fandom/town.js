@@ -118,7 +118,7 @@ class TownScrapper {
                 data.push(await this.scrape(towns[i]));
             }
             catch(e) {
-                console.log(e.info);
+                console.log(e);
             }
         }
 
