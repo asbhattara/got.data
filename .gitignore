@@ -77,6 +77,5 @@ cfg/config.js
 # API Docs
 apidoc
 
-/misc/images
 /wikiData
 package-lock.json

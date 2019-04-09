@@ -215,24 +215,30 @@ class UpdateWesteros {
         promises.push(new Promise(resolve => {
             console.log('[WesterosUpdater] '.green + "checking images");
 
-            let fs = require('fs');
-            let imgDir = __dirname + '/../../../misc/images/characters/book/';
+            try
+            {
+                let fs = require('fs');
+                let imgDir = __dirname + '/../../../misc/images/characters/book/';
 
-            fs.readdir(imgDir, (err, files) => {
-                if(err) throw new Error(err);
+                fs.readdir(imgDir, (err, files) => {
+                    if(err) throw new Error(err);
 
-                if(!files || files.length <= 2) {
-                    console.log('[WesterosUpdater] '.green + 'downloading show character images');
+                    if(!files || files.length <= 2) {
+                        console.log('[WesterosUpdater] '.green + 'downloading show character images');
 
-                    self.characterImageFiller.fill().then(() => {
+                        self.characterImageFiller.fill().then(() => {
+                            resolve();
+                        });
+                    }
+                    else
+                    {
                         resolve();
-                    });
-                }
-                else
-                {
-                    resolve();
-                }
-            });
+                    }
+                });
+            }
+            catch (e) {
+                console.log(e);
+            }
         }));
 
         await Promise.all(promises);

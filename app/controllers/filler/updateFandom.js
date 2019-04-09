@@ -279,22 +279,28 @@ class UpdateFandom {
         promises.push(new Promise(resolve => {
             console.log('[FandomUpdater] '.green + "checking images");
 
-            let fs = require('fs');
-            let imgDir = __dirname + '/../../../misc/images/characters/show/';
-            fs.readdir(imgDir, (err, files) => {
-                if(err) throw new Error(err);
-                if(!files || files.length <= 2) {
-                    console.log('[FandomUpdater] '.green + 'downloading show character images');
+            try
+            {
+                let fs = require('fs');
+                let imgDir = __dirname + '/../../../misc/images/characters/show/';
+                fs.readdir(imgDir, (err, files) => {
+                    if(err) throw new Error(err);
+                    if(!files || files.length <= 2) {
+                        console.log('[FandomUpdater] '.green + 'downloading show character images');
 
-                    self.characterImageFiller.fill().then(() => {
+                        self.characterImageFiller.fill().then(() => {
+                            resolve();
+                        });
+                    }
+                    else
+                    {
                         resolve();
-                    });
-                }
-                else
-                {
-                    resolve();
-                }
-            });
+                    }
+                });
+            }
+            catch (e) {
+                console.log(e);
+            }
         }));
 
         await Promise.all(promises);
