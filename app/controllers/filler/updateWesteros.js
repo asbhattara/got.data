@@ -1,15 +1,15 @@
-const CharacterFiller = require('./westeros/characters'),
-    CharacterPathFiller = require('./westeros/characterPaths'),
-    CharacterLocationFiller = require('./westeros/characterLocations'),
-    CharacterImageFiller = require('./westeros/characterImages'),
-    CityFiller = require('./westeros/cities'),
-    RegionFiller = require('./westeros/regions'),
-    AgeFiller = require('./westeros/ages'),
-    HouseFiller = require('./westeros/houses'),
-    CultureFiller = require('./westeros/cultures'),
-    ContinentFiller = require('./westeros/contintents'),
+const CharacterFiller = require('./westeros/character'),
+    CharacterPathFiller = require('./westeros/characterPath'),
+    CharacterLocationFiller = require('./westeros/characterLocation'),
+    CharacterImageFiller = require('./westeros/characterImage'),
+    CityFiller = require('./westeros/city'),
+    RegionFiller = require('./westeros/region'),
+    AgeFiller = require('./westeros/age'),
+    HouseFiller = require('./westeros/house'),
+    CultureFiller = require('./westeros/culture'),
+    ContinentFiller = require('./westeros/contintent'),
     RankFiller = require('./westeros/pagerank'),
-    EventFiller = require('./westeros/events');
+    EventFiller = require('./westeros/event');
 
 
 class UpdateWesteros {

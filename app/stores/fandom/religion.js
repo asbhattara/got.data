@@ -1,4 +1,4 @@
-const ReligionsFandom = require('../../models/fandom/religions')
+const ReligionsFandom = require('../../models/fandom/religion')
 
 class ReligionStore {
     constructor() {}

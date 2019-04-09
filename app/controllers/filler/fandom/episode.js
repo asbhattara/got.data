@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      Episodes = require('../../../models/fandom/episodes'),
+      Episodes = require('../../../models/fandom/episode'),
       EpisodeScraper = require('../../../controllers/scraper/fandom/episodes');
 
 

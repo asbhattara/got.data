@@ -1,4 +1,4 @@
-const CharacterLocations = require('../../models/westeros/characterLocations');
+const CharacterLocations = require('../../models/westeros/characterLocation');
 
 class CharacterLocationStore {
     constructor() {}

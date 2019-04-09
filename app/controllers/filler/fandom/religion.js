@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      Religions = require('../../../models/fandom/religions'),
+      Religions = require('../../../models/fandom/religion'),
       ReligionScrapper = require('../../scraper/fandom/religions');
 
 

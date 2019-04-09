@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      Characters = require('../../../models/fandom/characters'),
+      Characters = require('../../../models/fandom/character'),
       CharacterScraper = require('../../../controllers/scraper/fandom/characters'),
       PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    Characters = require('../../../models/westeros/characters'),
+    Characters = require('../../../models/westeros/character'),
     CharacterScraper = require('../../../controllers/scraper/westeros/characters');
 
 

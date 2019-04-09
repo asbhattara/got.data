@@ -1,4 +1,4 @@
-const Episodes = require('../../models/fandom/episodes')
+const Episodes = require('../../models/fandom/episode')
 
 class EpisodeStore {
     constructor() {}

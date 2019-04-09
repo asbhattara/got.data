@@ -1,6 +1,6 @@
-const CharacterFiller = require('./map/characterMap'),
-    EpisodeFiller = require('./map/episodeMap'),
-    RegionFiller = require('./map/regionMap');
+const CharacterFiller = require('./map/character'),
+    EpisodeFiller = require('./map/episode'),
+    RegionFiller = require('./map/region');
 
 
 class UpdateMap {

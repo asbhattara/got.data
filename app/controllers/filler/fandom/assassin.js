@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
       Assassins = require('../../../models/fandom/assassin'),
-      Characters = require('../../../models/fandom/characters'),
+      Characters = require('../../../models/fandom/character'),
       AssassinsScraper = require('../../scraper/fandom/assassin');
 
 

@@ -1,6 +1,6 @@
 const jimp = require("jimp");
 
-const CharacterFandom = require('../../../models/fandom/characters');
+const CharacterWesteros = require('../../../models/westeros/character');
 
 class CharacterImageFiller {
     constructor(policy) {
@@ -12,15 +12,14 @@ class CharacterImageFiller {
     }
 
     async fill() {
-        /*if(this.POLICY_REFILL === 1)
-        {
-            await this.clearAll();
-        }*/
+        // if(this.POLICY_REFILL === 1)
+        // {
+        //     await this.clearAll();
+        // }
 
-        let data = await CharacterFandom.find({}, (err) => {
+        let data = await CharacterWesteros.find({}, (err, chars) => {
             if (err) throw new Error(err);
         });
-
         if(!data)
         {
             throw new Error("no character data in database available")
@@ -33,7 +32,7 @@ class CharacterImageFiller {
                 continue;
             }
 
-            console.log('[FandomCharacterImageFiller] '.green + "downloading image of", data[i].slug);
+            console.log('[WesterosCharacterImageFiller] '.green + "downloading image of", data[i].slug);
 
             await this.download(data[i].slug, data[i].image)
         }
@@ -45,7 +44,7 @@ class CharacterImageFiller {
             const fs = require('fs');
             const path = require('path');
 
-            const directory = __dirname + '/../../../../misc/images/characters/show/';
+            const directory = __dirname + '/../../../../misc/images/characters/book/';
 
             fs.readdir(directory, (err, files) => {
                 if (err) throw err;
@@ -72,9 +71,9 @@ class CharacterImageFiller {
             let request = require('request');
 
             let uri = image;
-            let filename = '/misc/images/characters/show/' + slug;
+            let filename = '/misc/images/characters/book/' + slug;
 
-            console.log('[FandomCharacterImageFiller] '.green + 'Downloading: ' + uri);
+            console.log('[WesterosCharacterImageFiller] '.green + 'Downloading: ' + uri);
             request.head(uri, function(err, res, body){
                 if(!err) {
                     let type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
@@ -87,7 +86,7 @@ class CharacterImageFiller {
                             lenna.write(__appbase + '..' + filename + '.jpg');
 
                             resolve(filename + '.jpg');
-                            console.log('[FandomCharacterImageFiller] '.green + 'Downloaded to: ' + filename + '.jpg');
+                            console.log('[WesterosCharacterImageFiller] '.green + 'Downloaded to: ' + filename + '.jpg');
                         });
                     }));
                 }

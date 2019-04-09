@@ -105,9 +105,9 @@ const mapRouter = express.Router();
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
 
-require('./app/routes/fandomRoutes')(app, showRouter);
-require('./app/routes/westerosRoutes')(app, bookRouter);
-require('./app/routes/mapRoutes')(app, mapRouter);
+require('./app/routes/fandom')(app, showRouter);
+require('./app/routes/westeros')(app, bookRouter);
+require('./app/routes/map')(app, mapRouter);
 
 app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
@@ -134,10 +134,6 @@ app.get('/api/map/*', function (req, res) {
 app.get('*', function (req, res) {
     res.redirect('/api');
 });
-
-// app.use(function(req, res) {
-//     res.status(404).send({url: req.originalUrl + ' not found'})
-// });
 
 app.listen(3000);
 
