@@ -79,5 +79,4 @@ apidoc
 
 /misc/images
 /wikiData
-/tmp/*.json
 package-lock.json
