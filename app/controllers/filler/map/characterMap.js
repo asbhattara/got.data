@@ -20,7 +20,7 @@ class CharacterFiller {
                     return reject();
                 }
 
-                console.log('Characters from  file "'+file+'". No scrapping.');
+                console.log('[MapCharacterFiller] '.green + 'Characters from  file "'+file+'". No scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class CharacterFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[MapCharacterFiller] '.green + 'clearing collection...');
         return await Character.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[MapCharacterFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[MapCharacterFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(characters) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[MapCharacterFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         characters.map(character => {
             let newChar = new Character();
 
@@ -78,10 +78,10 @@ class CharacterFiller {
         try {
             return await Character.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[MapCharacterFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' characters successfully saved to MongoDB!');
+                console.log('[MapCharacterFiller] '.green + docs.length + ' characters successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

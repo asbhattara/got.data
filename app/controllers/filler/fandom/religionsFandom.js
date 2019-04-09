@@ -16,29 +16,27 @@ class ReligionFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomReligionFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomReligionFiller] '.green + 'clearing collection...');
         await Religions.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomReligionFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomReligionFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(regions) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomReligionFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         regions.map(region => {
             let newEp = new Religions();
             for(let attr in region) {
@@ -59,10 +57,10 @@ class ReligionFandomFiller {
     async insertToDb(data) {
         await Religions.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomReligionFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' regions successfully saved to MongoDB!');
+            console.log('[FandomReligionFiller] '.green + docs.length + ' regions successfully saved to MongoDB!');
         });
     }
 }

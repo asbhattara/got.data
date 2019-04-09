@@ -21,24 +21,24 @@ class HouseFandomFiller {
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomHouseFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
+        console.log('[FandomHouseFiller] '.green + 'clearing collection...')
         await Houses.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomHouseFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomHouseFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(houses) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomHouseFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         houses.map(house => {
             let newHouse = new Houses();
             for (let attr in house) {
@@ -54,10 +54,10 @@ class HouseFandomFiller {
     async insertToDb(data) {
         await Houses.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomHouseFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' houses successfully saved to MongoDB!');
+            console.log('[FandomHouseFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
         });
     }
 }

@@ -28,19 +28,19 @@ class CharacterFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosCharacterFiller] '.green + 'clearing collection...');
         return await Characters.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosCharacterFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosCharacterFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(characters) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosCharacterFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         characters.map(character => {
             let newChar = new Characters();
 
@@ -65,15 +65,15 @@ class CharacterFiller {
     async insertAll(data) {
         try {
             if(this.policy === this.POLICY_REFILL) {
-                console.log('starting whole refill')
+                console.log('[WesterosCharacterFiller] '.green + 'starting whole refill')
                 await this.clearAll();
                 await this.fillCollection(data);
             }
             else if (this.policy === this.POLICY_UPDATE) {
-                console.log('starting update');
+                console.log('[WesterosCharacterFiller] '.green + 'starting update');
                 await this.updateCollection(data);
             } else {
-                console.log('starting safe update');
+                console.log('[WesterosCharacterFiller] '.green + 'starting safe update');
                 this.safeUpdateCollection(data)
             }
             
@@ -94,7 +94,7 @@ class CharacterFiller {
             }));
             return await Characters.collection.bulkWrite(bulkOps, (err, res) => {
                     if (err) throw new Error(err);
-                    console.log(res.upsertedCount + ' documents newly created.\n' + res.matchedCount + ' documents updated');
+                    console.log('[WesterosCharacterFiller] '.green + res.upsertedCount + ' documents newly created.\n' + res.matchedCount + ' documents updated');
                 });
         } catch (e) {
             throw new Error(e);
@@ -110,7 +110,7 @@ class CharacterFiller {
                         let newChar = new Characters(obj);
                         newChar.save((err) => {
                             if (err) throw new Error(err);
-                            console.log(obj.slug + ' successfully added to DB');
+                            console.log('[WesterosCharacterFiller] '.green + obj.slug + ' successfully added to DB');
                         })
                     }
                 });
@@ -127,10 +127,10 @@ class CharacterFiller {
         try {
             return await Characters.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosCharacterFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 } 
-                console.log(docs.length + ' characters successfully saved to MongoDB!');
+                console.log('[WesterosCharacterFiller] '.green + docs.length + ' characters successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

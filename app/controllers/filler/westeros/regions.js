@@ -28,19 +28,19 @@ class RegionsFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosRegionFiller] '.green + 'clearing collection...');
         return Regions.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosRegionFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosRegionFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(regions) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosRegionFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         regions.map(region => {
             let newChar = new Regions();
 
@@ -69,10 +69,10 @@ class RegionsFiller {
         try {
             return await Regions.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosRegionFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' houses successfully saved to MongoDB!');
+                console.log('[WesterosRegionFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

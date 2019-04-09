@@ -16,29 +16,27 @@ class CityFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomCityFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
+        console.log('[FandomCityFiller] '.green + 'clearing collection...')
         await Citys.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomCityFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomCityFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(citys) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomCityFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         citys.map(city => {
             let newEp = new Citys();
             for(let attr in city) {
@@ -55,10 +53,10 @@ class CityFandomFiller {
     async insertToDb(data) {
         await Citys.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomCityFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' citys successfully saved to MongoDB!');
+            console.log('[FandomCityFiller] '.green + docs.length + ' citys successfully saved to MongoDB!');
         });
     }
 }

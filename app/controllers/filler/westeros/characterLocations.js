@@ -28,19 +28,19 @@ class CharacterLocationFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosCharacterLocationFiller] '.green + 'clearing collection...');
         return await CharacterLocations.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosCharacterLocationFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosCharacterLocationFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(characterLocations) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosCharacterLocationFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         characterLocations.map(characterLocation => {
             let newChar = new CharacterLocations();
 
@@ -69,10 +69,10 @@ class CharacterLocationFiller {
         try {
             return await CharacterLocations.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosCharacterLocationFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' character locations successfully saved to MongoDB!');
+                console.log('[WesterosCharacterLocationFiller] '.green + docs.length + ' character locations successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

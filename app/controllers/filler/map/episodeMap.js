@@ -20,7 +20,7 @@ class EpisodeFiller {
                     return reject();
                 }
 
-                console.log('Characters from  file "'+file+'". No scrapping.');
+                console.log('[MapEpisodeFiller] '.green + 'Episodes from  file "'+file+'". No scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class EpisodeFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[MapEpisodeFiller] '.green + 'clearing collection...');
         return await Episode.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[MapEpisodeFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[MapEpisodeFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(episodes) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[MapEpisodeFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         episodes.map(episode => {
             let newChar = new Episode();
 
@@ -78,10 +78,10 @@ class EpisodeFiller {
         try {
             return await Episode.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[MapEpisodeFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' episodes successfully saved to MongoDB!');
+                console.log('[MapEpisodeFiller] '.green + docs.length + ' episodes successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

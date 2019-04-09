@@ -28,19 +28,19 @@ class HousesFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosHouseFiller] '.green + 'clearing collection...');
         return await Houses.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosHouseFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosHouseFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(houses) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosHouseFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         houses.map(house => {
             let newChar = new Houses();
 
@@ -69,10 +69,10 @@ class HousesFiller {
         try {
             return await Houses.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosHouseFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' houses successfully saved to MongoDB!');
+                console.log('[WesterosHouseFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

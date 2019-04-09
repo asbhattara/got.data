@@ -32,7 +32,7 @@ class CharacterImageFiller {
                 continue;
             }
 
-            console.log("downloading image of", data[i].slug);
+            console.log('[WesterosCharacterImageFiller] '.green + "downloading image of", data[i].slug);
 
             await this.download(data[i].slug, data[i].image)
         }
@@ -73,7 +73,7 @@ class CharacterImageFiller {
             let uri = image;
             let filename = '/misc/images/characters/book/' + slug;
 
-            console.log('Downloading: ' + uri);
+            console.log('[WesterosCharacterImageFiller] '.green + 'Downloading: ' + uri);
             request.head(uri, function(err, res, body){
                 if(!err) {
                     let type = res.headers['content-type'].replace(new RegExp("/", "g"),'.');
@@ -86,7 +86,7 @@ class CharacterImageFiller {
                             lenna.write(__appbase + '..' + filename + '.jpg');
 
                             resolve(filename + '.jpg');
-                            console.log('Downloaded to: ' + filename + '.jpg');
+                            console.log('[WesterosCharacterImageFiller] '.green + 'Downloaded to: ' + filename + '.jpg');
                         });
                     }));
                 }

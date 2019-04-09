@@ -20,7 +20,7 @@ class RegionFiller {
                     return reject();
                 }
 
-                console.log('Characters from  file "'+file+'". No scrapping.');
+                console.log('[MapRegionFiller] '.green + 'Regions from  file "'+file+'". No scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class RegionFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[MapRegionFiller] '.green + 'clearing collection...');
         return await Region.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[MapRegionFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[MapRegionFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(regions) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[MapRegionFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         regions.map(region => {
             let newChar = new Region();
 
@@ -78,10 +78,10 @@ class RegionFiller {
         try {
             return await Region.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[MapRegionFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' regions successfully saved to MongoDB!');
+                console.log('[MapRegionFiller] '.green + docs.length + ' regions successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

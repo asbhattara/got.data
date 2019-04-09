@@ -28,12 +28,12 @@ class EventsFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosEventFiller] '.green + 'clearing collection...');
         return await Events.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosEventFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosEventFiller] '.green + 'Collection successfully removed');
             }
         });
     }
@@ -41,7 +41,7 @@ class EventsFiller {
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
 
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosEventFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newChar = new Events();
 
@@ -82,10 +82,10 @@ class EventsFiller {
         try {
             return await Events.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosEventFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' events successfully saved to MongoDB!');
+                console.log('[WesterosEventFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

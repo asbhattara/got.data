@@ -20,7 +20,7 @@ class ContinentsFiller {
                     return reject();
                 }
 
-                console.log('Cities from  file "'+file+'". Now scrapping.');
+                console.log('[WesterosContinentFiller] '.green + 'Cities from  file "'+file+'". Now scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class ContinentsFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosContinentFiller] '.green + 'clearing collection...');
         return await Continents.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosContinentFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosContinentFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosContinentFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newChar = new Continents();
 
@@ -83,10 +83,10 @@ class ContinentsFiller {
         try {
             return await Continents.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosContinentFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' events successfully saved to MongoDB!');
+                console.log('[WesterosContinentFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

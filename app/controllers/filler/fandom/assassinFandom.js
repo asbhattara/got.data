@@ -22,35 +22,27 @@ class AssassinsFandomFiller {
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomAssassinFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomAssassinFiller] '.green + 'clearing collection...');
         await Assassins.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomAssassinFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomAssassinFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(assassins) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomAssassinFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         assassins.map(async (assassin) => {
             let newAssassin = new Assassins();
-            // console.log(assassin.slug);
-            // await Characters.findOne({slug: assassin.slug}).exec((err, res) => {
-            //     if (err) throw new Error(err);
-            //     // console.log(res);
-            //     if (res) {
-            //         console.log(res._id);
-            //         newAssassin.assassin = mongoose.Types.ObjectId(res._id);
-            //     }
-            // });
+
             for (let attr in assassin) {
                 newAssassin[attr] = assassin[attr];
             }
@@ -64,10 +56,10 @@ class AssassinsFandomFiller {
     async insertToDb(data) {
         await Assassins.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomAssassinFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' assassins successfully saved to MongoDB!');
+            console.log('[FandomAssassinFiller] '.green + docs.length + ' assassins successfully saved to MongoDB!');
         });
     }
 }

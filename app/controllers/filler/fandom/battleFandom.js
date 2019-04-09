@@ -17,28 +17,26 @@ class BattleFandomFiller {
             // match scraped data to model
             data = await this.matchToModel(data);
 
-            console.log(data.length);
-            // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomBattleFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomBattleFiller] '.green + 'clearing collection...');
         await Battles.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomBattleFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomBattleFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(battles) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomBattleFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         battles.map(battle => {
             let newEp = new Battles();
             for(let attr in battle) {
@@ -59,10 +57,10 @@ class BattleFandomFiller {
     async insertToDb(data) {
         await Battles.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomBattleFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' battles successfully saved to MongoDB!');
+            console.log('[FandomBattleFiller] '.green + docs.length + ' battles successfully saved to MongoDB!');
         });
     }
 }

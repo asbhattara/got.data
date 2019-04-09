@@ -21,24 +21,24 @@ class BastardsFandomFiller {
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomBastardFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomBastardFiller] '.green + 'clearing collection...');
         await Bastards.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomBastardFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomBastardFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(bastards) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomBastardFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         bastards.map(bastard => {
             let newBastard = new Bastards();
             for(let attr in bastard) {
@@ -54,10 +54,10 @@ class BastardsFandomFiller {
     async insertToDb(data) {
         await Bastards.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomBastardFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' bastards successfully saved to MongoDB!');
+            console.log('[FandomBastardFiller] '.green + docs.length + ' bastards successfully saved to MongoDB!');
         });
     }
 }

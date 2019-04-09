@@ -16,29 +16,27 @@ class AnimalFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomAnimalFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomAnimalFiller] '.green + 'clearing collection...');
         await Animals.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomAnimalFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomAnimalFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(animals) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomAnimalFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         animals.map(animal => {
             let newEp = new Animals();
             for(let attr in animal) {
@@ -55,10 +53,10 @@ class AnimalFandomFiller {
     async insertToDb(data) {
         await Animals.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomAnimalFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' animals successfully saved to MongoDB!');
+            console.log('[FandomAnimalFiller] '.green + docs.length + ' animals successfully saved to MongoDB!');
         });
     }
 }

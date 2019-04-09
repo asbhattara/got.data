@@ -20,7 +20,7 @@ class CityFiller {
                     return reject();
                 }
 
-                console.log('Cities from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCityFiller] '.green + 'Cities from  file "'+file+'". No scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class CityFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosCityFiller] '.green + 'clearing collection...');
         return await Cities.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosCityFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosCityFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosCityFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newChar = new Cities();
 
@@ -83,10 +83,10 @@ class CityFiller {
         try {
             return await Cities.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosCityFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' events successfully saved to MongoDB!');
+                console.log('[WesterosCityFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

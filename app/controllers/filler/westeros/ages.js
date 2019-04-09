@@ -28,19 +28,19 @@ class AgesFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosAgeFiller] '.green + 'clearing collection...');
         return await Ages.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosAgeFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosAgeFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(ages) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosAgeFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         ages.map(age => {
             let newChar = new Ages();
 
@@ -107,10 +107,10 @@ class AgesFiller {
         try {
             return await Ages.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosAgeFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' ages successfully saved to MongoDB!');
+                console.log('[WesterosAgeFiller] '.green + docs.length + ' ages successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

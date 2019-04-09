@@ -20,7 +20,7 @@ class CityFiller {
                     return reject();
                 }
 
-                console.log('character path from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCharacterPathFiller] '.green + 'character path from  file "'+file+'". No scrapping.');
 
                 resolve(obj);
             });
@@ -42,19 +42,19 @@ class CityFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosCharacterPathFiller] '.green + 'clearing collection...');
         return await CharacterPath.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosCharacterPathFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosCharacterPathFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosCharacterPathFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newChar = new CharacterPath();
 
@@ -83,10 +83,10 @@ class CityFiller {
         try {
             return await CharacterPath.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosCharacterPathFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' character paths successfully saved to MongoDB!');
+                console.log('[WesterosCharacterPathFiller] '.green + docs.length + ' character paths successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

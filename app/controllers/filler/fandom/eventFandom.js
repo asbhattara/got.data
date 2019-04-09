@@ -20,24 +20,24 @@ class EventFandomFiller {
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomEventFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomEventFiller] '.green + 'clearing collection...');
         await Events.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomEventFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomEventFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(events) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomEventFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         events.map(event => {
             let newEvent = new Events();
             for(let attr in event) {
@@ -55,10 +55,10 @@ class EventFandomFiller {
     async insertToDb(data) {
         await Events.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomEventFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' events successfully saved to MongoDB!');
+            console.log('[FandomEventFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
         });
     }
 }

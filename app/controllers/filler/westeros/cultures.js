@@ -28,19 +28,19 @@ class CulturesFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[WesterosCultureFiller] '.green + 'clearing collection...');
         return await Cultures.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[WesterosCultureFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosCultureFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(cultures) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[WesterosCultureFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         cultures.map(culture => {
             let newChar = new Cultures();
 
@@ -64,10 +64,10 @@ class CulturesFiller {
         try {
             return await Cultures.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosCultureFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log(docs.length + ' cultures successfully saved to MongoDB!');
+                console.log('[WesterosCultureFiller] '.green + docs.length + ' cultures successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

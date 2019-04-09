@@ -21,24 +21,24 @@ class AgeFandomFiller {
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomAgeFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...');
+        console.log('[FandomAgeFiller] '.green + 'clearing collection...');
         await Ages.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomAgeFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomAgeFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(ages) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomAgeFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         ages.map(age => {
             let newAge = new Ages();
             for(let attr in age) {
@@ -59,10 +59,10 @@ class AgeFandomFiller {
     async insertToDb(data) {
         await Ages.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomAgeFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' ages successfully saved to MongoDB!');
+            console.log('[FandomAgeFiller] '.green + docs.length + ' ages successfully saved to MongoDB!');
         });
     }
 }

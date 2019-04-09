@@ -19,24 +19,24 @@ class EpisodeFandomFiller {
             // add to DB
             await this.insertAll(data);
         } catch (error) {
-            console.warn(error);
+            console.warn('[FandomEpisodeFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
+        console.log('[FandomEpisodeFiller] '.green + 'clearing collection...')
         await Episodes.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('error in removing collection: ' + err);
+                console.warn('[FandomEpisodeFiller] '.green + 'error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[FandomEpisodeFiller] '.green + 'Collection successfully removed');
             }
         });
     }
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(episodes) {
-        console.log('formating and saving scraped data to DB... this may take a few seconds');
+        console.log('[FandomEpisodeFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         episodes.map(episode => {
             let newEp = new Episodes();
             for(let attr in episode) {
@@ -54,10 +54,10 @@ class EpisodeFandomFiller {
     async insertAll(data) {
         await Episodes.insertMany(data, (err, docs) => {
             if (err) {
-                console.warn('error in saving to db: ' + err);
+                console.warn('[FandomEpisodeFiller] '.green + 'error in saving to db: ' + err);
                 return;
             } 
-            console.log(docs.length + ' episodes successfully saved to MongoDB!');
+            console.log('[FandomEpisodeFiller] '.green + docs.length + ' episodes successfully saved to MongoDB!');
         });
     }
 }
