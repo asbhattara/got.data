@@ -8,7 +8,7 @@ class CharacterStore {
             let data = await CharacterMap.find({});
 
             if (!data) {
-                return { success: -1, message: 'Character collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Character collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -23,7 +23,7 @@ class CharacterStore {
             let data = await CharacterMap.findOne({name: name});
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -37,7 +37,7 @@ class CharacterStore {
             let data = await CharacterMap.findOne({'_id': id});
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getById(id): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -50,7 +50,7 @@ class CharacterStore {
         try {
             let data = await CharacterMap.findOne({slug: slug});
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getBySlug(slug): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

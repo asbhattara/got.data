@@ -113,7 +113,7 @@ app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
 app.use('/api/map', mapRouter);
 
-app.use('/api', express.static('apiref.html'));
+app.use('/api', express.static('/apidoc'));
 app.use('/api/book/images/', express.static('./misc/images/characters/book'));
 app.use('/api/show/images/', express.static('./misc/images/characters/show'));
 

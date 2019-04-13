@@ -28,7 +28,7 @@ class ReligionStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Religion collection empty. Has scraping been started yet?' };
+                return { success: -1, message: 'getAll(): Result empty' };
             } else {
                 return { success: 1, religions: data };
             }
@@ -43,7 +43,7 @@ class ReligionStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: 0, message: 'No religion matched your criteria' };
+                return { success: 0, message: 'getByTitle(title): Result empty' };
             } else {
                 return { success: 1, religions: data };
             }

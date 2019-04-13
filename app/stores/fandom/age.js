@@ -3,7 +3,6 @@ const AgeFandom = require('../../models/fandom/age')
 class AgeStore {
     constructor() {}
 
-
     // get list of ages, input: ['name1', 'name2']
     async getMultiple(data) {
         try {
@@ -29,7 +28,7 @@ class AgeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Age collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Age collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -44,7 +43,7 @@ class AgeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No characters matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -59,7 +58,7 @@ class AgeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No characters matched your criteria' };
+                return { success: -1, message: 'getByAge(age): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

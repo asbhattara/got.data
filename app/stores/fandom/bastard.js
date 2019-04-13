@@ -13,7 +13,7 @@ class BastardStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: 0, message: 'No bastards matched your criteria' };
+                return { success: 0, message: 'getMultiple(): Bastard collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -28,7 +28,7 @@ class BastardStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Bastard collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Bastard collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -43,7 +43,7 @@ class BastardStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No bastards matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

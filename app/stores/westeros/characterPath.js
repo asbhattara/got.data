@@ -9,7 +9,7 @@ class CharacterPathStore {
             let data = await CharacterPaths.find({});
             
             if (!data) {
-                return { success: -1, message: 'CharacterPath collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): CharacterPath collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -26,7 +26,7 @@ class CharacterPathStore {
             });
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

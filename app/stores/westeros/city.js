@@ -10,7 +10,7 @@ class CityStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'City collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): City collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -25,7 +25,7 @@ class CityStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -40,7 +40,7 @@ class CityStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
+                return { success: -1, message: 'getByContinent(continent): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -56,7 +56,7 @@ class CityStore {
             });
 
             if (!data) {
-                return { success: -1, message: 'No cities matched your criteria' };
+                return { success: -1, message: 'getById(id): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

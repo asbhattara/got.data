@@ -29,7 +29,7 @@ class TownStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Town collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Town collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -44,7 +44,7 @@ class TownStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No towns matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -60,7 +60,7 @@ class TownStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No towns matched your criteria' };
+                return { success: -1, message: 'getByLocation(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -75,7 +75,7 @@ class TownStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No towns matched your criteria' };
+                return { success: -1, message: 'getByRuler(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -90,7 +90,7 @@ class TownStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No towns matched your criteria' };
+                return { success: -1, message: 'getByReligion(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

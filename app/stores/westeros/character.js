@@ -43,7 +43,7 @@ class CharacterStore {
             let data = await Characters.find({}).populate('pagerank', 'rank title');
             
             if (!data) {
-                return { success: -1, message: 'Character collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Character collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -58,7 +58,7 @@ class CharacterStore {
             let data = await Characters.findOne({name: name}).populate('pagerank', 'rank title');
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -75,7 +75,7 @@ class CharacterStore {
             let data = await Characters.findOne({slug: slug}).populate('pagerank', 'rank title');
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getBySlug(slug): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -91,7 +91,7 @@ class CharacterStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByHouse(house): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -104,7 +104,7 @@ class CharacterStore {
         try {
             let data = await Characters.findOne({slug: slug});
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'updateGeneral(): Result empty' };
             } else {
                 // let arr = JSON.parse(longevity);
                 data.longevity = longevity;
@@ -122,7 +122,7 @@ class CharacterStore {
         try {
             let data = await Characters.findOne({slug: slug});
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'updateGroupB(): Result empty' };
             } else {
                 // let arr = JSON.parse(longevity);
                 data.longevityB = longevity;
@@ -140,7 +140,7 @@ class CharacterStore {
         try {
             let data = await Characters.findOne({slug: slug});
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'updateGroupC(): Result empty' };
             } else {
                 // let arr = JSON.parse(longevity);
                 data.longevityC = longevity;

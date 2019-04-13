@@ -29,7 +29,7 @@ class BattleStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Battle collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Battle collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -44,7 +44,7 @@ class BattleStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No battles matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -59,7 +59,7 @@ class BattleStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No battles matched your criteria' };
+                return { success: -1, message: 'getBySlug(slug): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -74,7 +74,7 @@ class BattleStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No battles matched your criteria' };
+                return { success: -1, message: 'getByLocation(location): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -89,7 +89,7 @@ class BattleStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No battles matched your criteria' };
+                return { success: -1, message: 'getByConflict(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

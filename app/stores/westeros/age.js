@@ -9,7 +9,7 @@ class AgeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Age collection empty. Scraping should be started...' };
+                return { success: -1, message: ' getAll(): Age collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -24,7 +24,7 @@ class AgeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No ages matched your criteria' };
+                return { success: -1, message: ' getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

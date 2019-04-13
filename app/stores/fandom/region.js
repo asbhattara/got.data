@@ -29,7 +29,7 @@ class RegionStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Region collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Region collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -44,7 +44,7 @@ class RegionStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No regions matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -59,7 +59,7 @@ class RegionStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No regions matched your criteria' };
+                return { success: -1, message: 'getByLocation(location): Result empty' };
             } else {
                 return { success: 1, data: data };
             }

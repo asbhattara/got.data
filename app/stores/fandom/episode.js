@@ -28,7 +28,7 @@ class EpisodeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Episode collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Episode collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -43,7 +43,7 @@ class EpisodeStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: 0, message: 'No episodes matched your criteria' };
+                return { success: 0, message: 'getByTitle(title): Result empty' };
             } else {
                 return { success: 1, episodes: data };
             }

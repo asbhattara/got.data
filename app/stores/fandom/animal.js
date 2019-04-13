@@ -28,7 +28,7 @@ class AnimalStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'Animal collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -38,20 +38,34 @@ class AnimalStore {
         
     }
 
-    async getByHabitat(habitat) {
+    async getByName(name) {
         try {
-            let data = await AnimalFandom.find({habitat: habitat}, (err, animals) => {
+            let data = await AnimalFandom.find({name: name}, (err, animals) => {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: -1, message: 'No animals matched your criteria' };
+                return { success: -1, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
         } catch(e) {
             return { success: 0, message: 'error in database query! - ' + e }
         }
-        
+    }
+
+    async getByHabitat(habitat) {
+        try {
+            let data = await AnimalFandom.find({habitat: habitat}, (err, animals) => {
+                if (err) throw new Error(err);
+            });
+            if (!data) {
+                return { success: -1, message: 'getByHabitat(data): Result empty' };
+            } else {
+                return { success: 1, data: data };
+            }
+        } catch(e) {
+            return { success: 0, message: 'error in database query! - ' + e }
+        }
     }
 }
 module.exports = AnimalStore;

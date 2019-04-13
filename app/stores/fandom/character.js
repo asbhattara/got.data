@@ -43,7 +43,7 @@ class CharacterStore {
             let data = await CharactersFandom.find({});
             // .populate('pagerank age', 'rank title name age')
             if (!data) {
-                return { success: -1, message: 'Character collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Character collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -58,7 +58,7 @@ class CharacterStore {
             let data = await CharactersFandom.findOne({name: name}).populate('pagerank age', 'rank title name age');
 
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -75,7 +75,7 @@ class CharacterStore {
             let data = await CharactersFandom.findOne({slug: slug});
             // .populate('pagerank age', 'rank age')
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getBySlug(slug): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -91,7 +91,7 @@ class CharacterStore {
                 if (err) throw new Error(err);
             });
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'getByHouse(house): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -104,7 +104,7 @@ class CharacterStore {
         try {
             let data = await CharactersFandom.findOne({slug: slug});
             if (!data) {
-                return { success: 0, message: 'No characters matched your criteria' };
+                return { success: 0, message: 'updateGeneral(slug, plod, longevity, longvityStart): ' };
             } else {
                 // let arr = JSON.parse(longevity);
                 data.longevity = longevity;
@@ -129,7 +129,7 @@ class CharacterStore {
                 data.plodB = plod;
                 data.longevityStartB = longevityStart;
                 await data.save();
-                return { success: 1, message: data.name + ' has been updated' };
+                return { success: 1, message: data.name + ' has been updated (Group B)' };
             }
         } catch (e) {
             return { success: 0, message: 'error in database query! - ' + e }
@@ -147,7 +147,7 @@ class CharacterStore {
                 data.plodC = plod;
                 data.longevityStartC = longevityStart
                 await data.save();
-                return { success: 1, message: data.name + ' has been updated' };
+                return { success: 1, message: data.name + ' has been updated (Group C)' };
             }
         } catch (e) {
             return { success: 0, message: 'error in database query! - ' + e }

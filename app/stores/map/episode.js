@@ -8,7 +8,7 @@ class EpisodeStore {
             let data = await EpisodeMap.find({});
 
             if (!data) {
-                return { success: -1, message: 'Episode collection empty. Scraping should be started...' };
+                return { success: -1, message: 'getAll(): Episode collection empty. Scraping should be started...' };
             } else {
                 return { success: 1, data: data };
             }
@@ -23,7 +23,7 @@ class EpisodeStore {
             let data = await EpisodeMap.findOne({"characters.name": name});
 
             if (!data) {
-                return { success: 0, message: 'No episodes matched your criteria' };
+                return { success: 0, message: 'getEpisodesByCharacter(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -37,7 +37,7 @@ class EpisodeStore {
             let data = await EpisodeMap.findOne({name: name});
 
             if (!data) {
-                return { success: 0, message: 'No episodes matched your criteria' };
+                return { success: 0, message: 'getByName(name): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -51,7 +51,7 @@ class EpisodeStore {
             let data = await EpisodeMap.findOne({'_id': id});
 
             if (!data) {
-                return { success: 0, message: 'No episodes matched your criteria' };
+                return { success: 0, message: 'getById(id): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
@@ -65,7 +65,7 @@ class EpisodeStore {
             let data = await EpisodeMap.findMany({'characters': character});
 
             if (!data) {
-                return { success: 0, message: 'No episodes matched your criteria' };
+                return { success: 0, message: 'getEpisodesByCharacter(character): Result empty' };
             } else {
                 return { success: 1, data: data };
             }
