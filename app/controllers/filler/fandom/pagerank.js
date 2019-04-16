@@ -31,9 +31,9 @@ class PageRankFiller {
 
     // remove collection
     async clearAll() {
-        console.log('[FandomPagerankFiller] '.green + 'clearing collection...')
+        console.log('[FandomPagerankFiller] '.green + 'clearing collection...');
         return await PageRanks.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomPagerankFiller] '.green + 'Error in removing collection: ' + err);
             } else {
                 console.log('[FandomPagerankFiller] '.green + 'Collection successfully removed');
@@ -42,23 +42,23 @@ class PageRankFiller {
     }
 
     async insertAll(data) {
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         console.log('[FandomPagerankFiller] '.green + 'writing to db...');
         try {
             return await PageRanks.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[FandomPagerankFiller] '.green + 'error in saving to db: ' + err);
                     return;
-                } 
+                }
                 console.log('[FandomPagerankFiller] '.green + docs.length + ' entries successfully saved to MongoDB!');
             });
-        } catch (e) {
+        } catch(e) {
             throw new Error(e);
         }
     }
 }
+
 module.exports = PageRankFiller;

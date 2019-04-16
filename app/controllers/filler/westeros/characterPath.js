@@ -11,12 +11,12 @@ class CityFiller {
         let file = __appbase + '../data/characterPaths.json';
 
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile(file, function(err, obj) {
+            jsonfile.readFile(file, function (err, obj) {
                 if(err) {
                     return reject();
                 }
 
-                console.log('[WesterosCharacterPathFiller] '.green + 'character path from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCharacterPathFiller] '.green + 'character path from  file "' + file + '". No scrapping.');
 
                 resolve(obj);
             });
@@ -31,7 +31,7 @@ class CityFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -40,7 +40,7 @@ class CityFiller {
     async clearAll() {
         console.log('[WesterosCharacterPathFiller] '.green + 'clearing collection...');
         return await CharacterPath.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosCharacterPathFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosCharacterPathFiller] '.green + 'Collection successfully removed');
@@ -56,7 +56,7 @@ class CityFiller {
 
             for(let attr in event) {
                 // remove spaces and html tags
-                if (typeof event[attr] == 'string') {
+                if(typeof event[attr] == 'string') {
                     event[attr] = event[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -71,20 +71,19 @@ class CityFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await CharacterPath.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosCharacterPathFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosCharacterPathFiller] '.green + docs.length + ' character paths successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

@@ -6,17 +6,17 @@ class ContinentsFiller {
     constructor(policy) {
         this.policy = policy;
     }
-    
+
     async getFile() {
         let file = __appbase + '../data/continents.json';
 
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile(file, function(err, obj) {
+            jsonfile.readFile(file, function (err, obj) {
                 if(err) {
                     return reject();
                 }
 
-                console.log('[WesterosContinentFiller] '.green + 'Cities from  file "'+file+'". Now scrapping.');
+                console.log('[WesterosContinentFiller] '.green + 'Cities from  file "' + file + '". Now scrapping.');
 
                 resolve(obj);
             });
@@ -31,7 +31,7 @@ class ContinentsFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -40,7 +40,7 @@ class ContinentsFiller {
     async clearAll() {
         console.log('[WesterosContinentFiller] '.green + 'clearing collection...');
         return await Continents.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosContinentFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosContinentFiller] '.green + 'Collection successfully removed');
@@ -56,7 +56,7 @@ class ContinentsFiller {
 
             for(let attr in event) {
                 // remove spaces and html tags
-                if (typeof event[attr] == 'string') {
+                if(typeof event[attr] == 'string') {
                     event[attr] = event[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -71,20 +71,19 @@ class ContinentsFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Continents.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosContinentFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosContinentFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

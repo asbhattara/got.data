@@ -10,11 +10,7 @@ class UpdateMap {
         this.episodeFiller = new EpisodeFiller(FILLER_POLICY_REFILL);
         this.regionFiller = new RegionFiller(FILLER_POLICY_REFILL);
 
-        this.collections = [
-            'mapcharacters',
-            'mapepisodes',
-            'mapregions',
-        ];
+        this.collections = ['mapcharacters', 'mapepisodes', 'mapregions'];
     }
 
     async basicUpdate() {
@@ -31,8 +27,10 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[MapUpdater] '.green + "filling " + collection);
-                                    self.characterFiller.fill().then(() => { resolve() });
+                                    console.log('[MapUpdater] '.green + 'filling ' + collection);
+                                    self.characterFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -44,8 +42,10 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[MapUpdater] '.green + "filling " + collection);
-                                    self.episodeFiller.fill().then(() => { resolve() });
+                                    console.log('[MapUpdater] '.green + 'filling ' + collection);
+                                    self.episodeFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -57,22 +57,28 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[MapUpdater] '.green + "filling " + collection);
-                                    self.regionFiller.fill().then(() => { resolve() });
+                                    console.log('[MapUpdater] '.green + 'filling ' + collection);
+                                    self.regionFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
                             });
                         }));
                     default:
-                        console.error('[MapUpdater] '.green + "invalid collection " + collection);
+                        console.error('[MapUpdater] '.green + 'invalid collection ' + collection);
 
-                        return new Promise((resolve) => {resolve()});
+                        return new Promise((resolve) => {
+                            resolve();
+                        });
                 }
             } catch(e) {
                 console.warn('[MapUpdater] '.green + 'error in fetching data ' + e);
 
-                return new Promise((resolve) => {resolve()});
+                return new Promise((resolve) => {
+                    resolve();
+                });
             }
         });
 

@@ -19,22 +19,23 @@ class EpisodeFandomFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             console.warn('[FandomEpisodeFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('[FandomEpisodeFiller] '.green + 'clearing collection...')
+        console.log('[FandomEpisodeFiller] '.green + 'clearing collection...');
         await Episodes.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomEpisodeFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[FandomEpisodeFiller] '.green + 'Collection successfully removed');
             }
         });
     }
+
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(episodes) {
         console.log('[FandomEpisodeFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
@@ -44,7 +45,7 @@ class EpisodeFandomFiller {
                 // numbers sometimes return NaN which throws error in DB
                 if((attr == 'number' || attr == 'season' || attr == 'episode' || attr == 'viewers' || attr == 'runtime') && isNaN(episode[attr])) {
                     delete episode[attr];
-                } 
+                }
                 newEp[attr] = episode[attr];
             }
             return newEp;
@@ -53,18 +54,18 @@ class EpisodeFandomFiller {
     }
 
     async insertAll(data) {
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         await Episodes.insertMany(data, (err, docs) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomEpisodeFiller] '.green + 'error in saving to db: ' + err);
                 return;
-            } 
+            }
             console.log('[FandomEpisodeFiller] '.green + docs.length + ' episodes successfully saved to MongoDB!');
         });
     }
 }
+
 module.exports = EpisodeFandomFiller;

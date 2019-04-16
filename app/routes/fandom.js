@@ -7,7 +7,7 @@ const PageRankController = require('../controllers/fandomController/pagerankCont
 const AnimalController = require('../controllers/fandomController/animalController');
 const AssassinController = require('../controllers/fandomController/assassinController');
 const BastardController = require('../controllers/fandomController/bastardController');
-const BattleController = require ('../controllers/fandomController/battleController');
+const BattleController = require('../controllers/fandomController/battleController');
 const CastleController = require('../controllers/fandomController/castleController');
 const CityController = require('../controllers/fandomController/cityController');
 const RegionController = require('../controllers/fandomController/regionController');
@@ -15,7 +15,7 @@ const TownController = require('../controllers/fandomController/townController')
 const EventController = require('../controllers/fandomController/eventController');
 const BayeseanAttributeController = require('../controllers/fandomController/bayeseanController');
 
-module.exports = function(app, router) {
+module.exports = function (app, router) {
     const ageController = new AgeController();
     router.get('/ages', ageController.getAll.bind(ageController));
     router.get('/ages/:name', ageController.getByName.bind(ageController));
@@ -65,7 +65,7 @@ module.exports = function(app, router) {
     const bastardController = new BastardController();
     router.get('/bastards', bastardController.getAll.bind(bastardController));
     router.get('/bastards/:name', bastardController.getByName.bind(bastardController));
-    
+
     const battleController = new BattleController();
     router.get('/battles', battleController.getAll.bind(battleController));
     router.get('/battles/:name', battleController.getByName.bind(battleController));
@@ -82,7 +82,7 @@ module.exports = function(app, router) {
     router.get('/cities', cityController.getAll.bind(cityController));
     router.get('/cities/:name', cityController.getByName.bind(cityController));
     router.get('/cities/byLocation/:location', cityController.getByLocation.bind(cityController));
-    
+
     const regionController = new RegionController();
     router.get('/regions', regionController.getAll.bind(regionController));
     router.get('/regions/:name', regionController.getByName.bind(regionController));
@@ -96,8 +96,8 @@ module.exports = function(app, router) {
     router.get('/towns/byReligion/:name', townController.getByReligion.bind(townController));
 
     const bayeseanController = new BayeseanAttributeController();
-    router.get("/bayesean-attributes", bayeseanController.getAll.bind(bayeseanController));
-    router.post("/bayesean-attributes/update", bayeseanController.update.bind(bayeseanController));
+    router.get('/bayesean-attributes', bayeseanController.getAll.bind(bayeseanController));
+    router.post('/bayesean-attributes/update', bayeseanController.update.bind(bayeseanController));
 };
 
 

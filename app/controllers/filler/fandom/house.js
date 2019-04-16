@@ -19,50 +19,51 @@ class HouseFandomFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertToDb(data);
-        } catch (error) {
+        } catch(error) {
             console.warn('[FandomHouseFiller] '.green + error);
         }
     }
 
     // remove collection
     async clearAll() {
-        console.log('[FandomHouseFiller] '.green + 'clearing collection...')
+        console.log('[FandomHouseFiller] '.green + 'clearing collection...');
         await Houses.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomHouseFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[FandomHouseFiller] '.green + 'Collection successfully removed');
             }
         });
     }
+
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(houses) {
         console.log('[FandomHouseFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         houses.map(house => {
             let newHouse = new Houses();
-            for (let attr in house) {
+            for(let attr in house) {
                 newHouse[attr] = house[attr];
             }
             return newHouse;
         });
 
-        
+
         return houses.filter(house => house['name']);
     }
 
     async insertToDb(data) {
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         await Houses.insertMany(data, (err, docs) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomHouseFiller] '.green + 'error in saving to db: ' + err);
                 return;
-            } 
+            }
             console.log('[FandomHouseFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
         });
     }
 }
+
 module.exports = HouseFandomFiller;

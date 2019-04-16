@@ -17,7 +17,7 @@ class CulturesFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -26,7 +26,7 @@ class CulturesFiller {
     async clearAll() {
         console.log('[WesterosCultureFiller] '.green + 'clearing collection...');
         return await Cultures.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosCultureFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosCultureFiller] '.green + 'Collection successfully removed');
@@ -52,20 +52,19 @@ class CulturesFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Cultures.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosCultureFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosCultureFiller] '.green + docs.length + ' cultures successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

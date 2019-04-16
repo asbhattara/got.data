@@ -17,7 +17,7 @@ class CharacterLocationFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -26,7 +26,7 @@ class CharacterLocationFiller {
     async clearAll() {
         console.log('[WesterosCharacterLocationFiller] '.green + 'clearing collection...');
         return await CharacterLocations.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosCharacterLocationFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosCharacterLocationFiller] '.green + 'Collection successfully removed');
@@ -42,7 +42,7 @@ class CharacterLocationFiller {
 
             for(let attr in characterLocation) {
                 // remove spaces and html tags
-                if (typeof characterLocation[attr] == 'string') {
+                if(typeof characterLocation[attr] == 'string') {
                     characterLocation[attr] = characterLocation[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -57,20 +57,19 @@ class CharacterLocationFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await CharacterLocations.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosCharacterLocationFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosCharacterLocationFiller] '.green + docs.length + ' character locations successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

@@ -2,11 +2,10 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 const jsonfile = require('jsonfile');
 
-const CharactersScraper = require("./character");
+const CharactersScraper = require('./character');
 
 class CharacterLocationScraper {
-    constructor()
-    {
+    constructor() {
         this.bot = new MWBot({
             apiUrl: WESTEROS_API_URL
         });
@@ -14,25 +13,22 @@ class CharacterLocationScraper {
         this.characterscraper = new CharactersScraper();
     }
 
-    async getAllCities()
-    {
+    async getAllCities() {
         let file = __appbase + '../data/cities.json';
 
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile(file, function(err, obj) {
+            jsonfile.readFile(file, function (err, obj) {
                 if(err) {
                     return reject();
                 }
 
-                console.log('[WesterosCharacterLocationScraper] '.green + 'Cities from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCharacterLocationScraper] '.green + 'Cities from  file "' + file + '". No scrapping.');
 
                 let names = [];
 
-                for(let i = 0; i < obj.length; i++)
-                {
-                    if(obj[i].name !== undefined && obj[i].name.length > 0)
-                    {
-                        names.push(obj[i]["name"])
+                for(let i = 0; i < obj.length; i++) {
+                    if(obj[i].name !== undefined && obj[i].name.length > 0) {
+                        names.push(obj[i]['name']);
                     }
                 }
 
@@ -41,65 +37,59 @@ class CharacterLocationScraper {
         });
     }
 
-    async getAll()
-    {
-        console.log('[WesterosCharacterLocationScraper] '.green + "fetching cities from db");
+    async getAll() {
+        console.log('[WesterosCharacterLocationScraper] '.green + 'fetching cities from db');
 
         let cityNames = await this.getAllCities();
 
-        console.log('[WesterosCharacterLocationScraper] '.green + "fetching all character names from wiki");
+        console.log('[WesterosCharacterLocationScraper] '.green + 'fetching all character names from wiki');
         let characters = await this.characterscraper.getAllNames();
 
         let result = [];
 
-        console.log('[WesterosCharacterLocationScraper] '.green + "started fetching all character locations");
-        for(let i = 0; i < characters.length; i++)
-        {
+        console.log('[WesterosCharacterLocationScraper] '.green + 'started fetching all character locations');
+        for(let i = 0; i < characters.length; i++) {
             try {
-                result.push(await this.get(characters[i], cityNames));
-            }
-            catch (e) {
+                result.push(await this.get(characters[i]['slug'], characters[i]['name'], cityNames));
+            } catch(e) {
                 console.warn('[WesterosCharacterLocationScraper] '.green + e);
             }
         }
 
         return result;
     }
-    
-    async get(characterName, locationNames)
-    {
-        if(!characterName){
-            console.log('[WesterosCharacterLocationScraper] '.green + "Skipped: " + characterName);
+
+    async get(characterSlug, characterName, locationNames) {
+        if(!characterName) {
+            console.log('[WesterosCharacterLocationScraper] '.green + 'Skipped: ' + characterName);
 
             return null;
         }
 
-        console.log('[WesterosCharacterLocationScraper] '.green + "scraping " + characterName);
+        console.log('[WesterosCharacterLocationScraper] '.green + 'scraping ' + characterName);
 
-        let pageName = characterName.replace(/\s/g, "_");
         let data = await this.bot.request({
-            action: "parse",
-            page: pageName,
-            format: "json",
-            redirects: ""
+            action: 'parse',
+            page: characterSlug,
+            format: 'json',
+            redirects: ''
         });
 
         let character = {};
-        let body = data.parse.text["*"];
+        let body = data.parse.text['*'];
         let locationHits = [];
 
-        for(let i = 0; i < locationNames.length; i++)
-        {
+        for(let i = 0; i < locationNames.length; i++) {
             if(body.indexOf(locationNames[i]) > -1) {
                 locationHits.push(locationNames[i]);
             }
         }
 
         character.name = characterName;
-        character.slug = pageName;
+        character.slug = characterSlug;
         character.locations = locationHits;
 
-        console.log('[WesterosCharacterLocationScraper] '.green + "scraped locations " + character.locations);
+        console.log('[WesterosCharacterLocationScraper] '.green + 'scraped locations ' + character.locations);
 
         return character;
     }

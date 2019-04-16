@@ -19,7 +19,7 @@ class BattleFandomFiller {
             data = await this.matchToModel(data);
 
             await this.insertToDb(data);
-        } catch (error) {
+        } catch(error) {
             console.warn('[FandomBattleFiller] '.green + error);
         }
     }
@@ -28,13 +28,14 @@ class BattleFandomFiller {
     async clearAll() {
         console.log('[FandomBattleFiller] '.green + 'clearing collection...');
         await Battles.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomBattleFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[FandomBattleFiller] '.green + 'Collection successfully removed');
             }
         });
     }
+
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(battles) {
         console.log('[FandomBattleFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
@@ -45,29 +46,29 @@ class BattleFandomFiller {
                 if((attr == 'dateOfBattle') && isNaN(battle[attr])) {
                     delete battle[attr];
                     continue;
-                } 
+                }
                 newEp[attr] = battle[attr];
             }
             return newEp;
         });
 
-        
+
         return battles.filter(battle => battle['name']);
     }
 
     async insertToDb(data) {
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         await Battles.insertMany(data, (err, docs) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomBattleFiller] '.green + 'error in saving to db: ' + err);
                 return;
-            } 
+            }
             console.log('[FandomBattleFiller] '.green + docs.length + ' battles successfully saved to MongoDB!');
         });
     }
 }
+
 module.exports = BattleFandomFiller;

@@ -19,7 +19,7 @@ class TownFandomFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertToDb(data);
-        } catch (error) {
+        } catch(error) {
             console.warn('[FandomTownFiller] '.green + error);
         }
     }
@@ -28,42 +28,43 @@ class TownFandomFiller {
     async clearAll() {
         console.log('[FandomTownFiller] '.green + 'clearing collection...');
         return await Towns.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomTownFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[FandomTownFiller] '.green + 'Collection successfully removed');
             }
         });
     }
+
     // match attributes from Scraper to Mongoose Schema
     async matchToModel(towns) {
         console.log('[FandomTownFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         towns.map(town => {
             let newEp = new Towns();
             for(let attr in town) {
-                
+
                 newEp[attr] = town[attr];
             }
             return newEp;
         });
 
-        
+
         return towns.filter(town => town['name']);
     }
 
     async insertToDb(data) {
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         await Towns.insertMany(data, (err, docs) => {
-            if (err) {
+            if(err) {
                 console.warn('[FandomTownFiller] '.green + 'error in saving to db: ' + err);
                 return;
-            } 
+            }
             console.log('[FandomTownFiller] '.green + docs.length + ' towns successfully saved to MongoDB!');
         });
     }
 }
+
 module.exports = TownFandomFiller;

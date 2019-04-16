@@ -19,20 +19,23 @@ class EventScraper {
             }
         };
 
-        var events = []
+        var events = [];
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
-                
-                $('li[class=category-page__member]').each(function( index ) {
-                    let event = {"title": null, "reference": null};
-                    event.title = $(this).children('a').attr('title')
-                    event.reference = $(this).children('a').attr('href')
+
+                $('li[class=category-page__member]').each(function (index) {
+                    let event = {
+                        'title': null,
+                        'reference': null
+                    };
+                    event.title = $(this).children('a').attr('title');
+                    event.reference = $(this).children('a').attr('href');
 
                     if(!event.title.match(/Category/g)) {
                         events.push(event);
                     }
-                  
+
                 });
 
             })
@@ -40,7 +43,7 @@ class EventScraper {
             });
 
 
-            return events;
+        return events;
 
     }
 
@@ -48,11 +51,11 @@ class EventScraper {
         let data = null;
         try {
             data = await this.bot.request({
-                action: "parse",
-                format: "json",
+                action: 'parse',
+                format: 'json',
                 page: decodeURIComponent(event.reference.substr(6))
             });
-        } catch (err) {
+        } catch(err) {
             return false;
         }
 
@@ -61,207 +64,203 @@ class EventScraper {
         eventItem.name = event.title;
         eventItem.slug = event.reference.substr(6);
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
         if($('div[data-source=conflict]') != null) {
-            eventItem.conflict = $('div[data-source=conflict]').find(".pi-data-value").text();
+            eventItem.conflict = $('div[data-source=conflict]').find('.pi-data-value').text();
         }
 
         if($('div[data-source=date]') != null) {
-            eventItem.dateOfEvent = parseInt($('div[data-source=date]').find(".pi-data-value").text().replace(/\D/g,''));
+            eventItem.dateOfEvent = parseInt($('div[data-source=date]').find('.pi-data-value').text().replace(/\D/g, ''));
         }
 
 
-        eventItem.place = []
+        eventItem.place = [];
 
         if($('div[data-source=place]') != null) {
 
-            var place = $('div[data-source=place]').find(".pi-data-value").html()
+            var place = $('div[data-source=place]').find('.pi-data-value').html();
 
             if(place != null) {
                 place = place.match(/title="(.*?)"/g);
 
                 if(place) {
-                    place.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.place.push(el);
-                });
+                    place.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.place.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
-        eventItem.factions = []
+        eventItem.factions = [];
 
         if($('td[data-source=side1]') != null) {
 
-            var factions = $('td[data-source=side1]').html()
+            var factions = $('td[data-source=side1]').html();
 
             if(factions != null) {
                 factions = factions.match(/title="(.*?)"/g);
 
                 if(factions) {
-                    factions.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.factions.push(el);
-                });
+                    factions.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.factions.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
         if($('td[data-source=side2]') != null) {
 
-            var factions = $('td[data-source=side2]').html()
+            var factions = $('td[data-source=side2]').html();
 
             if(factions != null) {
                 factions = factions.match(/title="(.*?)"/g);
 
                 if(factions) {
-                    factions.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.factions.push(el);
-                });
+                    factions.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.factions.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
 
-
-
-        eventItem.leaders = []
+        eventItem.leaders = [];
 
         if($('td[data-source=commanders1]') != null) {
 
-            var leaders = $('td[data-source=commanders1]').html()
+            var leaders = $('td[data-source=commanders1]').html();
 
             if(leaders != null) {
                 leaders = leaders.match(/title="(.*?)"/g);
 
                 if(leaders) {
-                    leaders.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.leaders.push(el);
-                });
+                    leaders.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.leaders.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
         if($('td[data-source=commanders2]') != null) {
 
-            var leaders = $('td[data-source=commanders2]').html()
+            var leaders = $('td[data-source=commanders2]').html();
 
             if(leaders != null) {
                 leaders = leaders.match(/title="(.*?)"/g);
 
                 if(leaders) {
-                    leaders.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.leaders.push(el);
-                });
+                    leaders.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.leaders.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
 
-
-        eventItem.participants = []
+        eventItem.participants = [];
 
         if($('td[data-source=participants1]') != null) {
 
-            var participants = $('td[data-source=participants1]').html()
+            var participants = $('td[data-source=participants1]').html();
 
             if(participants != null) {
                 participants = participants.match(/title="(.*?)"/g);
 
                 if(participants) {
-                    participants.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.participants.push(el);
-                });
+                    participants.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.participants.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
         if($('td[data-source=participants2]') != null) {
 
-            var participants = $('td[data-source=participants2]').html()
+            var participants = $('td[data-source=participants2]').html();
 
             if(participants != null) {
                 participants = participants.match(/title="(.*?)"/g);
 
                 if(participants) {
-                    participants.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.participants.push(el);
-                });
+                    participants.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.participants.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
-        eventItem.casualties = []
+        eventItem.casualties = [];
 
         if($('td[data-source=casual1]') != null) {
 
-            var casualties = $('td[data-source=casual1]').html()
+            var casualties = $('td[data-source=casual1]').html();
 
             if(casualties != null) {
 
                 casualties = casualties.match(/title="(.*?)"/g);
 
                 if(casualties) {
-                    casualties.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.casualties.push(el);
-                });
+                    casualties.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.casualties.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
 
         if($('td[data-source=casual2]') != null) {
 
-            var casualties = $('td[data-source=casual2]').html()
+            var casualties = $('td[data-source=casual2]').html();
 
             if(casualties != null) {
                 casualties = casualties.match(/title="(.*?)"/g);
 
                 if(casualties) {
-                    casualties.forEach(function(element) {
-                    var el = element.replace(/title=/g,'').replace(/"/g,'').replace(/\[\d+\]+/g, '').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g,"&").replace(/[,].*/g, '');
-                    eventItem.casualties.push(el);
-                });
+                    casualties.forEach(function (element) {
+                        var el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
+                        eventItem.casualties.push(el);
+                    });
                 }
 
-                
+
             }
 
         }
-        
-        
+
 
         return eventItem;
     }
@@ -271,16 +270,13 @@ class EventScraper {
         let data = [];
 
         for(let i = 0; i < events.length; i++) {
-            console.log('[FandomEventScraper] '.green + "started scraping ", events[i]);
+            console.log('[FandomEventScraper] '.green + 'started scraping ', events[i]);
             let e = await this.scrape(events[i]);
 
-            if (e)
-                data.push(e);
-            else
-                console.warn('[FandomEventScraper] '.green + "invalid page");
+            if(e) data.push(e); else console.warn('[FandomEventScraper] '.green + 'invalid page');
         }
-        
-        
+
+
         return data;
     }
 }

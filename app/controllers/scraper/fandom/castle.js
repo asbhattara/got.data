@@ -24,9 +24,12 @@ class CastleScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let castle = {"title": null, "reference": null};
-                    castle.title = $(this).children('a').attr('title')
-                    castle.reference = $(this).children('a').attr('href')
+                    let castle = {
+                        'title': null,
+                        'reference': null
+                    };
+                    castle.title = $(this).children('a').attr('title');
+                    castle.reference = $(this).children('a').attr('href');
 
                     if(!castle.title.match(/Category/g)) {
                         castles.push(castle);
@@ -44,8 +47,8 @@ class CastleScrapper {
 
     async scrape(castle) {
         let data = await this.bot.request({
-            action: "parse",
-            format: "json",
+            action: 'parse',
+            format: 'json',
             page: decodeURIComponent(castle.reference.substr(6))
         });
 
@@ -53,26 +56,26 @@ class CastleScrapper {
 
         castleItem.name = castle.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
         if($('div[data-source=Location]') != null) {
-            castleItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+            castleItem.location = $('div[data-source=Location]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
         }
 
         if($('div[data-source=Type]') != null) {
-            castleItem.type = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+            castleItem.type = $('div[data-source=Type]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
         if($('div[data-source=Age]') != null) {
-            castleItem.age = parseInt($('div[data-source=Age]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[^0-9.]/g, ""));
+            castleItem.age = parseInt($('div[data-source=Age]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[^0-9.]/g, ''));
         }
 
-        castleItem.founder = []
+        castleItem.founder = [];
         if($('div[data-source=Founder]') != null) {
 
-            let founder = $('div[data-source=Founder]').find(".pi-data-value").html()
+            let founder = $('div[data-source=Founder]').find('.pi-data-value').html();
 
             if(founder != null) {
                 founder = founder.match(/title="(.*?)"/g);
@@ -84,11 +87,11 @@ class CastleScrapper {
             }
         }
 
-        castleItem.religion = []
+        castleItem.religion = [];
 
         if($('div[data-source=Religion]') != null) {
 
-            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find('.pi-data-value').html();
 
             if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
@@ -102,10 +105,10 @@ class CastleScrapper {
 
         }
 
-        castleItem.rulers = []
+        castleItem.rulers = [];
 
         if($('div[data-source=Rulers]') != null) {
-            let rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
+            let rulers = $('div[data-source=Rulers]').find('.pi-data-value').html();
 
             if(rulers != null) {
                 rulers = rulers.match(/title="(.*?)"/g);
@@ -130,12 +133,11 @@ class CastleScrapper {
         let data = [];
 
         for(let i = 0; i < castles.length; i++) {
-            console.log('[FandomCastleScraper] '.green + "started scraping ", castles[i]);
+            console.log('[FandomCastleScraper] '.green + 'started scraping ', castles[i]);
 
             try {
                 data.push(await this.scrape(castles[i]));
-            }
-            catch(e) {
+            } catch(e) {
                 console.warn('[FandomCastleScraper] '.green + e);
             }
         }

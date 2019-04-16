@@ -23,11 +23,14 @@ class CityScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let city = {"title": null, "reference": null};
-                    city.title = $(this).children('a').attr('title')
-                    city.reference = $(this).children('a').attr('href')
+                    let city = {
+                        'title': null,
+                        'reference': null
+                    };
+                    city.title = $(this).children('a').attr('title');
+                    city.reference = $(this).children('a').attr('href');
 
-                    if (!city.title.match(/Category/g)) {
+                    if(!city.title.match(/Category/g)) {
                         cities.push(city);
                     }
 
@@ -43,8 +46,8 @@ class CityScrapper {
 
     async scrape(city) {
         let data = await this.bot.request({
-            action: "parse",
-            format: "json",
+            action: 'parse',
+            format: 'json',
             page: decodeURIComponent(city.reference.substr(6))
         });
 
@@ -52,27 +55,27 @@ class CityScrapper {
 
         cityItem.name = city.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
-        if ($('div[data-source=Location]') != null) {
-            cityItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+        if($('div[data-source=Location]') != null) {
+            cityItem.location = $('div[data-source=Location]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
         }
 
-        if ($('div[data-source=Type]') != null) {
-            cityItem.type = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+        if($('div[data-source=Type]') != null) {
+            cityItem.type = $('div[data-source=Type]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
-        cityItem.rulers = []
+        cityItem.rulers = [];
 
-        if ($('div[data-source=Rulers]') != null) {
-            let rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
+        if($('div[data-source=Rulers]') != null) {
+            let rulers = $('div[data-source=Rulers]').find('.pi-data-value').html();
 
-            if (rulers != null) {
+            if(rulers != null) {
                 rulers = rulers.match(/title="(.*?)"/g);
 
-                if (rulers) {
+                if(rulers) {
                     rulers.forEach(function (element) {
                         let el = element.replace(/title=/g, '').replace(/"/g, '');
                         cityItem.rulers.push(el);
@@ -83,16 +86,16 @@ class CityScrapper {
             }
         }
 
-        cityItem.religion = []
+        cityItem.religion = [];
 
-        if ($('div[data-source=Religion]') != null) {
+        if($('div[data-source=Religion]') != null) {
 
-            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find('.pi-data-value').html();
 
-            if (religion != null) {
+            if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
 
-                if (religion) {
+                if(religion) {
                     religion.forEach(function (element) {
                         let el = element.replace(/title=/g, '').replace(/"/g, '');
                         cityItem.religion.push(el);
@@ -105,12 +108,12 @@ class CityScrapper {
 
         }
 
-        cityItem.founder = []
-        if ($('div[data-source=Founder]') != null) {
+        cityItem.founder = [];
+        if($('div[data-source=Founder]') != null) {
 
-            let founder = $('div[data-source=Founder]').find(".pi-data-value").html()
+            let founder = $('div[data-source=Founder]').find('.pi-data-value').html();
 
-            if (founder != null) {
+            if(founder != null) {
                 founder = founder.match(/title="(.*?)"/g);
 
                 founder.forEach(function (element) {
@@ -120,15 +123,15 @@ class CityScrapper {
             }
         }
 
-        cityItem.placesOfNote = []
-        if ($('div[data-source=Places]') != null) {
+        cityItem.placesOfNote = [];
+        if($('div[data-source=Places]') != null) {
 
-            let placesOfNote = $('div[data-source=Places]').find(".pi-data-value").html()
+            let placesOfNote = $('div[data-source=Places]').find('.pi-data-value').html();
 
-            if (placesOfNote != null) {
+            if(placesOfNote != null) {
                 placesOfNote = placesOfNote.match(/title="(.*?)"/g);
 
-                if (placesOfNote) {
+                if(placesOfNote) {
                     placesOfNote.forEach(function (element) {
                         let el = element.replace(/title=/g, '').replace(/"/g, '');
                         cityItem.placesOfNote.push(el);
@@ -145,13 +148,12 @@ class CityScrapper {
         let cities = await this.getAllCitysRaw();
         let data = [];
 
-        for (let i = 0; i < cities.length; i++) {
-            console.log('[FandomCityScraper] '.green + "started scraping ", cities[i]);
+        for(let i = 0; i < cities.length; i++) {
+            console.log('[FandomCityScraper] '.green + 'started scraping ', cities[i]);
 
             try {
                 data.push(await this.scrape(cities[i]));
-            }
-            catch(e) {
+            } catch(e) {
                 console.warn('[FandomCityScraper] '.green + e);
             }
         }

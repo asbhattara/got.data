@@ -24,7 +24,10 @@ class TownScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let town = {"title": null, "reference": null};
+                    let town = {
+                        'title': null,
+                        'reference': null
+                    };
                     town.title = $(this).children('a').attr('title');
                     town.reference = $(this).children('a').attr('href');
 
@@ -43,8 +46,8 @@ class TownScrapper {
 
     async scrape(town) {
         let data = await this.bot.request({
-            action: "parse",
-            format: "json",
+            action: 'parse',
+            format: 'json',
             page: decodeURIComponent(town.reference.substr(6))
         });
 
@@ -52,22 +55,22 @@ class TownScrapper {
 
         townItem.name = town.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
         if($('div[data-source=Location]') != null) {
-            townItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+            townItem.location = $('div[data-source=Location]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
         }
 
         if($('div[data-source=Type]') != null) {
-            townItem.type = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+            townItem.type = $('div[data-source=Type]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
-        townItem.rulers = []
+        townItem.rulers = [];
 
         if($('div[data-source=Rulers]') != null) {
-            let rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
+            let rulers = $('div[data-source=Rulers]').find('.pi-data-value').html();
 
             if(rulers != null) {
                 rulers = rulers.match(/title="(.*?)"/g);
@@ -87,7 +90,7 @@ class TownScrapper {
 
         if($('div[data-source=Religion]') != null) {
 
-            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find('.pi-data-value').html();
 
             if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
@@ -109,12 +112,11 @@ class TownScrapper {
         let data = [];
 
         for(let i = 0; i < towns.length; i++) {
-            console.log('[FandomTownScraper] '.green + "started scraping ", towns[i]);
+            console.log('[FandomTownScraper] '.green + 'started scraping ', towns[i]);
 
             try {
                 data.push(await this.scrape(towns[i]));
-            }
-            catch(e) {
+            } catch(e) {
                 console.warn('[FandomTownScraper] '.green + e);
             }
         }
