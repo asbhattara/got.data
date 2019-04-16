@@ -25,17 +25,12 @@ In this project we will lay the foundations for our system by integrating data f
 * Node should start to update all collections during first startup
 * If needed, you can start MongoDB shell via `mongo`. Then type `show dbs` to see all databases. Type `use db_name_here` to switch to preferred database. With `show collections` you can see all tables (in NoSQL tables are called collections). With `db.collection_name.find()` you can output the collection content.
 
-## Docker Setup NodeJS & MongoDB
-* Install nodejs, mongodb and docker on your local machine
+## Docker Setup
+* Install Docker and nodeJS on your local machine
 * Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
+* Rename `docker-compose.yml.template` to `docker-compose.yml` and adjust ports, access token, collection name as you want
 * Build the containers with `docker-compose up`
-* Start the mongo container `docker start got_mongo`
-* Open the shell of the mongo container`docker exec -it got_mongo /bin/bash`
-    * Open mongo shell `mongo -u got -p got`
-    * Create database got `use got` and insert data to keep the database `db.test.insert({});`
-    * Create the database user `db.createUser({user:"got", pwd:"got", roles=['readWrite']});`
-    * Quit mongo shell `quit()`
-    * Quit container shell`exit`
+* Done
 
 ## Scraping and filling / updating the database
 
