@@ -26,9 +26,9 @@ class BayeseanAttributeController {
      * @apiDescription Return all bayesean attributes currently stored.
      */
     async getAll(req, res) {
-        let characters = await this.baStore.getByWiki("fandom");
+        let characters = await this.baStore.getByWiki('fandom');
 
-        if (characters.success === STORE_RESPONSE_SUCCESS) {
+        if(characters.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(characters.data);
         } else {
             return res.status(404).send(characters.message);
@@ -52,9 +52,9 @@ class BayeseanAttributeController {
     async update(req, res) {
         let attributes = req.params.attributes ? req.params.attributes : req.body.attributes;
 
-        let bayeseanAttributes = await this.baStore.updateWiki("fandom", attributes);
+        let bayeseanAttributes = await this.baStore.updateWiki('fandom', attributes);
 
-        if (bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
+        if(bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bayeseanAttributes.message);
         } else {
             res.status(404).send(bayeseanAttributes.message);

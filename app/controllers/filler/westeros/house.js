@@ -17,7 +17,7 @@ class HousesFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -26,7 +26,7 @@ class HousesFiller {
     async clearAll() {
         console.log('[WesterosHouseFiller] '.green + 'clearing collection...');
         return await Houses.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosHouseFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosHouseFiller] '.green + 'Collection successfully removed');
@@ -42,7 +42,7 @@ class HousesFiller {
 
             for(let attr in house) {
                 // remove spaces and html tags
-                if (typeof house[attr] == 'string') {
+                if(typeof house[attr] == 'string') {
                     house[attr] = house[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -57,20 +57,19 @@ class HousesFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Houses.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosHouseFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosHouseFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

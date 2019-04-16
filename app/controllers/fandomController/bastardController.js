@@ -27,13 +27,13 @@ class BastardController {
      */
     async getAll(req, res) {
         let bastards = await this.bastardStore.getAll();
-        if (bastards.success === STORE_RESPONSE_SUCCESS) {
+        if(bastards.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bastards.data);
         } else {
             res.status(404).send(bastards.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/bastards/:name Get bastards by name
      * @apiVersion 0.0.2
@@ -56,7 +56,7 @@ class BastardController {
      */
     async getByName(req, res) {
         let bastards = await this.bastardStore.getByName(req.params.name);
-        if (bastards.success === STORE_RESPONSE_SUCCESS) {
+        if(bastards.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bastards.data);
         } else {
             res.status(404).send(bastards.message);

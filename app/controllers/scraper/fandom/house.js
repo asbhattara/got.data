@@ -24,9 +24,12 @@ class HouseScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let house = {"title": null, "reference": null};
-                    house.title = $(this).children('a').attr('title')
-                    house.reference = $(this).children('a').attr('href')
+                    let house = {
+                        'title': null,
+                        'reference': null
+                    };
+                    house.title = $(this).children('a').attr('title');
+                    house.reference = $(this).children('a').attr('href');
 
                     if(!house.title.match(/Category/g)) {
                         houses.push(house);
@@ -51,10 +54,12 @@ class HouseScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let house = {"title": null, "reference": null};
-                    house.title = $(this).children('a').attr('title')
-                    house.reference = $(this).children('a').attr('href')
-                    // console.log(house.title);
+                    let house = {
+                        'title': null,
+                        'reference': null
+                    };
+                    house.title = $(this).children('a').attr('title');
+                    house.reference = $(this).children('a').attr('href');
 
                     if(!house.title.match(/Category/g)) {
                         houses.push(house);
@@ -73,8 +78,8 @@ class HouseScrapper {
         let data = null;
         try {
             data = await this.bot.request({
-                action: "parse",
-                format: "json",
+                action: 'parse',
+                format: 'json',
                 page: decodeURIComponent(house.reference.substr(6))
             });
         } catch(err) {
@@ -85,32 +90,32 @@ class HouseScrapper {
 
         houseItem.name = house.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        houseItem.logoURL = $(".pi-image-thumbnail").attr("src");
+        houseItem.logoURL = $('.pi-image-thumbnail').attr('src');
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
         if($('div[data-source=Sigil]') != null) {
-            houseItem.sigil = $('div[data-source=Sigil]').find(".pi-data-value").text()
+            houseItem.sigil = $('div[data-source=Sigil]').find('.pi-data-value').text();
         }
 
         if($('div[data-source=Words]') != null) {
-            houseItem.words = $('div[data-source=Words]').find(".pi-data-value").text()
+            houseItem.words = $('div[data-source=Words]').find('.pi-data-value').text();
         }
 
-        houseItem.seat = []
+        houseItem.seat = [];
 
         if($('div[data-source=Seat]') != null) {
 
-            let seat = $('div[data-source=Seat]').find(".pi-data-value").html()
+            let seat = $('div[data-source=Seat]').find('.pi-data-value').html();
 
             if(seat != null) {
                 seat = seat.match(/title="(.*?)"/g);
 
                 if(seat) {
                     seat.forEach(function (element) {
-                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
                         houseItem.seat.push(el);
                     });
                 }
@@ -120,18 +125,18 @@ class HouseScrapper {
 
         }
 
-        houseItem.allegiance = []
+        houseItem.allegiance = [];
 
         if($('div[data-source=Allegiance]') != null) {
 
-            let allegiance = $('div[data-source=Allegiance]').find(".pi-data-value").html()
+            let allegiance = $('div[data-source=Allegiance]').find('.pi-data-value').html();
 
             if(allegiance != null) {
                 allegiance = allegiance.match(/title="(.*?)"/g);
 
                 if(allegiance) {
                     allegiance.forEach(function (element) {
-                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
                         houseItem.allegiance.push(el);
                     });
                 }
@@ -141,18 +146,18 @@ class HouseScrapper {
 
         }
 
-        houseItem.religion = []
+        houseItem.religion = [];
 
         if($('div[data-source=Religion]') != null) {
 
-            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find('.pi-data-value').html();
 
             if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
 
                 if(religion) {
                     religion.forEach(function (element) {
-                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
                         houseItem.religion.push(el);
                     });
                 }
@@ -162,11 +167,11 @@ class HouseScrapper {
 
         }
 
-        houseItem.region = []
+        houseItem.region = [];
 
         if($('div[data-source=Region]') != null) {
 
-            let region = $('div[data-source=Region]').find(".pi-data-value").html()
+            let region = $('div[data-source=Region]').find('.pi-data-value').html();
 
             if(region != null) {
                 region = region.match(/title="(.*?)"/g);
@@ -191,7 +196,7 @@ class HouseScrapper {
         let data = [];
 
         for(let i = 0; i < houses.length; i++) {
-            console.log('[FandomHouseScraper] '.green + "started scraping ", houses[i]);
+            console.log('[FandomHouseScraper] '.green + 'started scraping ', houses[i]);
 
             try {
                 data.push(await this.scrape(houses[i]));

@@ -13,94 +13,80 @@ class PageRankScraper {
         this.pending = [];
     }
 
-    async scrapePageRanks()
-    {
-        if(this.ranks)
-        {
+    async scrapePageRanks() {
+        if(this.ranks) {
             return this.ranks;
         }
 
         this.ranks = {};
 
         // starting page
-        await this.scrapePage("Main_Page");
+        await this.scrapePage('Main_Page');
 
         // loop while pending pages exist
-        while(this.pending.length !== 0)
-        {
+        while(this.pending.length !== 0) {
             await this.scrapePage(this.pending.pop());
 
-            console.log('[WesterosPagerankScraper] '.green + "pending:", this.pending.length, "- visited:", this.visited.length)
+            console.log('[WesterosPagerankScraper] '.green + 'pending:', this.pending.length, '- visited:', this.visited.length);
         }
 
         return this.ranks;
     }
 
-    async scrapePage(page)
-    {
-        if(this.visited.indexOf(page) >= 0)
-        {
+    async scrapePage(page) {
+        if(this.visited.indexOf(page) >= 0) {
             return;
         }
 
         this.visited.push(page);
 
-        console.log('[WesterosPagerankScraper] '.green + "scraping page", page);
+        console.log('[WesterosPagerankScraper] '.green + 'scraping page', page);
 
         let data;
 
         try {
             data = await this.bot.request({
-                action: "parse",
-                format: "json",
+                action: 'parse',
+                format: 'json',
                 page: page
             });
-        }
-        catch(e) {
+        } catch(e) {
             return false;
         }
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
         const self = this;
 
-        $("a").each(function () {
-            let link = $(this).attr("href");
+        $('a').each(function () {
+            let link = $(this).attr('href');
 
-            if(link === undefined)
-            {
+            if(link === undefined) {
                 return true;
             }
 
             // skip if is not an own wiki page
-            if(link.search('\\?') >= 0 || link.search('\\#') >= 0 || link.search('\\:') >= 0)
-            {
+            if(link.search('\\?') >= 0 || link.search('\\#') >= 0 || link.search('\\:') >= 0) {
                 return true;
             }
 
             // skip if it is not a wiki link
-            if(!link.startsWith("/index.php/"))
-            {
+            if(!link.startsWith('/index.php/')) {
                 return true;
             }
 
             let nextPage = decodeURIComponent(link.substring(11));
 
-            if(nextPage.search('\\/') >= 0)
-            {
+            if(nextPage.search('\\/') >= 0) {
                 return true;
             }
 
-            if(nextPage in self.ranks)
-            {
+            if(nextPage in self.ranks) {
                 self.ranks[nextPage] += 1;
-            }
-            else
-            {
+            } else {
                 self.ranks[nextPage] = 1;
             }
 
-            if(self.visited.indexOf(nextPage) >= 0 || self.pending.indexOf(nextPage) >= 0)
-            {
+            if(self.visited.indexOf(nextPage) >= 0 || self.pending.indexOf(nextPage) >= 0) {
                 return true;
             }
 

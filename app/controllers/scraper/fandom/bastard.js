@@ -24,7 +24,7 @@ class BastardScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let bastard = {"name": null};
+                    let bastard = {'name': null};
                     bastard.name = $(this).children('a').attr('title');
                     console.log('[FandomBastardScraper] '.green + 'scraping bastard: ' + bastard.name);
 

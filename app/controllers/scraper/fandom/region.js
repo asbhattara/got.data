@@ -24,11 +24,14 @@ class RegionScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let region = {"title": null, "reference": null};
-                    region.title = $(this).children('a').attr('title')
-                    region.reference = $(this).children('a').attr('href')
+                    let region = {
+                        'title': null,
+                        'reference': null
+                    };
+                    region.title = $(this).children('a').attr('title');
+                    region.reference = $(this).children('a').attr('href');
 
-                    if (!region.title.match(/Category/g)) {
+                    if(!region.title.match(/Category/g)) {
                         regions.push(region);
                     }
 
@@ -44,8 +47,8 @@ class RegionScrapper {
 
     async scrape(region) {
         let data = await this.bot.request({
-            action: "parse",
-            format: "json",
+            action: 'parse',
+            format: 'json',
             page: decodeURIComponent(region.reference.substr(6))
         });
 
@@ -53,27 +56,27 @@ class RegionScrapper {
 
         regionItem.name = region.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
-        if ($('div[data-source=Location]') != null) {
-            regionItem.location = $('div[data-source=Location]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+        if($('div[data-source=Location]') != null) {
+            regionItem.location = $('div[data-source=Location]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
         }
 
-        if ($('div[data-source=Geography]') != null) {
-            regionItem.geography = $('div[data-source=Geography]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+        if($('div[data-source=Geography]') != null) {
+            regionItem.geography = $('div[data-source=Geography]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
-        regionItem.rulers = []
+        regionItem.rulers = [];
 
-        if ($('div[data-source=Rulers]') != null) {
-            let rulers = $('div[data-source=Rulers]').find(".pi-data-value").html()
+        if($('div[data-source=Rulers]') != null) {
+            let rulers = $('div[data-source=Rulers]').find('.pi-data-value').html();
 
-            if (rulers != null) {
+            if(rulers != null) {
                 rulers = rulers.match(/title="(.*?)"/g);
 
-                if (rulers) {
+                if(rulers) {
                     rulers.forEach(function (element) {
                         let el = element.replace(/title=/g, '').replace(/"/g, '');
                         regionItem.rulers.push(el);
@@ -84,13 +87,13 @@ class RegionScrapper {
             }
         }
 
-        regionItem.religion = []
+        regionItem.religion = [];
 
-        if ($('div[data-source=Religion]') != null) {
+        if($('div[data-source=Religion]') != null) {
 
-            let religion = $('div[data-source=Religion]').find(".pi-data-value").html()
+            let religion = $('div[data-source=Religion]').find('.pi-data-value').html();
 
-            if (religion != null) {
+            if(religion != null) {
                 religion = religion.match(/title="(.*?)"/g);
 
                 religion.forEach(function (element) {
@@ -102,13 +105,13 @@ class RegionScrapper {
 
         }
 
-        regionItem.culture = []
+        regionItem.culture = [];
 
-        if ($('div[data-source=Culture]') != null) {
+        if($('div[data-source=Culture]') != null) {
 
-            let culture = $('div[data-source=Culture]').find(".pi-data-value").html()
+            let culture = $('div[data-source=Culture]').find('.pi-data-value').html();
 
-            if (culture != null) {
+            if(culture != null) {
                 culture = culture.match(/title="(.*?)"/g);
 
                 culture.forEach(function (element) {
@@ -121,17 +124,17 @@ class RegionScrapper {
         }
 
 
-        if ($('div[data-source="Regional capital"]') != null) {
-            regionItem.regionCapital = $('div[data-source="Regional capital"]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+        if($('div[data-source="Regional capital"]') != null) {
+            regionItem.regionCapital = $('div[data-source="Regional capital"]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
 
         regionItem.cities = [];
-        if ($('div[data-source=Cities]') != null) {
+        if($('div[data-source=Cities]') != null) {
 
-            let cities = $('div[data-source=Cities]').find(".pi-data-value").html()
+            let cities = $('div[data-source=Cities]').find('.pi-data-value').html();
 
-            if (cities != null) {
+            if(cities != null) {
                 cities = cities.match(/title="(.*?)"/g);
 
                 cities.forEach(function (element) {
@@ -142,12 +145,12 @@ class RegionScrapper {
         }
 
 
-        regionItem.towns = []
-        if ($('div[data-source=Towns]') != null) {
+        regionItem.towns = [];
+        if($('div[data-source=Towns]') != null) {
 
-            let towns = $('div[data-source=Towns]').find(".pi-data-value").html()
+            let towns = $('div[data-source=Towns]').find('.pi-data-value').html();
 
-            if (towns != null) {
+            if(towns != null) {
                 towns = towns.match(/title="(.*?)"/g);
 
                 towns.forEach(function (element) {
@@ -158,11 +161,11 @@ class RegionScrapper {
         }
 
         regionItem.castles = [];
-        if ($('div[data-source=Castles]') != null) {
+        if($('div[data-source=Castles]') != null) {
 
-            let castles = $('div[data-source=Castles]').find(".pi-data-value").html()
+            let castles = $('div[data-source=Castles]').find('.pi-data-value').html();
 
-            if (castles != null) {
+            if(castles != null) {
                 castles = castles.match(/title="(.*?)"/g);
 
                 castles.forEach(function (element) {
@@ -174,11 +177,11 @@ class RegionScrapper {
 
 
         regionItem.founder = [];
-        if ($('div[data-source=Founder]') != null) {
+        if($('div[data-source=Founder]') != null) {
 
-            let founder = $('div[data-source=Founder]').find(".pi-data-value").html()
+            let founder = $('div[data-source=Founder]').find('.pi-data-value').html();
 
-            if (founder != null) {
+            if(founder != null) {
                 founder = founder.match(/title="(.*?)"/g);
 
                 founder.forEach(function (element) {
@@ -189,11 +192,11 @@ class RegionScrapper {
         }
 
         regionItem.placesOfNote = [];
-        if ($('div[data-source=Places]') != null) {
+        if($('div[data-source=Places]') != null) {
 
-            let placesOfNote = $('div[data-source=Places]').find(".pi-data-value").html()
+            let placesOfNote = $('div[data-source=Places]').find('.pi-data-value').html();
 
-            if (placesOfNote != null) {
+            if(placesOfNote != null) {
                 placesOfNote = placesOfNote.match(/title="(.*?)"/g);
 
                 placesOfNote.forEach(function (element) {
@@ -210,13 +213,12 @@ class RegionScrapper {
         let regions = await this.getAllRegionsRaw();
         let data = [];
 
-        for (let i = 0; i < regions.length; i++) {
-            console.log('[FandomRegionScraper] '.green + "started scraping ", regions[i]);
+        for(let i = 0; i < regions.length; i++) {
+            console.log('[FandomRegionScraper] '.green + 'started scraping ', regions[i]);
 
             try {
                 data.push(await this.scrape(regions[i]));
-            }
-            catch(e) {
+            } catch(e) {
                 console.warn('[FandomRegionScraper] '.green + e);
             }
         }

@@ -27,13 +27,13 @@ class RegionController {
      */
     async getAll(req, res) {
         let regions = await this.regionStore.getAll();
-        if (regions.success === STORE_RESPONSE_SUCCESS) {
+        if(regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);
         }
     }
-    
+
     /**
      * @api {get} /api/book/regions/:name Get regions by name
      * @apiVersion 0.0.2
@@ -56,7 +56,7 @@ class RegionController {
      */
     async getByName(req, res) {
         let regions = await this.regionStore.getByName(req.params.name);
-        if (regions.success === STORE_RESPONSE_SUCCESS) {
+        if(regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);
@@ -85,11 +85,12 @@ class RegionController {
      */
     async getByContinent(req, res) {
         let regions = await this.regionStore.getByContinent(req.params.continent);
-        if (regions.success === STORE_RESPONSE_SUCCESS) {
+        if(regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);
         }
     }
 }
+
 module.exports = RegionController;

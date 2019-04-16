@@ -27,13 +27,16 @@ class CityController {
      */
     async getAll(req, res) {
         let cities = await this.cityStore.getAll();
-        if (cities.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": cities.data});
+        if(cities.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': cities.data
+            });
         } else {
-            res.status(404).send({"message": cities.message});
+            res.status(404).send({'message': cities.message});
         }
     }
-    
+
     /**
      * @api {get} /api/map/cities/byName/:name Get cities by name
      * @apiVersion 0.0.2
@@ -56,10 +59,13 @@ class CityController {
      */
     async getByName(req, res) {
         let cities = await this.cityStore.getByName(req.params.name);
-        if (cities.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": cities.data});
+        if(cities.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': cities.data
+            });
         } else {
-            res.status(404).send({"message": cities.message});
+            res.status(404).send({'message': cities.message});
         }
     }
 
@@ -84,11 +90,14 @@ class CityController {
      * @apiDescription Return cities with id :id.
      */
     async getById(req, res) {
-        let cities = await this.cityStore.getById(req.params.name);
-        if (cities.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": cities.data});
+        let cities = await this.cityStore.getById(req.params.id);
+        if(cities.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': cities.data
+            });
         } else {
-            res.status(404).send({"message": cities.message});
+            res.status(404).send({'message': cities.message});
         }
     }
 }

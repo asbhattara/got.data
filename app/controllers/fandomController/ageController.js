@@ -27,13 +27,13 @@ class AgeController {
      */
     async getAll(req, res) {
         let ages = await this.ageStore.getAll();
-        if (ages.success === STORE_RESPONSE_SUCCESS) {
+        if(ages.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(ages.data);
         } else {
             return res.status(404).send(ages.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/ages/:name Get ages by name
      * @apiVersion 0.0.2
@@ -58,7 +58,7 @@ class AgeController {
     async getByName(req, res) {
         let name = req.params.name ? req.params.name : req.body.name;
         let ages = await this.ageStore.getByName(name);
-        if (ages.success === STORE_RESPONSE_SUCCESS) {
+        if(ages.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(ages.data);
         } else {
             res.status(404).send(ages.message);
@@ -79,17 +79,17 @@ class AgeController {
      *     []
      * @apiErrorExample {json} NoData
      *      HTTP/1.1 404
-     *      getByAge(age): Result empty    
+     *      getByAge(age): Result empty
      * @apiErrorExample {json} ErrorInDatabase
      *      HTTP/1.1 404
      *      error in database query! - err
-     * 
+     *
      *
      * @apiDescription Return the list of characters with a specific age :age.
      */
     async getByAge(req, res) {
         let ages = await this.ageStore.getByAge(req.params.age);
-        if (ages.success === STORE_RESPONSE_SUCCESS) {
+        if(ages.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(ages.data);
         } else {
             res.status(404).send(ages.message);

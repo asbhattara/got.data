@@ -27,13 +27,13 @@ class AssassinController {
      */
     async getAll(req, res) {
         let assassins = await this.assassinStore.getAll();
-        if (assassins.success === STORE_RESPONSE_SUCCESS) {
+        if(assassins.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(assassins.data);
         } else {
             res.status(404).send(assassins.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/assassins/:name Get assassins by name
      * @apiVersion 0.0.2
@@ -56,7 +56,7 @@ class AssassinController {
      */
     async getByName(req, res) {
         let assassins = await this.AssassinStore.getByName(req.params.name);
-        if (assassins.success === STORE_RESPONSE_SUCCESS) {
+        if(assassins.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(assassins.data);
         } else {
             res.status(404).send(assassins.message);

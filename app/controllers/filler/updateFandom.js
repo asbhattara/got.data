@@ -36,21 +36,9 @@ class UpdateFandom {
         this.eventFiller = new EventFiller(FILLER_POLICY_REFILL);
 
         this.collections = [
-            'fandomages',
-            'fandomanimals',
-            'fandomhouses',
-            'fandomassassins',
-            'fandombastards',
-            'fandombattles',
-            'fandomcastles',
-            'fandomcities',
-            'fandomcharacters',
-            'fandomevents',
-            'fandomreligions',
-            'fandomregions',
-            'fandompageranks',
-            'fandomepisodes',
-            'fandomtowns'
+            'fandomages', 'fandomanimals', 'fandomhouses', 'fandomassassins', 'fandombastards', 'fandombattles',
+            'fandomcastles', 'fandomcities', 'fandomcharacters', 'fandomevents', 'fandomreligions', 'fandomregions',
+            'fandompageranks', 'fandomepisodes', 'fandomtowns'
         ];
     }
 
@@ -68,8 +56,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.ageFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.ageFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -81,8 +71,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.houseFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.houseFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -94,8 +86,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.animalFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.animalFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -107,8 +101,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.assassinFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.assassinFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -120,8 +116,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.bastardFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.bastardFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -133,8 +131,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.battleFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.battleFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -146,8 +146,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.castleFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.castleFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -159,8 +161,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.cityFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.cityFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -172,8 +176,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.characterFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.characterFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -185,8 +191,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.eventFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.eventFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -198,8 +206,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.religionFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.religionFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -211,8 +221,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.rankFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.rankFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -224,8 +236,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.episodeFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.episodeFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -237,8 +251,10 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.regionFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.regionFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
@@ -250,21 +266,27 @@ class UpdateFandom {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + "filling " + collection);
-                                    self.townFiller.fill().then(() => { resolve() });
+                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                                    self.townFiller.fill().then(() => {
+                                        resolve();
+                                    });
                                 } else {
                                     resolve();
                                 }
                             });
                         }));
                     default:
-                        console.error('[FandomUpdater] '.green + "invalid collection " + collection);
-                        return new Promise((resolve) => {resolve()});
+                        console.error('[FandomUpdater] '.green + 'invalid collection ' + collection);
+                        return new Promise((resolve) => {
+                            resolve();
+                        });
                 }
             } catch(e) {
                 console.warn('[FandomUpdater] '.green + 'error in fetching data ' + e);
 
-                return new Promise((resolve) => {resolve()});
+                return new Promise((resolve) => {
+                    resolve();
+                });
             }
         });
 
@@ -275,10 +297,9 @@ class UpdateFandom {
         promises = [];
 
         promises.push(new Promise(resolve => {
-            console.log('[FandomUpdater] '.green + "checking images");
+            console.log('[FandomUpdater] '.green + 'checking images');
 
-            try
-            {
+            try {
                 let fs = require('fs');
                 let imgDir = __dirname + '/../../../misc/images/characters/show/';
                 fs.readdir(imgDir, (err, files) => {
@@ -289,21 +310,18 @@ class UpdateFandom {
                         self.characterImageFiller.fill().then(() => {
                             resolve();
                         });
-                    }
-                    else
-                    {
+                    } else {
                         resolve();
                     }
                 });
-            }
-            catch (e) {
+            } catch(e) {
                 console.log(e);
             }
         }));
 
         await Promise.all(promises);
 
-        console.log('[FandomUpdater] '.green + 'Finished fetching show data.')
+        console.log('[FandomUpdater] '.green + 'Finished fetching show data.');
     }
 }
 

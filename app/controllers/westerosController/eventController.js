@@ -27,13 +27,13 @@ class EventController {
      */
     async getAll(req, res) {
         let events = await this.eventStore.getAll();
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
         }
     }
-    
+
     /**
      * @api {get} /api/book/events/:name Get events by name
      * @apiVersion 0.0.2
@@ -42,7 +42,7 @@ class EventController {
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
-     *      
+     *
      * @apiSuccessExample {json} Empty-Success-Response
      *     HTTP/1.1 200 OK
      *     []
@@ -56,11 +56,12 @@ class EventController {
      */
     async getByName(req, res) {
         let events = await this.eventStore.getByName(req.params.name);
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
         }
     }
 }
+
 module.exports = EventController;

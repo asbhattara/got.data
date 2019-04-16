@@ -24,9 +24,12 @@ class AnimalScrapper {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
-                    let animal = {"title": null, "reference": null};
-                    animal.title = $(this).children('a').attr('title')
-                    animal.reference = $(this).children('a').attr('href')
+                    let animal = {
+                        'title': null,
+                        'reference': null
+                    };
+                    animal.title = $(this).children('a').attr('title');
+                    animal.reference = $(this).children('a').attr('href');
 
                     if(!animal.title.match(/Category/g)) {
                         animals.push(animal);
@@ -44,8 +47,8 @@ class AnimalScrapper {
 
     async scrape(animal) {
         let data = await this.bot.request({
-            action: "parse",
-            format: "json",
+            action: 'parse',
+            format: 'json',
             page: decodeURIComponent(animal.reference.substr(6))
         });
 
@@ -53,35 +56,35 @@ class AnimalScrapper {
 
         animalItem.name = animal.title;
 
-        const $ = cheerio.load(data["parse"]["text"]["*"]);
+        const $ = cheerio.load(data['parse']['text']['*']);
 
-        let $infobox = $(".portable-infobox");
+        let $infobox = $('.portable-infobox');
 
         if($('div[data-source=Type]') != null) {
-            animalItem.location = $('div[data-source=Type]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&").replace(/[,].*/g, '');
+            animalItem.location = $('div[data-source=Type]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&').replace(/[,].*/g, '');
         }
 
         if($('div[data-source=Diet]') != null) {
-            animalItem.diet = $('div[data-source=Diet]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+            animalItem.diet = $('div[data-source=Diet]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
         if($('div[data-source=Status]') != null) {
-            animalItem.status = $('div[data-source=Status]').find(".pi-data-value").text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+            animalItem.status = $('div[data-source=Status]').find('.pi-data-value').text().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
         }
 
 
-        animalItem.habitat = []
+        animalItem.habitat = [];
 
         if($('div[data-source=Habitat]') != null) {
-            let range = $('div[data-source=Habitat]').find(".pi-data-value").html()
+            let range = $('div[data-source=Habitat]').find('.pi-data-value').html();
 
             if(range) {
-                range = range.split('<br>')
+                range = range.split('<br>');
 
                 range.forEach(function (element) {
-                    let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+                    let el = element.replace(/\*?<(?:.|\n)*?>/gm, '').trim().replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
 
-                    if(el != "") {
+                    if(el != '') {
 
                         animalItem.habitat.push(el);
                     }
@@ -91,17 +94,17 @@ class AnimalScrapper {
 
         }
 
-        animalItem.range = []
+        animalItem.range = [];
 
         if($('div[data-source=Range]') != null) {
-            let range = $('div[data-source=Range]').find(".pi-data-value").html()
+            let range = $('div[data-source=Range]').find('.pi-data-value').html();
 
             if(range != null) {
                 range = range.match(/title="(.*?)"/g);
 
                 if(range) {
                     range.forEach(function (element) {
-                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, "'").replace(/&amp;/g, "&").replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, "&");
+                        let el = element.replace(/title=/g, '').replace(/"/g, '').replace(/\[\d+\]+/g, '').replace(/&apos;/g, '\'').replace(/&amp;/g, '&').replace(/\([^()]*\)/g, '').replace(/&#x2020;/g, '&');
                         animalItem.range.push(el);
                     });
                 }
@@ -118,12 +121,11 @@ class AnimalScrapper {
         let data = [];
 
         for(let i = 0; i < animals.length; i++) {
-            console.log('[FandomAnimalScraper] '.green + "started scraping ", animals[i]);
+            console.log('[FandomAnimalScraper] '.green + 'started scraping ', animals[i]);
 
             try {
                 data.push(await this.scrape(animals[i]));
-            }
-            catch(e) {
+            } catch(e) {
                 console.warn('[FandomAnimalScraper] '.green + e);
             }
         }

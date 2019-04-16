@@ -27,13 +27,16 @@ class CharacterLocationController {
      */
     async getAll(req, res) {
         let characterLocations = await this.characterLocationStore.getAll();
-        if (characterLocations.success === STORE_RESPONSE_SUCCESS) {
-            return res.status(200).send({message: 'Success', data: characterLocations.data});
+        if(characterLocations.success === STORE_RESPONSE_SUCCESS) {
+            return res.status(200).send({
+                message: 'Success',
+                data: characterLocations.data
+            });
         } else {
             return res.status(404).send(characterLocations.message);
         }
     }
-    
+
     /**
      * @api {get} /api/bookc/characterlocations/:name Get all character locations by name
      * @apiVersion 0.0.2
@@ -57,7 +60,7 @@ class CharacterLocationController {
     async getByName(req, res) {
         let name = req.params.name ? req.params.name : req.body.name;
         let characterLocations = await this.characterLocationStore.getByName(name);
-        if (characterLocations.success === STORE_RESPONSE_SUCCESS) {
+        if(characterLocations.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(characterLocations.data);
         } else {
             res.status(404).send(characterLocations.message);
@@ -87,11 +90,12 @@ class CharacterLocationController {
     async getBySlug(req, res) {
         let slug = req.params.slug ? req.params.slug : req.body.slug;
         let characterLocations = await this.characterLocationStore.getBySlug(slug);
-        if (characterLocations.success === STORE_RESPONSE_SUCCESS) {
+        if(characterLocations.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(characterLocations.data);
         } else {
             res.status(404).send(characterLocations.message);
         }
     }
 }
+
 module.exports = CharacterLocationController;

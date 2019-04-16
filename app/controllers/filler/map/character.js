@@ -11,12 +11,12 @@ class CharacterFiller {
         let file = __appbase + '../data/characters.json';
 
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile(file, function(err, obj) {
+            jsonfile.readFile(file, function (err, obj) {
                 if(err) {
                     return reject();
                 }
 
-                console.log('[MapCharacterFiller] '.green + 'Characters from  file "'+file+'". No scrapping.');
+                console.log('[MapCharacterFiller] '.green + 'Characters from  file "' + file + '". No scrapping.');
 
                 resolve(obj);
             });
@@ -31,7 +31,7 @@ class CharacterFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -40,7 +40,7 @@ class CharacterFiller {
     async clearAll() {
         console.log('[MapCharacterFiller] '.green + 'clearing collection...');
         return await Character.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[MapCharacterFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[MapCharacterFiller] '.green + 'Collection successfully removed');
@@ -66,20 +66,19 @@ class CharacterFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Character.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[MapCharacterFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[MapCharacterFiller] '.green + docs.length + ' characters successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

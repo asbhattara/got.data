@@ -27,13 +27,13 @@ class EventController {
      */
     async getAll(req, res) {
         let events = await this.eventStore.getAll();
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(events.data);
         } else {
             return res.status(404).send(events.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/events/:name Get events by name
      * @apiVersion 0.0.2
@@ -57,7 +57,7 @@ class EventController {
     async getByName(req, res) {
         let name = req.params.name ? req.params.name : req.body.name;
         let events = await this.eventStore.getByName(name);
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
@@ -87,7 +87,7 @@ class EventController {
     async getBySlug(req, res) {
         let slug = req.params.slug ? req.params.slug : req.body.slug;
         let events = await this.eventStore.getByName(slug);
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
@@ -117,7 +117,7 @@ class EventController {
     async getByConflict(req, res) {
         let conflict = req.params.conflict ? req.params.conflict : req.body.conflict;
         let events = await this.eventStore.getByName(conflict);
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
@@ -147,7 +147,7 @@ class EventController {
     async getByDate(req, res) {
         let date = req.params.date ? req.params.date : req.body.date;
         let events = await this.eventStore.getByName(date);
-        if (events.success === STORE_RESPONSE_SUCCESS) {
+        if(events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);

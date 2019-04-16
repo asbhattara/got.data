@@ -27,13 +27,13 @@ class EpisodeController {
      */
     async getAll(req, res) {
         let episodes = await this.epStore.getAll();
-        if (episodes.success === STORE_RESPONSE_SUCCESS) {
+        if(episodes.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(episodes.data);
         } else {
             res.status(404).send(episodes.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/episodes/:title Get episodes by title
      * @apiVersion 0.0.2
@@ -56,7 +56,7 @@ class EpisodeController {
      */
     async getByTitle(req, res) {
         let episodes = await this.epStore.getByTitle(req.params.title);
-        if (episodes.success === STORE_RESPONSE_SUCCESS) {
+        if(episodes.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(episodes.data);
         } else {
             res.status(404).send(episodes.message);

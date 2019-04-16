@@ -5,23 +5,23 @@ class BayeseanAttributeController {
         this.baStore = new BayeseanAttributeStore();
     }
 
-    
-    async getAll(req, res) {
-        let characters = await this.baStore.getByWiki("westeros");
 
-        if (characters.success === STORE_RESPONSE_SUCCESS) {
+    async getAll(req, res) {
+        let characters = await this.baStore.getByWiki('westeros');
+
+        if(characters.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(characters.data);
         } else {
             return res.status(404).send(characters.message);
         }
     }
-    
+
     async update(req, res) {
         let attributes = req.params.attributes ? req.params.attributes : req.body.attributes;
 
-        let bayeseanAttributes = await this.baStore.updateWiki("westeros", attributes);
+        let bayeseanAttributes = await this.baStore.updateWiki('westeros', attributes);
 
-        if (bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
+        if(bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bayeseanAttributes.message);
         } else {
             res.status(404).send(bayeseanAttributes.message);

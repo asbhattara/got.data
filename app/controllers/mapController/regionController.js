@@ -27,10 +27,13 @@ class RegionController {
      */
     async getAll(req, res) {
         let result = await this.regionStore.getAll();
-        if (result.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": result.data});
+        if(result.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': result.data
+            });
         } else {
-            res.status(404).send({"message": result.message});
+            res.status(404).send({'message': result.message});
         }
     }
 
@@ -56,10 +59,13 @@ class RegionController {
      */
     async getByName(req, res) {
         let result = await this.regionStore.getByName(req.params.name);
-        if (result.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": result.data});
+        if(result.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': result.data
+            });
         } else {
-            res.status(404).send({"message": result.message});
+            res.status(404).send({'message': result.message});
         }
     }
 
@@ -84,12 +90,16 @@ class RegionController {
      * @apiDescription Return regions with id :id.
      */
     async getById(req, res) {
-        let result = await this.regionStore.getById(req.params.name);
-        if (result.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send({"message": "Success", "data": result.data});
+        let result = await this.regionStore.getById(req.params.id);
+        if(result.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({
+                'message': 'Success',
+                'data': result.data
+            });
         } else {
-            res.status(404).send({"message": result.message});
+            res.status(404).send({'message': result.message});
         }
     }
 }
+
 module.exports = RegionController;

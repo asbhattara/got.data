@@ -27,13 +27,13 @@ class ReligionController {
      */
     async getAll(req, res) {
         let religions = await this.relStore.getAll();
-        if (religions.success === STORE_RESPONSE_SUCCESS) {
+        if(religions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(religions.data);
         } else {
             res.status(404).send(religions.message);
         }
     }
-    
+
     /**
      * @api {get} /api/show/religions/:title Get religions by title
      * @apiVersion 0.0.2
@@ -55,8 +55,8 @@ class ReligionController {
      * @apiDescription Return religions named :title.
      */
     async getByTitle(req, res) {
-        let religions = await this.relStore.getByName(req.params.name);
-        if (religions.success === STORE_RESPONSE_SUCCESS) {
+        let religions = await this.relStore.getByName(req.params.title);
+        if(religions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(religions.data);
         } else {
             res.status(404).send(religions.message);

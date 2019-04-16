@@ -11,21 +11,20 @@ class CityFiller {
         let file = __appbase + '../data/cities.json';
 
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile(file, function(err, obj) {
+            jsonfile.readFile(file, function (err, obj) {
                 if(err) {
                     return reject();
                 }
 
-                console.log('[WesterosCityFiller] '.green + 'Cities from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCityFiller] '.green + 'Cities from  file "' + file + '". No scrapping.');
 
-                let result = obj.filter(function(item, pos) {
+                let result = obj.filter(function (item, pos) {
                     for(let i = 0; i < obj.length; i++) {
                         if(i === pos) {
                             break;
                         }
 
-                        if(obj[i]["name"] === item["name"])
-                        {
+                        if(obj[i]['name'] === item['name']) {
                             return false;
                         }
                     }
@@ -46,7 +45,7 @@ class CityFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -55,7 +54,7 @@ class CityFiller {
     async clearAll() {
         console.log('[WesterosCityFiller] '.green + 'clearing collection...');
         return await Cities.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosCityFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosCityFiller] '.green + 'Collection successfully removed');
@@ -71,7 +70,7 @@ class CityFiller {
 
             for(let attr in event) {
                 // remove spaces and html tags
-                if (typeof event[attr] == 'string') {
+                if(typeof event[attr] == 'string') {
                     event[attr] = event[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -86,20 +85,19 @@ class CityFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Cities.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosCityFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosCityFiller] '.green + docs.length + ' cities successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }

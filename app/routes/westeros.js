@@ -11,7 +11,7 @@ const EventController = require('../controllers/westerosController/eventControll
 const PageRankController = require('../controllers/westerosController/pagerankController');
 const BayeseanAttributeController = require('../controllers/westerosController/bayeseanController');
 
-module.exports = function(app, router) {
+module.exports = function (app, router) {
 
     const ageController = new AgeController();
     router.get('/ages', ageController.getAll.bind(ageController));
@@ -59,13 +59,13 @@ module.exports = function(app, router) {
 
     const eventController = new EventController();
     router.get('/events', eventController.getAll.bind(eventController));
-    router.get('/events/:name', eventController.getAll.bind(eventController));
+    router.get('/events/:name', eventController.getByName.bind(eventController));
 
     const rankController = new PageRankController();
     router.get('/ranks', rankController.getAll.bind(rankController));
     router.get('/ranks/:slug', rankController.getBySlug.bind(rankController));
 
     const bayeseanController = new BayeseanAttributeController();
-    router.get("/bayesean-attributes", bayeseanController.getAll.bind(bayeseanController));
-    router.post("/bayesean-attributes/update", bayeseanController.update.bind(bayeseanController));
+    router.get('/bayesean-attributes', bayeseanController.getAll.bind(bayeseanController));
+    router.post('/bayesean-attributes/update', bayeseanController.update.bind(bayeseanController));
 };

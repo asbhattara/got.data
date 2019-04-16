@@ -17,7 +17,7 @@ class RegionsFiller {
             data = await this.matchToModel(data);
             // add to DB
             await this.insertAll(data);
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
@@ -26,7 +26,7 @@ class RegionsFiller {
     async clearAll() {
         console.log('[WesterosRegionFiller] '.green + 'clearing collection...');
         return Regions.deleteMany({}, (err, data) => {
-            if (err) {
+            if(err) {
                 console.warn('[WesterosRegionFiller] '.green + 'error in removing collection: ' + err);
             } else {
                 console.log('[WesterosRegionFiller] '.green + 'Collection successfully removed');
@@ -42,7 +42,7 @@ class RegionsFiller {
 
             for(let attr in region) {
                 // remove spaces and html tags
-                if (typeof region[attr] == 'string') {
+                if(typeof region[attr] == 'string') {
                     region[attr] = region[attr].trim().replace(/\*?<(?:.|\n)*?>/gm, '');
                 }
 
@@ -57,20 +57,19 @@ class RegionsFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === FILLER_POLICY_REFILL)
-        {
+        if(this.policy === FILLER_POLICY_REFILL) {
             await this.clearAll();
         }
 
         try {
             return await Regions.insertMany(data, (err, docs) => {
-                if (err) {
+                if(err) {
                     console.warn('[WesterosRegionFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
                 console.log('[WesterosRegionFiller] '.green + docs.length + ' houses successfully saved to MongoDB!');
             });
-        } catch (error) {
+        } catch(error) {
             throw new Error(error);
         }
     }
