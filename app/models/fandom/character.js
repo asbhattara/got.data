@@ -99,6 +99,11 @@ const CharacterFandomSchema = new Schema({
     ],
     rank: Number,
     actor: String,
+    related: [{
+        name: {type: String},
+        slug: {type: String, ref: 'FandomCharacter'},
+        mentions: {type: Number}
+    }],
     createdAt: {
         type: Date,
         default: Date.now

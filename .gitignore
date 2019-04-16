@@ -77,5 +77,6 @@ cfg/config.js
 apidoc
 
 package-lock.json
+docker-compose.yml
 
 misc/images
