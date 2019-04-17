@@ -60,7 +60,7 @@ class CharacterScraper {
 
         });
 
-        names = this.fixListNameAnomalies(names);
+        names = CharacterScraper.fixListNameAnomalies(names);
 
         names = names.filter(function (item, pos) {
             for(let i = 0; i < names.length; i++) {
@@ -75,97 +75,6 @@ class CharacterScraper {
 
             return true;
         });
-
-        return names;
-    }
-
-    fixSingleNameAnomalies(name) {
-        if(name === 'Brienne') {
-            return 'Brienne of Tarth';
-        }
-
-        if(name === 'Catelyn Tully') {
-            return 'Catelyn Stark';
-        }
-
-        return name;
-    }
-
-    fixListNameAnomalies(names) {
-        for(let i = 0; i < names.length; i++) {
-            if(names[i]['character']['name'] === 'Brienne') {
-                names[i]['character']['name'] = 'Brienne of Tarth';
-                names[i]['character']['slug'] = 'Brienne_of_Tarth';
-            }
-
-            if(names[i]['character']['name'] === 'Smalljon Umber') {
-                names[i]['character']['slug'] = 'Smalljon_Umber';
-            }
-
-            if(names[i]['character']['name'] === 'Ramsay Snow') {
-                names[i]['character']['slug'] = 'Ramsay_Bolton';
-            }
-
-            if(names[i]['character']['name'] === 'Tickler') {
-                names[i]['character']['slug'] = 'The_Tickler';
-            }
-
-            if(names[i]['character']['name'] === 'Olenna Redwyne') {
-                names[i]['character']['slug'] = 'Olenna_Tyrell';
-            }
-
-            if(names[i]['character']['name'] === 'Joyeuse Erenford') {
-                names[i]['character']['slug'] = 'Joyeuse_Frey';
-            }
-
-            if(names[i]['character']['name'] === 'Black Walder Frey') {
-                names[i]['character']['slug'] = 'Walder_Rivers';
-            }
-
-            if(names[i]['character']['name'] === 'Fat Walda Frey') {
-                names[i]['character']['slug'] = 'Walda_Bolton';
-            }
-
-            if(names[i]['character']['name'] === 'Talisa Maegyr') {
-                names[i]['character']['slug'] = 'Talisa_Stark';
-            }
-
-            if(names[i]['character']['name'] === 'Lem Lemoncloak') {
-                names[i]['character']['slug'] = 'Lem';
-            }
-
-            if(names[i]['character']['name'] === 'Lommy Greenhands') {
-                names[i]['character']['slug'] = 'Lommy';
-            }
-
-            if(names[i]['character']['name'] === 'Archmaester') {
-                names[i]['character']['slug'] = 'Archmaester_(Eastwatch)';
-            }
-
-            if(names[i]['character']['name'] === 'Qhorin Halfhand') {
-                names[i]['character']['slug'] = 'Qhorin';
-            }
-
-            if(names[i]['character']['name'] === 'Karl') {
-                names[i]['character']['slug'] = 'Karl_Tanner';
-            }
-
-            if(names[i]['character']['name'] === 'Tormund Giantsbane') {
-                names[i]['character']['slug'] = 'Tormund';
-            }
-
-            if(names[i]['character']['name'] === 'Night\'s King') {
-                names[i]['character']['slug'] = 'Night_King';
-            }
-
-            if(names[i]['character']['name'] === 'Khal Drogo') {
-                names[i]['character']['slug'] = 'Drogo';
-            }
-
-            if(names[i]['character']['name'] === 'The Waif') {
-                names[i]['character']['slug'] = 'Waif';
-            }
-        }
 
         return names;
     }
@@ -348,7 +257,7 @@ class CharacterScraper {
                 mother = mother.match(/title="(.*?)"/g);
 
                 if(mother) {
-                    result.mother = this.fixSingleNameAnomalies(mother[0].replace(/title=/g, '').replace(/"/g, ''));
+                    result.mother = CharacterScraper.fixSingleNameAnomalies(mother[0].replace(/title=/g, '').replace(/"/g, ''));
                 }
 
 
@@ -367,7 +276,7 @@ class CharacterScraper {
                 father = father.match(/title="(.*?)"/g);
 
                 if(father) {
-                    result.father = this.fixSingleNameAnomalies(father[0].replace(/title=/g, '').replace(/"/g, ''));
+                    result.father = CharacterScraper.fixSingleNameAnomalies(father[0].replace(/title=/g, '').replace(/"/g, ''));
                 }
 
 
@@ -514,7 +423,7 @@ class CharacterScraper {
         }
         
         // get related characters
-        result.related = [];
+        let relatedCharacterLinks = [];
         for(let i = 0; i < this.names.length; i++) {
             let d = {"name": this.names[i].character.name, "slug": this.names[i].character.slug, "mentions": 0};
 
@@ -526,12 +435,134 @@ class CharacterScraper {
             });
 
             if(d.mentions > 1) {
-                result.related.push(d);
+                relatedCharacterLinks.push(d);
             }
         }
 
-        return result;
+        let nameBlacklist = ["lord", "high", "khal", "old", "fat", "spice"];
 
+        for(let i = 0; i < relatedCharacterLinks.length; i++)
+        {
+            let names = relatedCharacterLinks[i]["name"].split(" ");
+
+            relatedCharacterLinks[i]["mentions"] += CharacterScraper.countOccurrences($.text(), relatedCharacterLinks[i]["name"]);
+
+            if(nameBlacklist.indexOf(names[0].toLowerCase()) >= 0 || names.length === 1) {
+                continue;
+            }
+
+            relatedCharacterLinks[i]["mentions"] += CharacterScraper.countOccurrences($.text(), names[0]);
+        }
+
+        result.related = relatedCharacterLinks;
+
+        return result;
+    }
+
+    static countOccurrences(main_str, sub_str)
+    {
+        main_str += '';
+        sub_str += '';
+
+        if(sub_str.length <= 0)
+        {
+            return main_str.length + 1;
+        }
+
+        let subStr = sub_str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+        return (main_str.match(new RegExp(subStr, 'gi')) || []).length;
+    }
+
+    static fixSingleNameAnomalies(name) {
+        if(name === 'Brienne') {
+            return 'Brienne of Tarth';
+        }
+
+        if(name === 'Catelyn Tully') {
+            return 'Catelyn Stark';
+        }
+
+        return name;
+    }
+
+    static fixListNameAnomalies(names) {
+        for(let i = 0; i < names.length; i++) {
+            if(names[i]['character']['name'] === 'Brienne') {
+                names[i]['character']['name'] = 'Brienne of Tarth';
+                names[i]['character']['slug'] = 'Brienne_of_Tarth';
+            }
+
+            if(names[i]['character']['name'] === 'Smalljon Umber') {
+                names[i]['character']['slug'] = 'Smalljon_Umber';
+            }
+
+            if(names[i]['character']['name'] === 'Ramsay Snow') {
+                names[i]['character']['slug'] = 'Ramsay_Bolton';
+            }
+
+            if(names[i]['character']['name'] === 'Tickler') {
+                names[i]['character']['slug'] = 'The_Tickler';
+            }
+
+            if(names[i]['character']['name'] === 'Olenna Redwyne') {
+                names[i]['character']['slug'] = 'Olenna_Tyrell';
+            }
+
+            if(names[i]['character']['name'] === 'Joyeuse Erenford') {
+                names[i]['character']['slug'] = 'Joyeuse_Frey';
+            }
+
+            if(names[i]['character']['name'] === 'Black Walder Frey') {
+                names[i]['character']['slug'] = 'Walder_Rivers';
+            }
+
+            if(names[i]['character']['name'] === 'Fat Walda Frey') {
+                names[i]['character']['slug'] = 'Walda_Bolton';
+            }
+
+            if(names[i]['character']['name'] === 'Talisa Maegyr') {
+                names[i]['character']['slug'] = 'Talisa_Stark';
+            }
+
+            if(names[i]['character']['name'] === 'Lem Lemoncloak') {
+                names[i]['character']['slug'] = 'Lem';
+            }
+
+            if(names[i]['character']['name'] === 'Lommy Greenhands') {
+                names[i]['character']['slug'] = 'Lommy';
+            }
+
+            if(names[i]['character']['name'] === 'Archmaester') {
+                names[i]['character']['slug'] = 'Archmaester_(Eastwatch)';
+            }
+
+            if(names[i]['character']['name'] === 'Qhorin Halfhand') {
+                names[i]['character']['slug'] = 'Qhorin';
+            }
+
+            if(names[i]['character']['name'] === 'Karl') {
+                names[i]['character']['slug'] = 'Karl_Tanner';
+            }
+
+            if(names[i]['character']['name'] === 'Tormund Giantsbane') {
+                names[i]['character']['slug'] = 'Tormund';
+            }
+
+            if(names[i]['character']['name'] === 'Night\'s King') {
+                names[i]['character']['slug'] = 'Night_King';
+            }
+
+            if(names[i]['character']['name'] === 'Khal Drogo') {
+                names[i]['character']['slug'] = 'Drogo';
+            }
+
+            if(names[i]['character']['name'] === 'The Waif') {
+                names[i]['character']['slug'] = 'Waif';
+            }
+        }
+
+        return names;
     }
 }
 
