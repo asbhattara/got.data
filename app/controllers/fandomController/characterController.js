@@ -13,7 +13,7 @@ class CharacterController {
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
-     *     [{"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"id":"5cad9840b0c0ef00108e6529"},..,{..}]
+     *     [{"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"related":[{"_id":"5cb7137e8b32d4b573ec92be","name":"Eddard Stark","slug":"Eddard_Stark","mentions":14}],"id":"5cad9840b0c0ef00108e6529"},..,{..}]
      * @apiSuccessExample {json} Empty-Success-Response
      *     HTTP/1.1 200 OK
      *     []
@@ -42,7 +42,7 @@ class CharacterController {
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
-     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"id":"5cad9840b0c0ef00108e6529"}
+     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"related":[{"_id":"5cb7137e8b32d4b573ec92be","name":"Eddard Stark","slug":"Eddard_Stark","mentions":14}],"id":"5cad9840b0c0ef00108e6529"}
      * @apiSuccessExample {json} Empty-Success-Response
      *     HTTP/1.1 200 OK
      *     []
@@ -71,7 +71,7 @@ class CharacterController {
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
-     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"id":"5cad9840b0c0ef00108e6529"}
+     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"related":[{"_id":"5cb7137e8b32d4b573ec92be","name":"Eddard Stark","slug":"Eddard_Stark","mentions":14}],"id":"5cad9840b0c0ef00108e6529"}
      * @apiSuccessExample {json} Empty-Success-Response
      *     HTTP/1.1 200 OK
      *     []
@@ -100,7 +100,7 @@ class CharacterController {
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
-     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"id":"5cad9840b0c0ef00108e6529"}
+     *     {"titles":["Lord of Winterfell","Lord Paramount of the North","Warden","The North","Hand of the King","Robert Baratheon","Joffrey Baratheon","Regent","Joffrey Baratheon","Protector of the Realm","Joffrey Baratheon"],"origin":["Winterfell","The Eyrie"],"siblings":["Brandon Stark ","Lyanna Stark","Benjen Stark"],"spouse":["Catelyn Tully"],"lovers":[],"plod":0,"longevity":[],"plodB":0,"plodC":0,"longevityB":[],"longevityC":[],"culture":["Northmen"],"religion":["Old Gods of the Forest"],"allegiances":["House Stark","House Baratheon of King's Landing"],"seasons":[],"appearances":["Winter Is Coming","The Kingsroad","Lord Snow","Cripples, Bastards, and Broken Things","The Wolf and the Lion","A Golden Crown","You Win or You Die","The Pointy End","Baelor"],"_id":"5cad9840b0c0ef00108e6529","name":"Eddard Stark","slug":"Eddard_Stark","image":"https://vignette.wikia.nocookie.net/gameofthrones/images/3/37/Eddard_Stark_infobox_new.jpg/revision/latest/scale-to-width-down/323?cb=20160730050722","gender":"male","alive":false,"death":298,"father":"Rickard Stark","house":"House Stark","first_seen":"Winter Is Coming\"","actor":"Sean Bean","createdAt":"2019-04-10T07:16:16.773Z","updatedAt":"2019-04-10T07:16:16.773Z","__v":0,"pagerank":{"title":"Eddard_Stark","rank":1133},"age":{"name":"Eddard Stark","age":60},"related":[{"_id":"5cb7137e8b32d4b573ec92be","name":"Eddard Stark","slug":"Eddard_Stark","mentions":14}],"id":"5cad9840b0c0ef00108e6529"}
      * @apiSuccessExample {json} Empty-Success-Response
      *     HTTP/1.1 200 OK
      *     []
@@ -126,6 +126,12 @@ class CharacterController {
      * @apiVersion 0.0.2
      * @apiName UpdateGeneralCharacterGeneralShow
      * @apiGroup CharacterShow
+     *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
@@ -154,6 +160,12 @@ class CharacterController {
      * @apiName UpdateGroupBCharacterShow
      * @apiGroup CharacterShow
      *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
+     *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
      *     data.name has been updated (Group B)
@@ -180,6 +192,12 @@ class CharacterController {
      * @apiVersion 0.0.2
      * @apiName UpdateGroupCCharacterShow
      * @apiGroup CharacterShow
+     *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK

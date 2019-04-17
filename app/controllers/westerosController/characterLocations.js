@@ -6,7 +6,7 @@ class CharacterLocationController {
     }
 
     /**
-     * @api {get} /api/bookc/characterlocations Get all character locations
+     * @api {get} /api/book/characterlocations Get all character locations
      * @apiVersion 0.0.2
      * @apiName GetAllCharacterLocationsBook
      * @apiGroup CharacterLocationBook
@@ -38,7 +38,7 @@ class CharacterLocationController {
     }
 
     /**
-     * @api {get} /api/bookc/characterlocations/:name Get all character locations by name
+     * @api {get} /api/book/characterlocations/:name Get all character locations by name
      * @apiVersion 0.0.2
      * @apiName GetCharacterLocationsByNameBook
      * @apiGroup CharacterLocationBook
@@ -68,7 +68,7 @@ class CharacterLocationController {
     }
 
     /**
-     * @api {get} /api/bookc/characterlocations/:slug Get all character locations by slug
+     * @api {get} /api/book/characterlocations/:slug Get all character locations by slug
      * @apiVersion 0.0.2
      * @apiName GetCharacterLocationsBySlugBook
      * @apiGroup CharacterLocationBook

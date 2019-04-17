@@ -271,9 +271,19 @@ class EventScraper {
 
         for(let i = 0; i < events.length; i++) {
             console.log('[FandomEventScraper] '.green + 'started scraping ', events[i]);
-            let e = await this.scrape(events[i]);
 
-            if(e) data.push(e); else console.warn('[FandomEventScraper] '.green + 'invalid page');
+            try {
+                data.push(await this.scrape(events[i]));
+            }
+            catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
+                console.warn('[FandomEventScraper] '.green + 'invalid page');
+            }
         }
 
 

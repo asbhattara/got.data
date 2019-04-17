@@ -67,6 +67,8 @@ class CharacterScraper {
             } catch(e) {
                 if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
                     i -= 1;
+
+                    continue;
                 }
 
                 console.warn('[WesterosCharacterScraper] '.green + e);

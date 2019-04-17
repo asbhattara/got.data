@@ -52,6 +52,12 @@ class CharacterLocationScraper {
             try {
                 result.push(await this.get(characters[i]['slug'], characters[i]['name'], cityNames));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[WesterosCharacterLocationScraper] '.green + e);
             }
         }

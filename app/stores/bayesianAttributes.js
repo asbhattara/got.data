@@ -1,12 +1,12 @@
-const bayeseanAttributes = require('../models/bayeseanAttributes');
+const bayesianAttributes = require('../models/bayesianAttributes');
 
-class BayeseanAttributeStore {
+class BayesianAttributeStore {
     constructor() {
     }
 
     async getByWiki(wiki) {
         try {
-            let data = await bayeseanAttributes.findOne({wiki: wiki});
+            let data = await bayesianAttributes.findOne({wiki: wiki});
 
             if(!data) {
                 return {
@@ -30,10 +30,10 @@ class BayeseanAttributeStore {
 
     async updateWiki(wiki, attributes) {
         try {
-            let data = await bayeseanAttributes.findOne({wiki: wiki});
+            let data = await bayesianAttributes.findOne({wiki: wiki});
 
             if(!data) {
-                await bayeseanAttributes.create({
+                await bayesianAttributes.create({
                     wiki: wiki,
                     attributes: attributes
                 });
@@ -61,4 +61,4 @@ class BayeseanAttributeStore {
     }
 }
 
-module.exports = BayeseanAttributeStore;
+module.exports = BayesianAttributeStore;

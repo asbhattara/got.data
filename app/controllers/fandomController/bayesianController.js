@@ -1,15 +1,15 @@
-const BayeseanAttributeStore = require('../../stores/bayeseanAttributes');
+const BayesianAttributeStore = require('../../stores/bayesianAttributes');
 
-class BayeseanAttributeController {
+class BayesianAttributeController {
     constructor() {
-        this.baStore = new BayeseanAttributeStore();
+        this.baStore = new BayesianAttributeStore();
     }
 
     /**
-     * @api {get} /api/show/bayesean-attributes Get all bayesean attributes
+     * @api {get} /api/show/bayesian-attributes Get all bayesian attributes
      * @apiVersion 0.0.2
-     * @apiName GetAllBayeseanAttributesShow
-     * @apiGroup BayeseanShow
+     * @apiName GetAllBayesianAttributesShow
+     * @apiGroup BayesianShow
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
@@ -19,11 +19,11 @@ class BayeseanAttributeController {
      *     []
      * @apiErrorExample {json} NoData
      *      HTTP/1.1 404
-     *      getAll(): Bayesean collection empty. Scraping should be started...
+     *      getAll(): Bayesian collection empty. Scraping should be started...
      * @apiErrorExample {json} ErrorInDatabase
      *      HTTP/1.1 404
      *      error in database query! - err
-     * @apiDescription Return all bayesean attributes currently stored.
+     * @apiDescription Return all bayesian attributes currently stored.
      */
     async getAll(req, res) {
         let characters = await this.baStore.getByWiki('fandom');
@@ -36,10 +36,13 @@ class BayeseanAttributeController {
     }
 
     /**
-     * @api {post} /api/show/bayesean-attributes/update Update Bayesean attributes
+     * @api {post} /api/show/bayesian-attributes/update Update Bayesian attributes
      * @apiVersion 0.0.2
-     * @apiName UpdateBayeseanAttributesShow
-     * @apiGroup BayeseanShow
+     * @apiName UpdateBayesianAttributesShow
+     * @apiGroup BayesianShow
+     *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {Object} attributes An object which stores all the attributes
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
@@ -47,19 +50,19 @@ class BayeseanAttributeController {
      * @apiErrorExample {json} ErrorInDatabase
      *     HTTP/1.1 404
      *     error in database query! - err
-     * @apiDescription Update bayesean attributes.
+     * @apiDescription Update bayesian attributes.
      */
     async update(req, res) {
         let attributes = req.params.attributes ? req.params.attributes : req.body.attributes;
 
-        let bayeseanAttributes = await this.baStore.updateWiki('fandom', attributes);
+        let bayesianAttributes = await this.baStore.updateWiki('fandom', attributes);
 
-        if(bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send(bayeseanAttributes.message);
+        if(bayesianAttributes.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send(bayesianAttributes.message);
         } else {
-            res.status(404).send(bayeseanAttributes.message);
+            res.status(404).send(bayesianAttributes.message);
         }
     }
 }
 
-module.exports = BayeseanAttributeController;
+module.exports = BayesianAttributeController;

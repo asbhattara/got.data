@@ -126,6 +126,12 @@ class AnimalScrapper {
             try {
                 data.push(await this.scrape(animals[i]));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomAnimalScraper] '.green + e);
             }
         }

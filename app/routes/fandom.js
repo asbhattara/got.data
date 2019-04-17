@@ -13,7 +13,7 @@ const CityController = require('../controllers/fandomController/cityController')
 const RegionController = require('../controllers/fandomController/regionController');
 const TownController = require('../controllers/fandomController/townController');
 const EventController = require('../controllers/fandomController/eventController');
-const BayeseanAttributeController = require('../controllers/fandomController/bayeseanController');
+const BayesianAttributeController = require('../controllers/fandomController/bayesianController');
 
 module.exports = function (app, router) {
     const ageController = new AgeController();
@@ -95,9 +95,9 @@ module.exports = function (app, router) {
     router.get('/towns/byRuler/:name', townController.getByRuler.bind(townController));
     router.get('/towns/byReligion/:name', townController.getByReligion.bind(townController));
 
-    const bayeseanController = new BayeseanAttributeController();
-    router.get('/bayesean-attributes', bayeseanController.getAll.bind(bayeseanController));
-    router.post('/bayesean-attributes/update', bayeseanController.update.bind(bayeseanController));
+    const bayesianController = new BayesianAttributeController();
+    router.get('/bayesian-attributes', bayesianController.getAll.bind(bayesianController));
+    router.post('/bayesian-attributes/update', bayesianController.update.bind(bayesianController));
 };
 
 

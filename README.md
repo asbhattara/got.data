@@ -26,7 +26,7 @@ In this project we will lay the foundations for our system by integrating data f
 * If needed, you can start MongoDB shell via `mongo`. Then type `show dbs` to see all databases. Type `use db_name_here` to switch to preferred database. With `show collections` you can see all tables (in NoSQL tables are called collections). With `db.collection_name.find()` you can output the collection content.
 
 ## Docker Setup
-* Install Docker and nodeJS on your local machine
+* Install Docker and Docker-Compose on your local machine
 * Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
 * Rename `docker-compose.yml.template` to `docker-compose.yml` and adjust ports, access token, collection name as you want
 * Build the containers with `docker-compose up`

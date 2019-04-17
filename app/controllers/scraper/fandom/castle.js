@@ -138,6 +138,12 @@ class CastleScrapper {
             try {
                 data.push(await this.scrape(castles[i]));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomCastleScraper] '.green + e);
             }
         }

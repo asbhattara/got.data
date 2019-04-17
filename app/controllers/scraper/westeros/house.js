@@ -72,6 +72,12 @@ class HouseScraper {
             try {
                 data.push(await this.get(houses[i]['name'], houses[i]['slug']));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[WesterosHouseScraper] '.green + e);
             }
         }
