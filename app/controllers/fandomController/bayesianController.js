@@ -41,6 +41,9 @@ class BayesianAttributeController {
      * @apiName UpdateBayesianAttributesShow
      * @apiGroup BayesianShow
      *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {Object} attributes An object which stores all the attributes
+     *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
      *     wiki has been updated

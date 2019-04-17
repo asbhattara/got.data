@@ -90,6 +90,7 @@ const CharacterSchema = new Schema({
         type: Number,
         default: 0.0
     },
+
     longevityB: [{type: Number}],
     longevityC: [{type: Number}],
     longevityStartB: Number,
@@ -114,5 +115,19 @@ CharacterSchema.virtual('pagerank', {
     foreignField: 'title',
     justOne: true
 });
+
+let autoPopulate = function (next) {
+    this.populate({
+        path: 'pagerank',
+        select: {
+            rank: 1,
+            title: 0,
+            _id: 0
+        }
+    });
+    next();
+};
+
+CharacterSchema.pre('find', autoPopulate).pre('findOne', autoPopulate);
 
 module.exports = mongoose.model('WesterosCharacter', CharacterSchema);

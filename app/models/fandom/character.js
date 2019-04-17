@@ -97,7 +97,6 @@ const CharacterFandomSchema = new Schema({
             ref: 'FandomEpisode'
         }
     ],
-    rank: Number,
     actor: String,
     related: [{
         name: {type: String},

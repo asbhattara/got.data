@@ -127,6 +127,12 @@ class CharacterController {
      * @apiName UpdateGeneralCharacterGeneralShow
      * @apiGroup CharacterShow
      *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
+     *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
      *     data.name has been updated
@@ -154,6 +160,12 @@ class CharacterController {
      * @apiName UpdateGroupBCharacterShow
      * @apiGroup CharacterShow
      *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
+     *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK
      *     data.name has been updated (Group B)
@@ -180,6 +192,12 @@ class CharacterController {
      * @apiVersion 0.0.2
      * @apiName UpdateGroupCCharacterShow
      * @apiGroup CharacterShow
+     *
+     * @apiParam {String} token Security Token for authentication
+     * @apiParam {String} slug The character's slug for identification
+     * @apiParam {Float} plod Predicted likelihood of death for that character (between 0 - 1)
+     * @apiParam {Float[]} longevity Predicted longevity (between 0 - 1)
+     * @apiParam {Int} longevityStart Longevity Start
      *
      * @apiSuccessExample {json} Success-Response
      *     HTTP/1.1 200 OK

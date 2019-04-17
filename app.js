@@ -90,6 +90,7 @@ app.use(cors({
 const showRouter = express.Router();
 const bookRouter = express.Router();
 const mapRouter = express.Router();
+const generalRouter = express.Router();
 
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
@@ -97,10 +98,12 @@ bookRouter.use(routerAuthentication);
 require('./app/routes/fandom')(app, showRouter);
 require('./app/routes/westeros')(app, bookRouter);
 require('./app/routes/map')(app, mapRouter);
+require('./app/routes/general')(app, generalRouter);
 
 app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
 app.use('/api/map', mapRouter);
+app.use('/api/general', generalRouter);
 
 app.use('/doc', express.static('./misc/apidoc'));
 app.use('/api/book/images/', express.static('./misc/images/characters/book'));
@@ -116,6 +119,10 @@ app.get('/api/show/*', function (req, res) {
 });
 
 app.get('/api/map/*', function (req, res) {
+    res.status(404).send('404');
+});
+
+app.get('/api/general/*', function (req, res) {
     res.status(404).send('404');
 });
 
