@@ -1,8 +1,8 @@
-const BayeseanAttributeStore = require('../../stores/bayeseanAttributes');
+const BayesianAttributeStore = require('../../stores/bayesianAttributes');
 
-class BayeseanAttributeController {
+class BayesianAttributeController {
     constructor() {
-        this.baStore = new BayeseanAttributeStore();
+        this.baStore = new BayesianAttributeStore();
     }
 
 
@@ -19,14 +19,14 @@ class BayeseanAttributeController {
     async update(req, res) {
         let attributes = req.params.attributes ? req.params.attributes : req.body.attributes;
 
-        let bayeseanAttributes = await this.baStore.updateWiki('westeros', attributes);
+        let bayesianAttributes = await this.baStore.updateWiki('westeros', attributes);
 
-        if(bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
-            res.status(200).send(bayeseanAttributes.message);
+        if(bayesianAttributes.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send(bayesianAttributes.message);
         } else {
-            res.status(404).send(bayeseanAttributes.message);
+            res.status(404).send(bayesianAttributes.message);
         }
     }
 }
 
-module.exports = BayeseanAttributeController;
+module.exports = BayesianAttributeController;

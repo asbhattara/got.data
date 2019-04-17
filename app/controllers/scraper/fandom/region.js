@@ -219,6 +219,12 @@ class RegionScrapper {
             try {
                 data.push(await this.scrape(regions[i]));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomRegionScraper] '.green + e);
             }
         }

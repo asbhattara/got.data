@@ -2,6 +2,7 @@ const ReligionsFandom = require('../../models/fandom/religion');
 
 class ReligionStore {
     constructor() {
+
     }
 
 
@@ -45,7 +46,7 @@ class ReligionStore {
             } else {
                 return {
                     success: 1,
-                    religions: data
+                    data: data
                 };
             }
         } catch(e) {
@@ -69,7 +70,7 @@ class ReligionStore {
             } else {
                 return {
                     success: 1,
-                    religions: data
+                    data: data
                 };
             }
         } catch(e) {

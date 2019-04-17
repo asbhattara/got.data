@@ -154,6 +154,12 @@ class CityScrapper {
             try {
                 data.push(await this.scrape(cities[i]));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomCityScraper] '.green + e);
             }
         }

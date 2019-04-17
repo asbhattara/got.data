@@ -9,7 +9,7 @@ const RegionController = require('../controllers/westerosController/regionContro
 const ContinentController = require('../controllers/westerosController/continentController');
 const EventController = require('../controllers/westerosController/eventController');
 const PageRankController = require('../controllers/westerosController/pagerankController');
-const BayeseanAttributeController = require('../controllers/westerosController/bayeseanController');
+const BayesianAttributeController = require('../controllers/westerosController/bayesianController');
 
 module.exports = function (app, router) {
 
@@ -65,7 +65,7 @@ module.exports = function (app, router) {
     router.get('/ranks', rankController.getAll.bind(rankController));
     router.get('/ranks/:slug', rankController.getBySlug.bind(rankController));
 
-    const bayeseanController = new BayeseanAttributeController();
-    router.get('/bayesean-attributes', bayeseanController.getAll.bind(bayeseanController));
-    router.post('/bayesean-attributes/update', bayeseanController.update.bind(bayeseanController));
+    const bayesianController = new BayesianAttributeController();
+    router.get('/bayesian-attributes', bayesianController.getAll.bind(bayesianController));
+    router.post('/bayesian-attributes/update', bayesianController.update.bind(bayesianController));
 };

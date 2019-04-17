@@ -18,27 +18,31 @@ const CharacterImageFiller = require('./fandom/characterImage');
 class UpdateFandom {
     constructor(db) {
         this.db = db;
-        this.characterFiller = new CharacterFiller(FILLER_POLICY_REFILL);
+
+        this.filler = {
+            'fandomcharacters': new CharacterFiller(FILLER_POLICY_REFILL),
+            'fandomages': new AgeFiller(FILLER_POLICY_REFILL),
+            'fandomanimals': new AnimalFiller(FILLER_POLICY_REFILL),
+            'fandomhouses': new HouseFiller(FILLER_POLICY_REFILL),
+            'fandomassassins': new AssassinFiller(FILLER_POLICY_REFILL),
+            'fandombastards': new BastardFiller(FILLER_POLICY_REFILL),
+            'fandombattles': new BattleFiller(FILLER_POLICY_REFILL),
+            'fandomcastles': new CastleFiller(FILLER_POLICY_REFILL),
+            'fandomcities': new CityFiller(FILLER_POLICY_REFILL),
+            'fandomevents': new EventFiller(FILLER_POLICY_REFILL),
+            'fandomreligions': new ReligionFiller(FILLER_POLICY_REFILL),
+            'fandomregions': new RegionFiller(FILLER_POLICY_REFILL),
+            'fandomepisodes': new EpisodeFiller(FILLER_POLICY_REFILL),
+            'fandomtowns': new TownFiller(FILLER_POLICY_REFILL),
+            'fandompageranks': new PageRankFiller(FILLER_POLICY_REFILL),
+        };
+
         this.characterImageFiller = new CharacterImageFiller(FILLER_POLICY_REFILL);
-        this.episodeFiller = new EpisodeFiller(FILLER_POLICY_REFILL);
-        this.religionFiller = new ReligionFiller(FILLER_POLICY_REFILL);
-        this.rankFiller = new PageRankFiller(FILLER_POLICY_REFILL);
-        this.animalFiller = new AnimalFiller(FILLER_POLICY_REFILL);
-        this.assassinFiller = new AssassinFiller(FILLER_POLICY_REFILL);
-        this.bastardFiller = new BastardFiller(FILLER_POLICY_REFILL);
-        this.battleFiller = new BattleFiller(FILLER_POLICY_REFILL);
-        this.castleFiller = new CastleFiller(FILLER_POLICY_REFILL);
-        this.cityFiller = new CityFiller(FILLER_POLICY_REFILL);
-        this.regionFiller = new RegionFiller(FILLER_POLICY_REFILL);
-        this.townFiller = new TownFiller(FILLER_POLICY_REFILL);
-        this.ageFiller = new AgeFiller(FILLER_POLICY_REFILL);
-        this.houseFiller = new HouseFiller(FILLER_POLICY_REFILL);
-        this.eventFiller = new EventFiller(FILLER_POLICY_REFILL);
 
         this.collections = [
-            'fandomages', 'fandomanimals', 'fandomhouses', 'fandomassassins', 'fandombastards', 'fandombattles',
-            'fandomcastles', 'fandomcities', 'fandomcharacters', 'fandomevents', 'fandomreligions', 'fandomregions',
-            'fandompageranks', 'fandomepisodes', 'fandomtowns'
+            'fandomcharacters', 'fandomages', 'fandomanimals', 'fandomhouses', 'fandomassassins', 'fandombastards',
+            'fandombattles', 'fandomcastles', 'fandomcities', 'fandomevents', 'fandomreligions', 'fandomregions',
+            'fandomepisodes', 'fandomtowns', 'fandompageranks'
         ];
     }
 
@@ -46,256 +50,30 @@ class UpdateFandom {
         const self = this;
 
         console.log('[FandomUpdater] '.green + 'filling show collections');
+
         let promises = this.collections.map(async(collection) => {
             console.log('[FandomUpdater] '.green + 'checking ' + collection);
-            try {
-                switch(collection) {
-                    case 'fandomages':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
 
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.ageFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomhouses':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
+            return new Promise((resolve => {
+                self.db.collection(collection).countDocuments(function (err, count) {
+                    if(err) throw new Error(err);
 
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.houseFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomanimals':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.animalFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomassassins':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.assassinFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandombastards':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.bastardFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandombattles':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.battleFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomcastles':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.castleFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomcities':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.cityFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomcharacters':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.characterFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomevents':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.eventFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomreligions':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.religionFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandompageranks':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.rankFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomepisodes':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.episodeFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomregions':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.regionFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    case 'fandomtowns':
-                        return new Promise((resolve => {
-                            self.db.collection(collection).countDocuments(function (err, count) {
-                                if(err) throw new Error(err);
-
-                                if(count === 0) {
-                                    console.log('[FandomUpdater] '.green + 'filling ' + collection);
-                                    self.townFiller.fill().then(() => {
-                                        resolve();
-                                    });
-                                } else {
-                                    resolve();
-                                }
-                            });
-                        }));
-                    default:
-                        console.error('[FandomUpdater] '.green + 'invalid collection ' + collection);
-                        return new Promise((resolve) => {
+                    if(count === 0) {
+                        console.log('[FandomUpdater] '.green + 'filling ' + collection);
+                        self.filler[collection].fill().then(() => {
                             resolve();
                         });
-                }
-            } catch(e) {
-                console.warn('[FandomUpdater] '.green + 'error in fetching data ' + e);
-
-                return new Promise((resolve) => {
-                    resolve();
+                    } else {
+                        resolve();
+                    }
                 });
-            }
+            }));
         });
 
-        // execute all fillers without dependencies
         await Promise.all(promises);
 
-        // execute filler with dependencies
         promises = [];
-
+        // image updater
         promises.push(new Promise(resolve => {
             console.log('[FandomUpdater] '.green + 'checking images');
 
@@ -315,7 +93,7 @@ class UpdateFandom {
                     }
                 });
             } catch(e) {
-                console.log(e);
+                console.warn('[FandomUpdater] '.green + e);
             }
         }));
 

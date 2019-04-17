@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const BayeseanAttributeSchema = new Schema({
+const BayesianAttributeSchema = new Schema({
     wiki: {
         type: String,
         required: true,
@@ -10,4 +10,4 @@ const BayeseanAttributeSchema = new Schema({
     attributes: Schema.Types.Mixed
 });
 
-module.exports = mongoose.model('BayeseanAttribute', BayeseanAttributeSchema);
+module.exports = mongoose.model('BayesianAttribute', BayesianAttributeSchema);

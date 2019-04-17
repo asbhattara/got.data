@@ -30,6 +30,12 @@ class RegionScraper {
             try {
                 regionsCollection.push(await this.get(regions[i]));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[WesterosRegionScraper] '.green + e);
             }
         }

@@ -73,6 +73,12 @@ class AgeScraper {
             try {
                 data.push(await this.scrape(character['name'], age['slug']));
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomAgeScraper] '.green + e);
             }
         }

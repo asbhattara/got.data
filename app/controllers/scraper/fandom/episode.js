@@ -181,6 +181,12 @@ class EpisodeScraper {
 
                 previous = episode;
             } catch(e) {
+                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                    i -= 1;
+
+                    continue;
+                }
+
                 console.warn('[FandomEpisodeScraper] '.green + e);
             }
         }
