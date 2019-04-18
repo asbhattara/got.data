@@ -29,7 +29,7 @@ In this project we will lay the foundations for our system by integrating data f
 * Install Docker and Docker-Compose on your local machine
 * Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
 * Rename `docker-compose.yml.template` to `docker-compose.yml` and adjust ports, access token, collection name as you want
-* Build the containers with `docker-compose up`
+* Build and start the containers with `docker-compose up -d`
 * Done
 
 ## Scraping and filling / updating the database

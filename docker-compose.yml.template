@@ -11,7 +11,7 @@ services:
             - database
         environment:
             - databaseuri=database
-            - databasecollection=<DBCOLLECTION>
+            - databasecollection=got
             - accesstoken=<ACCESSTOKEN>
         ports:
             - 3032:3000
@@ -23,8 +23,8 @@ services:
             - mongodb:/data/db
             - mongodb_config:/data/configdb
         environment:
-            - MONGO_INITDB_DATABASE=<DBCOLLECTION>
-            - MONGODB_DATABASE=<DBCOLLECTION>
+            - MONGO_INITDB_DATABASE=got
+            - MONGODB_DATABASE=got
 volumes:
     mongodb:
     mongodb_config:

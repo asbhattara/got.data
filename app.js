@@ -33,7 +33,8 @@ function routerAuthentication(req, res, next) {
     if(!sentToken) {
         console.log('[API] '.green + '401 - no token sent');
         return res.status(401).send({ //Send a nice little message to remind the user that he needs to supply a token
-            message: 'Need to send a token', code: 401
+            message: 'Need to send a token',
+            code: 401
         });
     }
 
@@ -84,7 +85,9 @@ mongoose.connection.on('connected', async() => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors({
-    'origin': '*', 'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE', 'preflightContinue': false
+    'origin': '*',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
 }));
 
 const showRouter = express.Router();
@@ -131,6 +134,6 @@ app.get('*', function (req, res) {
     res.redirect('/doc');
 });
 
-app.listen(3000);
+app.listen(config['server']['port']);
 
 console.log('[API] '.green + 'RESTful API server started on: 3000');
