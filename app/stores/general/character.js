@@ -145,6 +145,8 @@ class CharacterStore {
                     } else {
                         fandomcharacters[i]['related'][n] = {
                             'alive': fandomcharacters[index]['alive'],
+                            'img': !!fandomcharacters[index]['image'],
+                            
                             'name': fandomcharacters[i]['related'][n]['name'],
                             'slug': fandomcharacters[i]['related'][n]['slug'],
                             'mentions': fandomcharacters[i]['related'][n]['mentions']
@@ -167,8 +169,14 @@ class CharacterStore {
                 });
 
                 obj["related"] = obj["related"].sort(function (a, b) {
+                    return b["alive"] - a["alive"];
+                });
+
+                obj["related"] = obj["related"].sort(function (a, b) {
                     return b["mentions"] - a["mentions"];
                 });
+
+                obj["related"] = obj["related"].slice(0, 20);
 
                 return obj;
             });
