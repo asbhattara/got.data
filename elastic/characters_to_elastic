@@ -1,0 +1,28 @@
+curl -X PUT "localhost:9200/charactersidx" -H "Content-Type: application/json" -d '
+{
+  "mappings": {
+    "properties": { 
+	"name": { "type": "keyword" },
+	"titles": { "type": "keyword" },
+	"gender": { "type": "keyword" },
+	"father": { "type": "keyword" },
+	"mother": { "type": "keyword" },
+	"origin": { "type": "keyword" },
+	"house": { "type": "keyword" },
+	"first_seen": { "type": "keyword" },
+	"spouse": { "type": "keyword" },
+	"actor": { "type": "keyword" },
+	"birth": { "type": "integer" },
+	"alive": { "type": "boolean" },
+	"seasons": { "type": "integer" },
+	"death": { "type": "integer" },
+	"plodB": { "type": "double" },
+	"longevityB": { "type": "double" },
+	"plodC": { "type": "double" },
+	"longevityC": { "type": "double" }
+	}
+    }
+}
+'
+
+elastic-import characters.json localhost:9200 charactersidx _doc --json
