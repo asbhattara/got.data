@@ -2,7 +2,7 @@ require(__dirname + '/../' + 'constants');
 
 const config = require('../cfg/config');
 const mongoose = require('mongoose');
-const Filler = require('../app/controllers/filler/filler');
+const Filler = require('../app/fillers/filler');
 
 const collection = process.env.npm_config_collection;
 const wiki = process.env.npm_config_wiki;

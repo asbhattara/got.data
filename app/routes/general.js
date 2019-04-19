@@ -1,4 +1,4 @@
-const CharacterController = require('../controllers/generalController/characterController');
+const CharacterController = require('../controllers/general/characterController');
 
 module.exports = function (app, router) {
     const characterController = new CharacterController();

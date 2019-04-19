@@ -2,9 +2,9 @@ require(__dirname + '/' + 'constants');
 
 const config = require('./cfg/config');
 
-const UpdateFandom = require('./app/controllers/filler/updateFandom');
-const UpdateWesteros = require('./app/controllers/filler/updateWesteros');
-const UpdateMap = require('./app/controllers/filler/updateMap');
+const UpdateFandom = require('./app/fillers/updateFandom');
+const UpdateWesteros = require('./app/fillers/updateWesteros');
+const UpdateMap = require('./app/fillers/updateMap');
 
 const express = require('express');
 const mongoose = require('mongoose');
