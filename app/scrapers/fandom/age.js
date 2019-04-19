@@ -73,7 +73,7 @@ class AgeScraper {
             try {
                 data.push(await this.scrape(character['name'], age['slug']));
             } catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;

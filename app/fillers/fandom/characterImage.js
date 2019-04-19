@@ -38,7 +38,7 @@ class CharacterImageFiller {
             let request = require('request');
 
             let uri = image;
-            let filename = '/misc/images/characters/show/' + slug;
+            let filename = '/misc/images/show/' + slug;
 
             console.log('[FandomCharacterImageFiller] '.green + 'Downloading: ' + uri);
             request.head(uri, function (err, res, body) {

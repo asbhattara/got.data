@@ -72,7 +72,7 @@ class UpdateWesteros {
 
             try {
                 let fs = require('fs');
-                let imgDir = __dirname + '/../../misc/images/characters/book/';
+                let imgDir = __dirname + '/../../misc/images/book/';
 
                 fs.readdir(imgDir, (err, files) => {
                     if(err) throw new Error(err);

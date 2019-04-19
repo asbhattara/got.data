@@ -98,6 +98,7 @@ const generalRouter = express.Router();
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
 
+// api endpoints
 require('./app/routes/fandom')(app, showRouter);
 require('./app/routes/westeros')(app, bookRouter);
 require('./app/routes/map')(app, mapRouter);
@@ -108,9 +109,10 @@ app.use('/api/book', bookRouter);
 app.use('/api/map', mapRouter);
 app.use('/api/general', generalRouter);
 
+// statuc stuff
 app.use('/doc', express.static('./misc/apidoc'));
-app.use('/api/book/images/', express.static('./misc/images/characters/book'));
-app.use('/api/show/images/', express.static('./misc/images/characters/show'));
+app.use('/api/book/images/', express.static('./misc/images/book'));
+app.use('/api/show/images/', express.static('./misc/images/show'));
 
 // api request not found
 app.get('/api/book/*', function (req, res) {

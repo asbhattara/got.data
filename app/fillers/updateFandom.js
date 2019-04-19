@@ -79,7 +79,7 @@ class UpdateFandom {
 
             try {
                 let fs = require('fs');
-                let imgDir = __dirname + '/../../misc/images/characters/show/';
+                let imgDir = __dirname + '/../../misc/images/show/';
                 fs.readdir(imgDir, (err, files) => {
                     if(err) throw new Error(err);
                     if(!files || files.length <= 2) {

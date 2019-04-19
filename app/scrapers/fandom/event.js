@@ -276,7 +276,7 @@ class EventScraper {
                 data.push(await this.scrape(events[i]));
             }
             catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;

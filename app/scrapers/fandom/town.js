@@ -117,7 +117,7 @@ class TownScrapper {
             try {
                 data.push(await this.scrape(towns[i]));
             } catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;

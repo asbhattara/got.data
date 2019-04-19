@@ -30,7 +30,7 @@ class RegionScraper {
             try {
                 regionsCollection.push(await this.get(regions[i]));
             } catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;

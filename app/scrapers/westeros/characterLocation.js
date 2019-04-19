@@ -52,7 +52,7 @@ class CharacterLocationScraper {
             try {
                 result.push(await this.get(characters[i]['slug'], characters[i]['name'], cityNames));
             } catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;

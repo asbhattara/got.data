@@ -41,7 +41,7 @@ class CharacterImageFiller {
             let request = require('request');
 
             let uri = image;
-            let filename = '/misc/images/characters/book/' + slug;
+            let filename = '/misc/images/book/' + slug;
 
             console.log('[WesterosCharacterImageFiller] '.green + 'Downloading: ' + uri);
             request.head(uri, function (err, res, body) {

@@ -72,7 +72,7 @@ class HouseScraper {
             try {
                 data.push(await this.get(houses[i]['name'], houses[i]['slug']));
             } catch(e) {
-                if('' + e + '' === 'Error: invalidjson: No valid JSON response') {
+                if(e.code === 'invalidjson') {
                     i -= 1;
 
                     continue;
