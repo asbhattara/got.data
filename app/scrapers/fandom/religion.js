@@ -36,7 +36,15 @@ class ReligionScraper {
             names.push(info);
         });
 
-        return names;
+        return names.filter(function (item, pos) {
+            for(let i = 0; i < pos; i++) {
+                if(names[i]['slug'] === item['slug']) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     async scrapeAll() {

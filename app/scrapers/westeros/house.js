@@ -56,7 +56,15 @@ class HouseScraper {
             console.log('[WesterosHouseScraper] '.green + 'loading houses (', houses.length, '/', totalhits, ')');
         }
 
-        return houses;
+        return houses.filter(function (item, pos) {
+            for(let i = 0; i < pos; i++) {
+                if(houses[i]['slug'] === item['slug']) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     /*

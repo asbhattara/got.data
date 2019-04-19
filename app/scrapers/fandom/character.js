@@ -62,12 +62,8 @@ class CharacterScraper {
 
         names = CharacterScraper.fixListNameAnomalies(names);
 
-        names = names.filter(function (item, pos) {
-            for(let i = 0; i < names.length; i++) {
-                if(i === pos) {
-                    break;
-                }
-
+        return names.filter(function (item, pos) {
+            for(let i = 0; i < pos; i++) {
                 if(names[i]['character']['slug'] === item['character']['slug']) {
                     return false;
                 }
@@ -75,8 +71,6 @@ class CharacterScraper {
 
             return true;
         });
-
-        return names;
     }
 
     async scrapeAll() {

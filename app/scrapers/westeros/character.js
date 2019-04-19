@@ -49,7 +49,13 @@ class CharacterScraper {
         console.log('[WesterosCharacterScraper] '.green + 'All character names loaded');
 
         return characters.filter(function (item, pos) {
-            return characters.indexOf(item) === pos;
+            for(let i = 0; i < pos; i++) {
+                if(characters[i]['slug'] === item['slug']) {
+                    return false;
+                }
+            }
+
+            return true;
         });
     }
 
