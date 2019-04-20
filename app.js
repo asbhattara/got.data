@@ -2,9 +2,9 @@ require(__dirname + '/' + 'constants');
 
 const config = require('./cfg/config');
 
-const UpdateFandom = require('./app/controllers/filler/updateFandom');
-const UpdateWesteros = require('./app/controllers/filler/updateWesteros');
-const UpdateMap = require('./app/controllers/filler/updateMap');
+const UpdateFandom = require('./app/fillers/updateFandom');
+const UpdateWesteros = require('./app/fillers/updateWesteros');
+const UpdateMap = require('./app/fillers/updateMap');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -33,7 +33,8 @@ function routerAuthentication(req, res, next) {
     if(!sentToken) {
         console.log('[API] '.green + '401 - no token sent');
         return res.status(401).send({ //Send a nice little message to remind the user that he needs to supply a token
-            message: 'Need to send a token', code: 401
+            message: 'Need to send a token',
+            code: 401
         });
     }
 
@@ -84,7 +85,9 @@ mongoose.connection.on('connected', async() => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors({
-    'origin': '*', 'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE', 'preflightContinue': false
+    'origin': '*',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
 }));
 
 const showRouter = express.Router();
@@ -95,6 +98,7 @@ const generalRouter = express.Router();
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
 
+// api endpoints
 require('./app/routes/fandom')(app, showRouter);
 require('./app/routes/westeros')(app, bookRouter);
 require('./app/routes/map')(app, mapRouter);
@@ -105,9 +109,10 @@ app.use('/api/book', bookRouter);
 app.use('/api/map', mapRouter);
 app.use('/api/general', generalRouter);
 
+// statuc stuff
 app.use('/doc', express.static('./misc/apidoc'));
-app.use('/api/book/images/', express.static('./misc/images/characters/book'));
-app.use('/api/show/images/', express.static('./misc/images/characters/show'));
+app.use('/api/book/images/', express.static('./misc/images/book'));
+app.use('/api/show/images/', express.static('./misc/images/show'));
 
 // api request not found
 app.get('/api/book/*', function (req, res) {
@@ -131,6 +136,6 @@ app.get('*', function (req, res) {
     res.redirect('/doc');
 });
 
-app.listen(3000);
+app.listen(config['server']['port']);
 
 console.log('[API] '.green + 'RESTful API server started on: 3000');

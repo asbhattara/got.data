@@ -145,6 +145,8 @@ class CharacterStore {
                     } else {
                         fandomcharacters[i]['related'][n] = {
                             'alive': fandomcharacters[index]['alive'],
+                            'img': !!fandomcharacters[index]['image'],
+
                             'name': fandomcharacters[i]['related'][n]['name'],
                             'slug': fandomcharacters[i]['related'][n]['slug'],
                             'mentions': fandomcharacters[i]['related'][n]['mentions']
@@ -162,12 +164,34 @@ class CharacterStore {
                     }
                 }
 
-                obj["related"] = obj["related"].filter(function (e) {
+                obj['related'] = obj['related'].filter(function (e) {
                     return e !== null;
                 });
 
-                obj["related"] = obj["related"].sort(function (a, b) {
-                    return b["mentions"] - a["mentions"];
+                let relations_sort_mentions = obj['related'].sort(function (a, b) {
+                    return b['mentions'] - a['mentions'];
+                }).slice(0);
+
+                let relations_sort_alive = obj['related'].sort(function (a, b) {
+                    return b['alive'] - a['alive'];
+                }).slice(0);
+
+                obj['related'] = relations_sort_mentions.slice(0, 20).concat(relations_sort_alive.slice(0, 20));
+
+                // filter duplicates
+                obj['related'] = obj['related'].filter(function (item, pos) {
+                    for(let i = 0; i < pos; i++) {
+                        if(obj['related'][i]['slug'] === item['slug']) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                // sort by mentions again
+                obj['related'].sort(function (a, b) {
+                    return b['mentions'] - a['mentions'];
                 });
 
                 return obj;

@@ -7,6 +7,7 @@ module.exports = {
         'collection': process.env.databasecollection || 'collection'
     },
     'server': {
-        'accessToken': process.env.accesstoken || '123secure'
+        'accessToken': process.env.accesstoken || '123secure',
+        'port': process.env.port || 3000
     }
 };

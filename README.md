@@ -10,6 +10,13 @@ In this project we will lay the foundations for our system by integrating data f
 
 # Developer information
 
+## Docker Setup
+* Install Docker and Docker-Compose on your local machine
+* Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
+* Rename `docker-compose.yml.template` to `docker-compose.yml` and adjust ports, access token, collection name as you want
+* Build and start the containers with `docker-compose up -d`
+* Done
+
 ## Standard Setup NodeJS & MongoDB
 * Install nodejs and mongodb on your local machine (https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/ and https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 * Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
@@ -25,16 +32,9 @@ In this project we will lay the foundations for our system by integrating data f
 * Node should start to update all collections during first startup
 * If needed, you can start MongoDB shell via `mongo`. Then type `show dbs` to see all databases. Type `use db_name_here` to switch to preferred database. With `show collections` you can see all tables (in NoSQL tables are called collections). With `db.collection_name.find()` you can output the collection content.
 
-## Docker Setup
-* Install Docker and Docker-Compose on your local machine
-* Clone this project to a folder on your hard drive, open a console and change into the folder you just checked out
-* Rename `docker-compose.yml.template` to `docker-compose.yml` and adjust ports, access token, collection name as you want
-* Build the containers with `docker-compose up`
-* Done
-
 ## Scraping and filling / updating the database
 
-If the collections are empty, the filler will be started automatically when started.
+If the collections are empty, the fillers will be started automatically on startup.
 
 `x` is in the following a placeholder and has to be replaced by the intended collection. (e.g. character)
 
@@ -42,7 +42,7 @@ If the collections are empty, the filler will be started automatically when star
 
 * To delete the collection and fill it again (new _ids are set!) with newly scraped data use: `npm run refill --collection=x --wiki=y`
 * To update the collection with newly scraped data (manual edits are overwritten!) use: `npm run update --collection=x --wiki=y`
-* To only add new properties/entries to the collection from a newly scrap use: `npm run safeipdate --collection=x --wiki=y`
+* To only add new properties/entries to the collection from a newly scrap use: `npm run safeupdate --collection=x --wiki=y`
 
 Westeros Wiki (`y = westeros`):
 *    `x = 'age'`, \[refill\]
